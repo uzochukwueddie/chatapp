@@ -1,19 +1,43 @@
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-menu [content]="content" side="left">
+    <ion-header>
+        <ion-toolbar>
+        <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        <ion-list>
+        <button menuClose ion-item >
+            New Page
+        </button>
+        </ion-list>
 
+        <ion-buttons start>
+            <button menuClose ion-button (click)="logout()">
+                Logout
+            </button>
+        </ion-buttons>
+    </ion-content>
 </ion-menu>
 
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-menu [content]="content" side="right">
+    <ion-header>
+        <ion-toolbar>
+        <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <ion-item *ngFor="let user of roomUsers; let i = index">
+                <ion-avatar item-left>
+                    <img src="http://placehold.it/30x30">
+                </ion-avatar>
+                <h2 class="senderName">{{user.username}}</h2>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

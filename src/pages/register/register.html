@@ -1,0 +1,21 @@
+<ion-content padding>
+    <ion-card style="margin: 0px; border: none !important; width: 100%;" padding>
+      <img src="http://placehold.it/10x10"  style="width:50%; margin: auto; padding:20px;"/>
+    </ion-card>
+  
+    <ion-list padding>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="username" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="email" [(ngModel)]="email" placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+      </ion-item>
+
+      <button ion-button block color="bluecolor" (click)="RegisterUser()">Register</button>
+      <button ion-button clear block color="bluecolor" (click)="LoginPage()">Already have an account?</button>
+    </ion-list>
+  
+</ion-content>

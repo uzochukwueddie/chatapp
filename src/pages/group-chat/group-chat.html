@@ -1,0 +1,72 @@
+<ion-header no-border>
+  <ion-navbar>
+    <ion-buttons left>
+        <button ion-button icon-only (click)="goBack()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+    <ion-title>
+      {{roomName.name}}
+    </ion-title>
+    
+  </ion-navbar>
+  <button ion-button (click)="groupMenu()">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-header>
+
+
+<ion-content class="chat-box">
+  <!-- <group-message></group-message> -->
+
+  <ion-list no-lines>
+      <ion-item *ngFor="let message of msgArray" class="chatItem">
+        <ion-avatar item-left>
+          <img src="http://placehold.it/30x30">
+        </ion-avatar>
+        <h2 class="senderName">{{ message.from }}</h2>
+        <p class="sender-class">{{message.text}}</p>
+        <!-- <p class="receiver-class" *ngIf="userData.user.username != msg.from">{{msg.text}}</p> -->
+      </ion-item>
+  </ion-list>
+
+</ion-content>
+
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <!-- <send-message-box></send-message-box> -->
+    <ion-grid>
+      <ion-row>
+        <!-- <ion-col col-3> -->
+          <!-- <div class="main">
+            <div class="emoji-content-editable"
+              (emojiPickerCaretEmitter)="handleCurrentCaret($event)"
+              (input)="content = $event.target.textContent"
+              [textContent]="content"
+              contenteditable="false"></div>
+            <i
+              class="emoji-toggle-button"
+              (click)="toggled = !toggled"
+              [(emojiPickerIf)]="toggled"
+              [emojiPickerDirection]="direction"
+              (emojiPickerSelect)="handleSelection($event)">😄</i>
+          </div> -->
+
+          <!-- <app-emoji-picker (selectedImojiPickerItem)="emoji($event)"></app-emoji-picker> -->
+
+        <!-- </ion-col> -->
+
+        <ion-col col-9>
+          <ion-textarea [(ngModel)]="message" placeholder="Enter Mesaage..."></ion-textarea>
+        </ion-col>
+        <ion-col col-3>
+          <button clear ion-button (click)="SendMessage()">
+            <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  
+</ion-footer>
