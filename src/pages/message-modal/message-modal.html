@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MessageModal</ion-title>
+
+    <button ion-button block (click)="closeModal()">Close Modal</button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let request of msgRequest"> 
+            <button *ngIf="checkIfBlocked(userData.blockedUsers, userData.blockedBy, request.message.sendername)" ion-item  (click)="readMsg(request)">
+                <ion-avatar item-start *ngIf="request.message.body !== '' ">
+                    <img src="http://placehold.it/50x50">
+                </ion-avatar>
+                <h2 *ngIf="request.message.body !== '' ">{{request.message.sendername}}</h2>
+                <p *ngIf="request.message.body !== '' ">{{request.message.body}}</p>
+            </button>
+        </ion-item>
+      </ion-list>
+</ion-content>

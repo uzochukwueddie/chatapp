@@ -1,0 +1,23 @@
+<form (ngSubmit)="interestSubmit()">
+    <ion-item>
+      <ion-label color="primary" stacked>Favorite Clubs (Select Multiple)</ion-label>
+      <ion-select [(ngModel)]="clubs" multiple="true" [ngModelOptions]="{standalone: true}">
+        <ion-option *ngFor="let room of rooms" [value]="room.name">{{room.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Favorite Players</ion-label>
+      <ion-input type="text" [(ngModel)]="players" name="players" value=""></ion-input>
+    </ion-item>
+    <ion-item *ngFor="let player of userPlayers">
+      <p>{{player}}</p>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Favorite National Teams</ion-label>
+      <ion-input type="text" [(ngModel)]="teams" name="teams" value=""></ion-input>
+    </ion-item>
+    <ion-item *ngFor="let team of userTeams">
+        <p>{{team}}</p>
+      </ion-item>
+    <button ion-button block color="bluecolor">Save Interests</button>
+</form>

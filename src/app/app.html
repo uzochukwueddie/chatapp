@@ -20,10 +20,10 @@
     </ion-content>
 </ion-menu>
 
-<ion-menu [content]="content" side="right">
+<ion-menu [content]="content" side="right" id="rightSide">
     <ion-header>
         <ion-toolbar>
-        <ion-title>Menu</ion-title>
+        <ion-title>Online Fans ({{roomUsers.length}})</ion-title>
         </ion-toolbar>
     </ion-header>
 
@@ -33,7 +33,16 @@
                 <ion-avatar item-left>
                     <img src="http://placehold.it/30x30">
                 </ion-avatar>
-                <h2 class="senderName">{{user.username}}</h2>
+                <h2 class="senderName" *ngIf="username !== user.name">
+                    <button menuClose ion-button clear (click)="showAlert(user)">
+                        {{user.name}}
+                    </button>
+                </h2>
+                <h2 class="senderName" *ngIf="username === user.name">
+                    <button menuClose ion-button clear >
+                        {{user.name}}
+                    </button>
+                </h2>
             </ion-item>
         </ion-list>
     </ion-content>

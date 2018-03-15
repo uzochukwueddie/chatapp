@@ -1,0 +1,20 @@
+<ion-item *ngFor="let room of rooms" class="roomItem">
+  <button ion-item  (click)="GroupChatPage(room)" no-lines detail-none class="btn1">
+      <ion-avatar item-start>
+        <img src="http://placehold.it/50x50">
+      </ion-avatar>
+      <h2 class="roomName" text-wrap>{{room.name}}</h2>
+      <p class="fanslength">
+          <ion-icon name="person"></ion-icon>
+          {{room.fans.length}}
+      </p>
+      
+  </button>
+  
+  <button class="favBtn" ion-button clear item-end (click)="addToFavorite(room)">
+      <ion-icon name="add"></ion-icon>&nbsp;Add
+  </button>
+</ion-item>
+
+
+

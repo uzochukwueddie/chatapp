@@ -1,0 +1,7 @@
+
+
+<ion-content *ngIf="userSame">
+    <button *ngIf="block" ion-item (click)="blockUser()">Block</button>
+    <button *ngIf="unblock" ion-item (click)="unBlockUser()">UnBlock</button>
+    <button *ngIf="!block && !unblock" ion-item>You are blocked by {{receiver}}</button>
+</ion-content>

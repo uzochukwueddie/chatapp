@@ -1,0 +1,15 @@
+page-profile {
+    
+}
+
+.alertCss {
+    .alert-title {
+        // color: color($colors, graycolor);
+    }
+
+    .alert-message {
+        color: color($colors, primary);
+        margin-top: 15px !important;
+        display: block !important;
+    }
+}

@@ -39,7 +39,10 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  bluecolor: #4aa1f3
+  bluecolor: #4aa1f3,
+  lightwhite: #ffffff,
+  blue-color: #4aa1f3,
+  graycolor: #65737e
 );
 
 
@@ -53,9 +56,15 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
-
+$toolbar-md-title-text-color: color($colors, lightwhite);
+$segment-button-md-text-color-activated: color($colors, lightwhite);
+$segment-button-md-border-color-activated: color($colors, lightwhite);
+$searchbar-md-input-search-icon-color: color($colors, lightwhite);
+$searchbar-md-input-placeholder-color: color($colors, lightwhite);
+$searchbar-md-input-clear-icon-color: color($colors, lightwhite);
+$alert-md-input-text-color: color($colors, graycolor);
+$text-input-placeholder-color: color($colors, lightwhite);
+$text-input-md-show-focus-highlight: false;
 
 // App Windows Variables
 // --------------------------------------------------

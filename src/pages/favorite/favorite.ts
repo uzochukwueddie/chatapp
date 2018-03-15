@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Events  } from 'ionic-angular';
+import { RoomsProvider } from '../../providers/rooms/rooms';
+import * as io from 'socket.io-client';
 
-/**
- * Generated class for the FavoritePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -15,11 +12,47 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FavoritePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  clubs: any[];
+
+  socketHost: any;
+  socket: any;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private rm: RoomsProvider,
+    private platform: Platform,
+    private events: Events
+  ) {
+    this.socketHost = 'http://localhost:3000';
+    this.platform.ready().then(() => {
+      this.socket = io(this.socketHost);
+    });
   }
 
   ionViewDidLoad() {
+    this.getUserData();
+    this.socket.on('refreshPage', (data) => {
+      this.getUserData();
+    })
+
+  }
+
+  getUserData(){
+    this.rm.getUser()
+      .subscribe(res => {
+        this.clubs = res.user.favClub;
+      });
+  }
+
+  GroupChatPage(room) {
+    this.socket.connect();
     
+    this.rm.getUser()
+      .subscribe(res => {
+        this.events.publish('userName', res);
+        this.navCtrl.push("GroupChatPage", {data: room, user: res, tabIndex: 3})
+    });
   }
 
 }

@@ -4,11 +4,13 @@ import {
   NavController, 
   NavParams, 
   AlertController,
-  LoadingController
+  LoadingController,
+  Events,
+  Platform
  } from 'ionic-angular';
 import { RegisterProvider } from '../../providers/register/register';
 import { Storage } from '@ionic/storage';
-// import { HttpClient } from '@angular/common/http';
+import * as io from 'socket.io-client';
 
 
 
@@ -23,6 +25,9 @@ export class LoginPage {
   password: any;
   loading: any;
 
+  socketHost: any;
+  socket: any;
+
   userdata: any;
 
   auth = 'http://localhost:3000/api/protected';
@@ -34,8 +39,14 @@ export class LoginPage {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private storage: Storage,
+    private events: Events,
+    private platform: Platform,
     // private http: HttpClient
   ) {
+    this.socketHost = 'http://localhost:3000';
+    this.platform.ready().then(() => {
+      this.socket = io(this.socketHost);
+    })
   }
 
   // ionViewDidLoad() {
@@ -58,8 +69,9 @@ export class LoginPage {
           this.loading.dismiss();
           this.storage.set('token', res.token);
           this.storage.set('username', res.user.username);
-          // this.reg.setUserData(res);
-          this.navCtrl.setRoot("TabsPage", {"tabData": res.user});
+          this.events.publish('user-name', res.user);
+          this.socket.emit('join stream', {"room": "stream"});
+          this.navCtrl.setRoot("TabsPage");
         }, err => {
           this.loading.dismiss();
           let alert = this.alertCtrl.create({

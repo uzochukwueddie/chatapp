@@ -1,0 +1,58 @@
+page-stream {
+    .content{
+        background: #4aa1f3;
+    }
+
+    .content-item1 {
+        background: #4aa1f3;
+        margin: 0px auto !important;
+        text-align: center;
+    }
+
+    .content-card1 {
+        padding: 5px;
+        width: 100%;
+        margin: 0px auto !important;
+        text-align: center;
+        border-radius: 2%;
+    }
+
+    .content-card1 .postImage {
+        width: 88%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .content-card1 .username {
+        font-weight: bold;
+        color: #4aa1f3;
+        padding: 0px !important;
+    }
+
+    .content-card1 .postTime {
+        font-size: 12px;
+    }
+
+    .content-card1 .postCity {
+        font-size: 12px;
+    }
+
+    .content-card1 .post {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .item-inner {
+        border: none !important;
+    }
+
+    .fab{
+        background-color: #4aa1f3 !important;
+    }
+
+
+}
+
+.alert-title{
+    color: #4aa1f3 !important;
+}

@@ -1,0 +1,33 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+
+
+@IonicPage()
+@Component({
+  selector: 'page-blockedusers',
+  templateUrl: 'blockedusers.html',
+})
+export class BlockedusersPage {
+  user: any;
+  blockedUsers = [];
+  noUser = false;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+  ) {
+    this.user = this.navParams.get('user');
+
+    this.blockedUsers = this.user.blockedUsers;
+
+    if(this.user.blockedUsers.length <= 0){
+      this.noUser = true;
+    }
+  }
+
+  ionViewDidLoad() {
+    
+  }
+
+}

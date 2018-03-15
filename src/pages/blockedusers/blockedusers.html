@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Blocked Users</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let blocked of blockedUsers">
+      <h2 *ngIf="blockedUsers.length > 0">{{blocked}}</h2>
+    </ion-item>
+    <h2 *ngIf="noUser">No blocked users in your list</h2>
+  </ion-list>
+</ion-content>

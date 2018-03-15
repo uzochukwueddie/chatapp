@@ -20,18 +20,13 @@
       </div>
 </ion-content> -->
  
-<ion-tabs >
-    <ion-tab [root]="tab1Root" tabTitle="Rooms"></ion-tab>
-    <ion-tab [root]="tab2Root" tabTitle="Active"></ion-tab>
-    <ion-tab [root]="tab3Root" tabTitle="Chat"></ion-tab>
-    <ion-tab [root]="tab4Root" tabTitle="Favorite"></ion-tab>
+<ion-tabs>
+    <ion-tab [root]="tab1Root" tabTitle="Streams" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Clubs" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Chat" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab4Root" tabTitle="Nearby" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab5Root" tabTitle="Profile" (ionSelect)="clickTab()"></ion-tab>
+    
 </ion-tabs>
 
- <!-- <ion-content>
-    <ion-tabs >
-        <ion-tab [root]="tab1Root" tabTitle="Rooms"></ion-tab>
-        <ion-tab [root]="tab2Root" tabTitle="Active"></ion-tab>
-        <ion-tab [root]="tab3Root" tabTitle="Chat"></ion-tab>
-        <ion-tab [root]="tab4Root" tabTitle="Favorite"></ion-tab>
-    </ion-tabs>
-</ion-content> -->
+

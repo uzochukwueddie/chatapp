@@ -1,0 +1,58 @@
+
+<ion-header>
+  <ion-navbar>
+      <ion-buttons left>
+        <button ion-button icon-only (click)="goBack()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+    
+      <ion-row>
+        <ion-col>
+            <ion-title>Comments</ion-title>
+        </ion-col>
+        <ion-col>
+          <button class="viewPost" clear icon-end (click)="viewPost()">
+            <div>View Post</div>
+          </button>
+        </ion-col>
+      </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ion-textarea [(ngModel)]="comment" class="message" placeholder="Write Comment"></ion-textarea>
+          <button class="addComment" ion-button block ion-button (click)="sendComment()">
+            Add Comment
+        </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-list>
+          <ion-item *ngFor="let com of commentsArray" class="postItem">
+            <ion-avatar item-left>
+              <img src="http://placehold.it/50x50">
+            </ion-avatar>
+            <h2 class="username">
+              {{ com.id.username}}
+            </h2>
+            <p class="postTime">
+                {{GetPostTime(com.createdAt)}}
+            </p>
+            <p class="comment" text-wrap>
+              {{com.comment}}{{com.comment}}{{com.comment}}{{com.comment}}
+            </p>
+          </ion-item>
+        </ion-list>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,108 @@
+<ion-header no-border>
+    <!-- <expandable-header [scrollArea]="mycontent" headerHeight="50">
+    </expandable-header> -->
+    
+</ion-header>
+
+
+<ion-content class="content">
+    <ion-segment [(ngModel)]="stream" no-border>
+      <ion-segment-button value="now" isActive="true">
+        Now
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Top
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="stream">
+      <ion-list *ngSwitchCase="'now'" >
+        <ion-item *ngFor="let stream of streamArray; let i = index" class="content-item1">
+            <ion-card class="content-card1">
+              <ion-item>
+                <ion-avatar class="ionAvatar" item-start>
+                  <img class="userImg" src="http://placehold.it/50x50">
+                </ion-avatar>
+                <h2 class="username" ion-button clear (click)="viewProfile(stream.username || stream.user.username)">
+                    {{ stream.username || stream.user.username }}
+                </h2>
+                <p class="postTime">{{GetPostTime(stream.created)}}</p>
+                <p text-wrap class="postCity" *ngIf="stream.user.city && stream.user.country"> @ {{ stream.user.city}}, {{ stream.user.country}}</p>
+              </ion-item>
+            
+              <img class="postImage" src="http://placehold.it/50x30">
+            
+              <ion-card-content>
+                <p text-wrap class="post">{{ stream.post}}</p>
+              </ion-card-content>
+            
+              <ion-row>
+                <ion-col>
+                  <button ion-button icon-left clear small (click)="likeComment(stream)">
+                    <ion-icon name="thumbs-up"></ion-icon>
+                    <div>{{stream.likes || postLength}}</div>
+                  </button>
+                </ion-col>
+                <ion-col>
+                  <button ion-button icon-left clear small (click)="addComment(stream)">
+                    <ion-icon name="text"></ion-icon>
+                    <div>{{stream.comment.length }}</div>
+                  </button>
+                </ion-col>
+              </ion-row>
+            
+            </ion-card>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'top'">
+        <ion-item *ngFor="let top of topPostArray; let i = index" class="content-item1">
+            <ion-card class="content-card1">
+              <ion-item>
+                <ion-avatar class="ionAvatar" item-start>
+                  <img class="userImg" src="http://placehold.it/50x50">
+                </ion-avatar>
+                <h2 class="username" (click)="viewProfile(top.username)">
+                  {{ top.username }}
+                </h2>
+                <p class="postTime">{{GetPostTime(top.created)}}</p>
+                <p text-wrap class="postCity" *ngIf="top.user.city && top.user.country"> @{{ top.user.city}}, {{ top.user.country}}</p>
+              </ion-item>
+            
+              <img class="postImage" src="http://placehold.it/50x30">
+            
+              <ion-card-content>
+                <p text-wrap class="post">{{ top.post}}</p>
+              </ion-card-content>
+            
+              <ion-row>
+                <ion-col>
+                  <button ion-button icon-left clear small (click)="likeComment(top)">
+                    <ion-icon name="thumbs-up"></ion-icon>
+                    <div>{{top.likes}}</div>
+                  </button>
+                </ion-col>
+                <ion-col>
+                  <button ion-button icon-left clear small (click)="addComment(top)">
+                    <ion-icon name="text"></ion-icon>
+                    <div>{{top.comment.length }}</div>
+                  </button>
+                </ion-col>
+              </ion-row>
+            
+            </ion-card>
+
+
+        </ion-item>
+      </ion-list>
+
+    </div>
+    <ion-fab right bottom fixed>
+      <button ion-fab (click)="showModal()">
+          <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
+</ion-content>
+
+

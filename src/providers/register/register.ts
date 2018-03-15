@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
 // import * as io from 'socket.io-client';
 
-declare var io;
+// declare var io;
 
 @Injectable()
 export class RegisterProvider {
@@ -12,9 +12,11 @@ export class RegisterProvider {
   token: any;
   user: any;
 
+  // url = 'http://localhost:3000/api/register' || 'http://localhost:3000/api/register';
   url = 'http://localhost:3000/api/register';
+  // loginUrl = 'http://localhost:3000/api/login' || 'http://localhost:3000/api/login';
   loginUrl = 'http://localhost:3000/api/login';
-  auth = 'http://localhost:3000/api/auth/protected';
+  auth = 'http://localhost:3000/api/protected';
   // homeUrl = 'http://localhost:3000/api/home';
 
   socketHost: string = 'http://localhost:3000';
@@ -27,16 +29,6 @@ export class RegisterProvider {
   ) { 
   }
 
-  initialize(){
-    this.socket = io.connect(this.socketHost);
-    
-    this.socket.on("connect", (msg) => {
-      console.log('on connect');
-    });
-
-    
-
-  }
 
   // async checkAuthentication(){
 

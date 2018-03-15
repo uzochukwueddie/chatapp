@@ -1,0 +1,25 @@
+<ion-searchbar
+      [(ngModel)]="club"
+      [showCancelButton]="true"
+      (keyup)="roomSearch($event)"
+      (ionCancel)="onCancel($event)"
+      (ionClear)="onClear($event)">
+</ion-searchbar>
+
+<div class="autocomplete" *ngIf="showDiv">
+    <ion-list >
+      <ion-item *ngFor="let results of searchResults">
+        <h2>
+            <button *ngIf="results && noSearchResults.length > 0" ion-item  
+              (click)="GroupChatPage(results)" no-lines detail-none class="searchItem">
+              {{results.name}}
+            </button>
+
+            <button *ngIf="noResults && noSearchResults.length === 0" 
+            (click)="createRoom()" ion-item  no-lines detail-none class="searchItem">
+              {{results.name}}
+            </button>
+          </h2>
+      </ion-item>
+    </ion-list>
+</div>

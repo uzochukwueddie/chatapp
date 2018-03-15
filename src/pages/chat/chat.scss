@@ -1,3 +1,14 @@
 page-chat {
+    .online_span {
+        background-color: #00ff00;
+        width: 15px !important;
+        height: 15px !important;
+        border-radius: 50%;
+        float: right;
+        color: white;
+    }
 
+    .doneClass{
+        color: #4aa1f3;
+    }
 }

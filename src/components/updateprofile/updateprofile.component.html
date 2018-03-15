@@ -1,0 +1,38 @@
+<form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label color="primary" stacked>Fullname</ion-label>
+      <ion-input type="text" [(ngModel)]="fullname" name="fullname" value="{{fullname}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Country</ion-label>
+      <ion-input type="text" [(ngModel)]="country" name="country" value="{{country}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Mantra</ion-label>
+      <ion-input type="text" [(ngModel)]="mantra" name="mantra" value="{{mantra}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Your Favorite Team</ion-label>
+      <ion-select [(ngModel)]="club" [ngModelOptions]="{standalone: true}">
+        <ion-option *ngFor="let room of rooms" [value]="room.name">{{room.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label color="primary" stacked >Gender</ion-label>
+    </ion-item>
+    <ion-row radio-group [(ngModel)]="gender" [ngModelOptions]="{standalone: true}">
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label>Male</ion-label>
+          <ion-radio name="male" value="Male" [checked]="gender === Male"></ion-radio>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label>Female</ion-label>
+          <ion-radio name="female" value="Female" [checked]="gender === Female"></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <button ion-button block color="bluecolor">Save Profile</button>
+</form>

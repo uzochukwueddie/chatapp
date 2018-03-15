@@ -1,0 +1,59 @@
+
+<ion-header>
+  <ion-navbar>
+    <img item-start src="http://placehold.it/50x50">
+    <ion-title>
+      {{receiverName.name}}
+      <!-- <p *ngIf="isOnline">Online</p> -->
+    </ion-title>
+    <p  *ngIf="typing">{{receiverName.name}} is typing ....</p>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list no-lines>
+      <ion-item *ngFor="let message of msgArray" class="chatItem">
+        <ion-avatar item-left>
+          <img src="http://placehold.it/30x30">
+        </ion-avatar>
+        <h2 class="senderName" *ngIf="isAdded">{{ message.sender }}</h2>
+        <p class="sender-class" *ngIf="isAdded">{{message.text}}</p>
+
+        <h2 class="senderName">{{ message.sendername }}</h2>
+        <p class="sender-class">{{message.body}}</p>
+
+        <img *ngIf="message.image" [src]="message.image">
+        <img *ngIf="message.imageId" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+      </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer no-border>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-9>
+            <ion-textarea [(ngModel)]="message" placeholder="Enter Mesaage..." (keypress)="isTyping()"></ion-textarea>
+          </ion-col>
+          <ion-col col-3>
+            <button clear ion-button (click)="PrivateMessage()">
+              <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+            </button>
+          </ion-col>
+
+          <div class="upload-button-wrapper" color="primary">
+            <button (click)="addImage()">
+              <ion-icon name="image"></ion-icon>
+            </button>
+  
+            <button (click)="cameraImage()">
+              <ion-icon name="camera"></ion-icon>
+            </button>
+          </div>
+
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+</ion-footer>

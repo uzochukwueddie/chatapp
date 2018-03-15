@@ -1,23 +1,41 @@
-<ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Soccerkik</ion-title>
-    </ion-navbar>  
+<ion-header no-border>
+
 </ion-header>
 
 
-<ion-content padding>
-    <ion-list>
-      <button ion-item *ngFor="let room of rooms" (click)="GroupChatPage(room)">
-          <ion-avatar item-start>
-            <img src="http://placehold.it/50x50">
-          </ion-avatar>
-          <h2>{{room.name}}</h2>
-          <p>
-            <!-- {{room.fans.length}}/{{room.fans.length}} <ion-icon name="heart"></ion-icon>{{ room.fans.length }} -->
-          </p>
-      </button>
+<ion-content>
+  <ion-segment [(ngModel)]="chatrooms">
+    <ion-segment-button value="clubs">
+      Clubs
+    </ion-segment-button>
+    <ion-segment-button value="countries">
+      Countries
+    </ion-segment-button>
+    <ion-segment-button value="favorites">
+      Favorites
+    </ion-segment-button>
+  </ion-segment>
+
+  <roomssearch-page></roomssearch-page>
+
+  <div [ngSwitch]="chatrooms">
+    <ion-list *ngSwitchCase="'clubs'">
+      <rooms-page></rooms-page>
     </ion-list>
+
+    <ion-list *ngSwitchCase="'countries'">
+      
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'favorites'">
+      <ion-item *ngFor="let club of clubs">
+          <button ion-item  (click)="GroupChatPage(club)" no-lines detail-none class="btn1">
+              <ion-avatar item-start>
+                <img src="http://placehold.it/50x50">
+              </ion-avatar>
+              <h2 class="roomName" text-wrap>{{club}}</h2>
+          </button>
+        </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

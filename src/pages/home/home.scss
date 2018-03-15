@@ -1,3 +1,94 @@
 page-home {
+    .content{
+        background: #4aa1f3;
+    }
 
+    ion-content {
+        .roomName {
+            color: #4aa1f3 !important;
+            margin: 0px !important;
+        }
+
+        .favBtn {
+            color: #4aa1f3 !important;
+            margin-top: 35px !important;
+        }
+
+        .fanslength{
+            color: color($colors, graycolor);
+            margin-top: 8px !important;
+        }
+
+        .btn1{
+            width: auto !important;
+        }
+    }
+
+    .searchbar-md .searchbar-input{
+        background: inherit !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .searchbar-input {
+        background: inherit !important;
+        color: white !important;
+        border: none !important;
+    }
+
+    .searchbar-input.container {
+        border: none !important;
+    }
+
+    .searchbar-search-icon {
+        color: white !important;
+    }
+
+    .autocomplete {
+        width: 100%;
+    
+        ion-searchbar {
+            padding: 1px !important;
+        }
+    
+        ion-list {
+            position: absolute;
+            width: inherit;
+            overflow-y: scroll;
+            max-height: 150%;
+            z-index: 999;
+    
+            ion-item {
+                img {
+                    max-height: 2.5rem;
+                    width: auto;
+                    margin: auto;
+                    display: block;
+                }
+            }
+    
+            ion-item:hover {
+                cursor: pointer;
+                background: #4aa1f3
+            }
+        }
+
+        .searchItem {
+            color: #4aa1f3;
+        }
+    }
+}
+
+.inputCss {
+    .alert-title {
+        color: color($colors, blue-color);
+    }
+
+    // .alert-input {
+    //     color: color($colors, blue-color);
+    // }
+
+    .button-inner {
+        color: color($colors, blue-color);
+    }
 }

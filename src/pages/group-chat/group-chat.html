@@ -1,72 +1,164 @@
 <ion-header no-border>
   <ion-navbar>
     <ion-buttons left>
-        <button ion-button icon-only (click)="goBack()">
-            <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
+      <button ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>
-      {{roomName.name}}
+      {{roomName.name || roomName}}
     </ion-title>
+
+    <ion-row>
+      <ion-col class="menuCol" end>
+        <button id="notification-button" ion-button item-left clear (click)="openModal()" >
+          <ion-icon name="notifications">
+            <!-- <ion-badge id="notifications-badge" *ngIf="requestNum > 0" color="danger">{{requestNum}}</ion-badge> -->
+            <ion-badge id="notifications-badge" color="danger">1</ion-badge>
+          </ion-icon>              
+        </button>
+        <button ion-button item-end clear (click)="groupMenu()" left>
+          <ion-icon name="menu" class="menuBtn"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
     
   </ion-navbar>
-  <button ion-button (click)="groupMenu()">
-    <ion-icon name="menu"></ion-icon>
-  </button>
+  
 </ion-header>
 
 
-<ion-content class="chat-box">
-  <!-- <group-message></group-message> -->
+<ion-content>
+  <div class="message-wrapper" *ngFor="let message of msgArray">
 
-  <ion-list no-lines>
+
+    <!-- <ion-list no-lines class="chatList">
       <ion-item *ngFor="let message of msgArray" class="chatItem">
         <ion-avatar item-left>
           <img src="http://placehold.it/30x30">
         </ion-avatar>
-        <h2 class="senderName">{{ message.from }}</h2>
-        <p class="sender-class">{{message.text}}</p>
-        <!-- <p class="receiver-class" *ngIf="userData.user.username != msg.from">{{msg.text}}</p> -->
+        <h2 *ngIf="message.from" class="senderName">{{ message.from }}</h2>
+        <p *ngIf="message.text" class="sender-class">{{message.text}}</p>
+  
+        <h2 *ngIf="message.name" class="senderName">{{ message.name }}</h2>
+        <p *ngIf="message.message" class="sender-class">{{message.message}}</p>
+
+        <img *ngIf="message.image" [src]="message.image" imageViewer >
+        <img *ngIf="message.imageId" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
       </ion-item>
-  </ion-list>
+    </ion-list> -->
+
+
+
+    <div *ngIf="userData.user.username !== message.name" class="left">
+      
+      <div class="chat-bubble left slide-left" *ngIf="message.name">
+
+        <div class="message-detail" >
+          <span *ngIf="message.name" class="bold">{{message.name}}</span>
+        </div>
+        <div *ngIf="message.message" class="message" [innerHTML]="message.message" autolinker></div>
+        
+        <img *ngIf="message.imageId && message.name" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+
+      </div>
+    </div>
+
+
+
+    <div *ngIf="userData.user.username === message.name" class="right">
+      
+      <div class="chat-bubble right slide-right" *ngIf="message.name">
+
+        <div class="message-detail" >
+          <span *ngIf="message.name" class="bold">{{message.name}}</span>
+        </div>
+        <div *ngIf="message.message" class="message" [innerHTML]="message.message" autolinker></div>
+        
+        <img *ngIf="message.imageId && message.name" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+      </div>
+    </div>
+
+
+
+    <div *ngIf="userData.user.username !== message.from" class="left">
+      
+      <div class="chat-bubble left slide-left" *ngIf="message.from">
+        <div class="message-detail" >
+          <span *ngIf="message.from" class="bold">{{message.from}}</span>
+        </div>
+        <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
+
+
+        <img *ngIf="message.image && message.from" [src]="message.image" imageViewer >
+
+      </div>
+    </div>
+
+    <div *ngIf="userData.user.username === message.from" class="right">
+      
+      <div class="chat-bubble right slide-right" *ngIf="message.from">
+        <div class="message-detail" >
+          <span *ngIf="message.from" class="bold">{{message.from}}</span>
+        </div>
+        <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
+
+        <img *ngIf="message.image && message.from" [src]="message.image" imageViewer >
+
+      </div>
+    </div>
+
+    <div class="cf"></div>
+
+
+  </div>
 
 </ion-content>
 
 
-<ion-footer no-border>
+<!-- <ion-footer no-border>
   <ion-toolbar>
-    <!-- <send-message-box></send-message-box> -->
     <ion-grid>
       <ion-row>
-        <!-- <ion-col col-3> -->
-          <!-- <div class="main">
-            <div class="emoji-content-editable"
-              (emojiPickerCaretEmitter)="handleCurrentCaret($event)"
-              (input)="content = $event.target.textContent"
-              [textContent]="content"
-              contenteditable="false"></div>
-            <i
-              class="emoji-toggle-button"
-              (click)="toggled = !toggled"
-              [(emojiPickerIf)]="toggled"
-              [emojiPickerDirection]="direction"
-              (emojiPickerSelect)="handleSelection($event)">😄</i>
-          </div> -->
-
-          <!-- <app-emoji-picker (selectedImojiPickerItem)="emoji($event)"></app-emoji-picker> -->
-
-        <!-- </ion-col> -->
-
         <ion-col col-9>
           <ion-textarea [(ngModel)]="message" placeholder="Enter Mesaage..."></ion-textarea>
         </ion-col>
+        
         <ion-col col-3>
           <button clear ion-button (click)="SendMessage()">
             <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
           </button>
         </ion-col>
+        <div class="upload-button-wrapper" color="primary">
+          <button (click)="getImage()">
+            <ion-icon name="image"></ion-icon>
+          </button>
+
+          <button (click)="takePicture()">
+            <ion-icon name="camera"></ion-icon>
+          </button>
+       </div>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
   
+</ion-footer> -->
+
+<ion-footer>
+    <ion-item class="inputToolbar">
+      <ion-input [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <button class="imgBtn" ion-button clear item-end (click)="getImage()">
+        <ion-icon name="image"></ion-icon>
+      </button>
+      <button class="imgBtn" ion-button clear item-end (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+      <button ion-button clear item-end (click)="SendMessage()">
+        <ion-icon class="footer-btn" name="send"></ion-icon>
+      </button>
+    </ion-item>
 </ion-footer>
+
+
+

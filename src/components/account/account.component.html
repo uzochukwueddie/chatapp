@@ -1,0 +1,28 @@
+<ion-item>
+  <h2>Account</h2>
+  <p>{{user.email}}</p>
+</ion-item>
+
+<ion-item>
+  <ion-list>
+    <div *ngFor="let btn of buttonsArray">
+      <button  ion-button color="primary" (click)="accountPage(btn)">
+        {{btn.name}}
+      </button>
+    </div>
+  </ion-list>
+</ion-item>
+
+<ion-item>
+  <ion-buttons>
+    <button menuClose ion-button (click)="logout()">
+        Logout
+    </button>
+  </ion-buttons>
+</ion-item>
+
+<ion-item>
+  <p>
+    Have suggestions? Need assistance? Email us at support@soccerkik.com.
+  </p>
+</ion-item>

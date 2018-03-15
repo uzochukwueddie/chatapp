@@ -1,0 +1,53 @@
+<ion-item *ngFor="let friend of friends">
+    <button *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)" ion-item  no-lines detail-none (click)="PrivateChatPage(friend)">
+        <ion-avatar item-start>
+        <img src="http://placehold.it/50x50">
+        </ion-avatar>
+            
+        <!-- <span *ngFor="let online of isOnline" >
+            <p class="online_span" *ngIf="online === friend.name"></p>
+        </span> -->
+
+        <ion-grid >
+            <ion-row>
+                <ion-col width-70>
+                    <h2 item-left>{{friend.name}} </h2>
+                </ion-col>
+                <ion-col width-25>
+                    <h4 *ngFor="let msg of msgArray" item-right>
+                        <span *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+                            {{GetTime(msg.message.createdAt)}}
+                        </span>
+                    </h4>
+                </ion-col>
+            </ion-row>
+
+        </ion-grid>
+        
+        <h4 *ngFor="let msg of msgArray">
+            <!-- <span *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+                {{GetTime(msg.message.createdAt)}}
+            </span> -->
+
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-75>
+                        <p *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+                            <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
+                            </ion-icon> 
+                            {{msg.message.body.substr(0, 10)}}...
+                        </p>
+                    </ion-col>
+
+                    <ion-col width-25>
+                        <p item-right *ngIf="Increment(msg.msg, friend.name, userName) > 0">
+                            {{Increment(msg.msg, friend.name, userName)}}
+                        </p>
+                    </ion-col>
+
+                </ion-row>
+            </ion-grid>
+            
+        </h4>
+    </button>
+</ion-item>

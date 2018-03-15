@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { RoomsProvider } from '../../providers/rooms/rooms';
+import * as io from 'socket.io-client';
 
-/**
- * Generated class for the ChatPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -15,11 +12,34 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChatPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  userName: string;
+
+  socketHost: any;
+  socket: any;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private rm: RoomsProvider,
+    private platform: Platform,
+    // private msg: MessageProvider,
+  ) {
+    this.socketHost = 'http://localhost:3000';
+    this.platform.ready().then(() => {
+      this.socket = io(this.socketHost);
+    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
+    this.getUserData();
   }
+
+  getUserData(){
+    this.rm.getUser()
+      .subscribe(res => {
+        this.userName = res.user.username;
+      });
+  }
+  
 
 }

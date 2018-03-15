@@ -4,10 +4,12 @@ import {
   NavController, 
   NavParams, 
   AlertController,
-  LoadingController
+  LoadingController,
+  Platform
  } from 'ionic-angular';
 import { RegisterProvider } from '../../providers/register/register';
 import { Storage } from '@ionic/storage';
+import * as io from 'socket.io-client';
 
 
 
@@ -24,14 +26,22 @@ export class RegisterPage {
 
   loading: any;
 
+  socketHost: any;
+  socket: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private reg: RegisterProvider,
     private alertCtrl: AlertController,
     private storage: Storage,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private platform: Platform,
   ) {
+    this.socketHost = 'http://localhost:3000';
+    this.platform.ready().then(() => {
+      this.socket = io(this.socketHost);
+    })
   }
 
   RegisterUser() {
@@ -42,6 +52,7 @@ export class RegisterPage {
               this.loading.dismiss();
               this.storage.set('token', res.token);
               this.storage.set('username', res.user.username);
+              this.socket.emit('join stream', {"room": "stream"});
               this.navCtrl.setRoot("TabsPage");
             }, err => {
               this.loading.dismiss();

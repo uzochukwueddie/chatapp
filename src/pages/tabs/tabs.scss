@@ -1,3 +1,14 @@
 page-tabs {
+    .tabbar{
+        border: none !important;
+        background: #4aa1f3 !important;
+    }
 
+    .tab-button-text{
+        color: white;
+    }
+
+    .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+        border: 0.1px solid #4aa1f3 !important;
+    }
 }

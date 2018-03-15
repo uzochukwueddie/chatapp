@@ -1,20 +1,22 @@
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
 @Injectable()
 export class GroupProvider {
-  socket: any;
+  room: any;
   user: any;
 
-  constructor(public http: HttpClient) {}
+  constructor(
+    // public http: HttpClient
+  ) {}
 
-  setSocketRef(val){
-    this.socket = val;
+  setRoomName(val){
+    this.room = val;
   }
 
-  getSocketRef(){
-    return this.socket
+  getRoomName(){
+    return this.room
   }
 
 }
