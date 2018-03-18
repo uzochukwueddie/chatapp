@@ -1,29 +1,32 @@
-<!-- <ion-header>
-
-  <ion-navbar>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-
-</ion-header> -->
-
-
-<ion-content padding>
-    <ion-card style="margin: 0px; border: none !important; width: 100%;" padding>
-      <img src="http://placehold.it/10x10"  style="width:50%; margin: auto; padding:20px;"/>
-    </ion-card>
-  
-    <ion-list padding>
+<ion-content padding class="transparent-header">
+    <ion-header>
+      <ion-navbar>
+      </ion-navbar>
+    </ion-header>
+    <img class="logo" src="assets/imgs/logo-instagram.png" />
+    <div padding>
       <ion-item>
         <ion-input type="email" [(ngModel)]="email" placeholder="Email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
       </ion-item>
-
-      <button ion-button block color="bluecolor" (click)="LoginUser()">Login</button>
-      <button ion-button clear block color="bluecolor" (click)="RegisterPage()">Register New Account</button>
-      <button ion-button clear block color="bluecolor">Forgot Password?</button>
-    </ion-list>
-  
-    
+      <button ion-button block outline (click)="LoginUser()" class="login-button">Login</button>
+    </div>
+    <div class="strike">
+      <span>OR</span>
+    </div>
+    <button ion-button block clear color="light" class="login-button" (click)="facebookLogin()">
+      <ion-icon name="logo-facebook"></ion-icon> Login with Facebook
+    </button>
+    <button ion-button block clear class="forgot-btn" (click)="forgotPassword()">
+      Forgot password?
+    </button>
 </ion-content>
+<ion-footer>
+  <ion-toolbar class="footer">
+    <div (click)="RegisterPage()">
+      <span>Don't have an account? <strong>Sign up here</strong>.</span>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -12,12 +12,12 @@ export class ProfileProvider {
 
   public getProfile(username): Observable<any>{
     return this.http
-        .get(`http://localhost:3000/api/user/profile/${username}`);
+        .get(`https://soccerchatapi.herokuapp.com/api/user/profile/${username}`);
   }
 
   addProfile(username, fullname, country, mantra, club, gender): Observable<any>{
     return this.http
-        .post(`http://localhost:3000/api/user/profile/${username}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/profile/${username}`, {
           username: username,
           name: fullname,
           country: country,
@@ -27,19 +27,34 @@ export class ProfileProvider {
         });
   }
 
-  addInterest(username, club, players, teams): Observable<any>{
+  addInterest(username, club, players): Observable<any>{
     return this.http
-        .post(`http://localhost:3000/api/user/interest/${username}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/interest/${username}`, {
           username: username,
           clubs: club,
-          players: players,
-          teams: teams
+          players: players
+        });
+  }
+
+  deleteValues(username?, playername?): Observable<any>{
+    return this.http
+        .post(`https://soccerchatapi.herokuapp.com/api/favplayer/delete/${username}`, {
+          playerUser: username,
+          playername: playername
+        });
+  }
+
+  deleteTeam(username?, teamname?): Observable<any>{
+    return this.http
+        .post(`https://soccerchatapi.herokuapp.com/api/favteam/delete/${username}`, {
+          teamUser: username,
+          teamname: teamname
         });
   }
 
   changePassword(password, cpassword, username): Observable<any> {
     return this.http
-      .post(`http://localhost:3000/api/user/change-password/${username}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/user/change-password/${username}`, {
         password: password,
         cpassword: cpassword,
         username: username

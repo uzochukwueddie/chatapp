@@ -1,32 +1,35 @@
-<img src="http://placehold.it/10x10"  style="width:100%; margin: auto;"/>
-
-<ion-list *ngIf="fullname">
-  <ion-label color="primary" stacked>Fullname</ion-label>
-  <p>{{fullname}}</p>
-</ion-list>
-
-<ion-list *ngIf="country">
-  <ion-label color="primary" stacked>Country</ion-label>
-  <p>{{country}}</p>
-</ion-list>
-
-<ion-list *ngIf="club">
-  <ion-label color="primary" stacked>Club Supported</ion-label>
-  <p>{{club}}</p>
-</ion-list>
-
-<ion-list *ngIf="mantra">
-  <ion-label color="primary" stacked>Mantra</ion-label>
-  <p>{{mantra}}</p>
-</ion-list>
-
-<ion-label color="primary" stacked>Favorites</ion-label>
-<ion-list>
-  <button ion-item (click)="showClubs()">Favorite Clubs</button>
-</ion-list>
-<ion-list>
-  <button ion-item (click)="showPlayers()">Favorite Players</button>
-</ion-list>
-<ion-list>
-  <button ion-item (click)="showTeams()">Favorite national teams</button>
-</ion-list>
+<div class="header-image"></div>
+<div class="main-content" text-wrap text-center>
+    <div class="circular"></div>
+    <h2 *ngIf="username">{{username}}</h2>
+    <p *ngIf="city || country">{{city}} &bull; {{country}}</p>
+    <p class="profile-description" *ngIf="mantra">{{mantra}}</p>
+    <hr>
+    <ion-list no-lines>
+        <ion-item *ngIf="club">
+            <p>Main Club</p>
+            <a item-end medium (click)="showClubs()">
+                {{club}}
+            </a>
+        </ion-item>
+        <ion-item>
+            <p>Favorite Clubs</p>
+            <a button ion-button color="primary" item-end medium (click)="showClubs()">
+              View
+            </a>
+        </ion-item>
+        <ion-item>
+            <p>Favorite Players</p>
+            <a button ion-button color="primary" item-end medium (click)="showPlayers()">
+              View
+            </a>
+        </ion-item>
+        <ion-item>
+            <p>Favorite national teams</p>
+            <a button ion-button color="primary" item-end medium (click)="showTeams()">
+              View
+            </a>
+        </ion-item>
+    </ion-list>
+    
+</div>

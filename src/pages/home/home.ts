@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, Platform, NavController } from 'ionic-angular';
+import { IonicPage, Platform, NavController, Events } from 'ionic-angular';
 import * as io from 'socket.io-client';
 import { Storage } from '@ionic/storage';
 import { RoomsProvider } from '../../providers/rooms/rooms';
@@ -30,10 +30,11 @@ export class HomePage {
     private navCtrl: NavController,
     private platform: Platform,
     private storage: Storage,
-    private rm: RoomsProvider
+    private rm: RoomsProvider,
+    private events: Events
   ) {
     this.chatrooms = "clubs";
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -47,36 +48,7 @@ export class HomePage {
     this.socket.on('refreshPage', (data) => {
       this.getUserData();
     });
-
-
-      // this.topOrBottom=this.contentHandle._tabsPlacement;
-      // this.contentBox=document.querySelector(".scroll-content")['style'];
-    
-      // if (this.topOrBottom == "top") {
-      //   this.tabBarHeight = this.contentBox.marginTop;
-      // } else if (this.topOrBottom == "bottom") {
-      //   this.tabBarHeight = this.contentBox.marginBottom;
-      // }
   }
-
-  // scrollingFun(e) {
-  //   if (e.scrollTop > this.contentHandle.getContentDimensions().contentHeight) {
-  //     document.querySelector(".tabbar")['style'].display = 'none';
-  //     if (this.topOrBottom == "top") {
-  //       this.contentBox.marginTop = 0;
-  //     } else if (this.topOrBottom == "bottom") {
-  //       this.contentBox.marginBottom = 0
-  //     }
- 
-  //   } else {
-  //     document.querySelector(".tabbar")['style'].display = 'flex';
-  //     if (this.topOrBottom == "top") {
-  //       this.contentBox.marginTop = this.tabBarHeight;
-  //     } else if (this.topOrBottom == "bottom") {
-  //       this.contentBox.marginBottom = this.tabBarHeight
-  //     }
-  //   }
-  // }
 
 
   getName() {
@@ -90,6 +62,7 @@ export class HomePage {
     
     this.rm.getUser()
       .subscribe(res => {
+        this.events.publish('userName', res);
         this.navCtrl.push("GroupChatPage", {data: room, user: res})
     });
   }

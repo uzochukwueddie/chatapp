@@ -25,13 +25,13 @@ export class LocationProvider {
 
   addLocation(id, data): Observable<any> {
     return this.http
-      .post(`http://localhost:3000/api//user/location/${id}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api//user/location/${id}`, {
         data: data
       });
   }
 
   getLocations(city): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/location/near/${city}`);
+    return this.http.get(`https://soccerchatapi.herokuapp.com/api/location/near/${city}`);
   }
 
   distance(lat1, lon1, lat2, lon2) {

@@ -8,8 +8,7 @@
 
 
 <ion-content >
-
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row  justify-content-start>
         <ion-col col-6 width-50 *ngFor="let user of nearByArray">
             <button (click)="userProfile(user)">
@@ -20,6 +19,18 @@
             </button>
         </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
+
+  <div class="pins">
+    <ion-card class="pin" *ngFor="let user of nearByArray">
+      <button (click)="userProfile(user)">
+        <img src="http://placehold.it/150x150">
+        <ion-item>
+          <small>{{user.username}}</small>
+          <p><small>{{distance(userData.coords.latitude, userData.coords.longitude, user.coords.latitude, user.coords.longitude)}} miles</small></p>
+        </ion-item>
+      </button>
+    </ion-card>
+  </div>
 
 </ion-content>

@@ -1,59 +1,113 @@
 
 <ion-header>
   <ion-navbar>
-    <img item-start src="http://placehold.it/50x50">
-    <ion-title>
-      {{receiverName.name}}
-      <!-- <p *ngIf="isOnline">Online</p> -->
-    </ion-title>
-    <p  *ngIf="typing">{{receiverName.name}} is typing ....</p>
+
+    <ion-row>
+      <ion-col col-2 class="avatarCol">
+        <ion-avatar item-start class="avatar">
+            <img class="userImg" src="http://placehold.it/30x30">
+        </ion-avatar>
+      </ion-col>
+      
+      <ion-col col-10>
+        <ion-title class="titleCol" (click)="viewProfile(receiverName.name)">
+            <h2 class="userTitle">
+              {{receiverName.name}}
+              <p *ngIf="isOnline && receiverName.name && !typing" class="online">
+                Online
+              </p>
+              <p  *ngIf="typing" class="online">{{receiverName.name}} is typing ....</p>
+            </h2>
+        </ion-title>
+      </ion-col>
+        
+    </ion-row>
+
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <ion-list no-lines>
-      <ion-item *ngFor="let message of msgArray" class="chatItem">
-        <ion-avatar item-left>
-          <img src="http://placehold.it/30x30">
-        </ion-avatar>
-        <h2 class="senderName" *ngIf="isAdded">{{ message.sender }}</h2>
-        <p class="sender-class" *ngIf="isAdded">{{message.text}}</p>
+<ion-content style="margin-top:10px">
+  <ion-spinner name="circles" *ngIf="msgArray.length <= 0 && !isComplete"></ion-spinner>
 
-        <h2 class="senderName">{{ message.sendername }}</h2>
-        <p class="sender-class">{{message.body}}</p>
+  <div class="message-wrapper" *ngFor="let message of msgArray">
 
-        <img *ngIf="message.image" [src]="message.image">
-        <img *ngIf="message.imageId" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
-      </ion-item>
-  </ion-list>
+      <div *ngIf="senderName.username !== receiverName.name && senderName.username !== message.sendername" class="left">
+        <div class="chat-bubble left slide-left" *ngIf="message.sendername">
+          <div *ngIf="message.body" class="message" [innerHTML]="message.body" autolinker></div>
+          <img *ngIf="message.imageId && message.sendername" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        </div>
+      </div>
+  
+      <div *ngIf="senderName.username === message.sendername" class="right">
+        <div class="chat-bubble right slide-right" *ngIf="message.sendername" (click)="viewProfile(message.name)">
+          <div *ngIf="message.body" class="message" [innerHTML]="message.body" autolinker></div>
+          <img *ngIf="message.imageId && message.sendername" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        </div>
+      </div>
+  
+  
+  
+      <div *ngIf="senderName.username !== receiverName.name && senderName.username !== message.sender" class="left">
+        <div class="chat-bubble left slide-left" *ngIf="message.sender">
+          <div *ngIf="message.text && message.sender && isAdded" class="message" [innerHTML]="message.text" autolinker></div>
+        </div>
+      </div>
+  
+      <div *ngIf="senderName.username === message.sender" class="right">
+        <div class="chat-bubble right slide-right" *ngIf="message.sender">
+          <div *ngIf="message.text && message.sender && isAdded" class="message" [innerHTML]="message.text" autolinker></div>
+        </div>
+      </div>
+  
+      <div class="cf"></div>
+  
+  
+  </div>
+
+
+
 </ion-content>
 
+
+
 <ion-footer no-border>
-    <ion-toolbar>
-      <ion-grid>
-        <ion-row>
-          <ion-col col-9>
-            <ion-textarea [(ngModel)]="message" placeholder="Enter Mesaage..." (keypress)="isTyping()"></ion-textarea>
-          </ion-col>
-          <ion-col col-3>
-            <button clear ion-button (click)="PrivateMessage()">
-              <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
-            </button>
-          </ion-col>
+    <ion-item class="inputToolbar">
+      <ion-input [(ngModel)]="message" placeholder="Send a message..." (keypress)="isTyping()"></ion-input>
+      <button class="imgBtn" ion-button clear item-end (click)="addImage()">
+        <ion-icon name="image"></ion-icon>
+      </button>
+      <button class="imgBtn" ion-button clear item-end (click)="cameraImage()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
 
-          <div class="upload-button-wrapper" color="primary">
-            <button (click)="addImage()">
-              <ion-icon name="image"></ion-icon>
-            </button>
-  
-            <button (click)="cameraImage()">
-              <ion-icon name="camera"></ion-icon>
-            </button>
-          </div>
 
-        </ion-row>
-      </ion-grid>
-    </ion-toolbar>
+      <div 
+        class="emoji-content-editable"
+        (emojiPickerCaretEmitter)="handleCurrentCaret($event)"
+        (input)="content = $event.target.textContent"
+        [textContent]="content"
+        contenteditable="true">
+      </div>
+
+      <button ion-button clear item-end
+        (click)="toggleFunction()">
+        😄
+      </button>
+
+
+      <button ion-button clear item-end (click)="PrivateMessage()">
+        <ion-icon class="footer-btn" name="send"></ion-icon>
+      </button>
+    </ion-item>
+
+    <div>
+        <button ion-button clear item-end
+        class="emoji-toggle-button imgBtn"
+        [(emojiPickerIf)]="toggled"
+        [emojiPickerDirection]="direction"
+        (emojiPickerSelect)="handleSelection($event)"></button>
+    </div>
+
 </ion-footer>

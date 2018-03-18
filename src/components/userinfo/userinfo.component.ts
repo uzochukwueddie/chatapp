@@ -17,6 +17,8 @@ export class UserinfoComponent {
   mantra: string;
   club: string;
   gender: string;
+  city: string;
+  username: string;
 
   constructor(
     private profile: ProfileProvider,
@@ -34,6 +36,7 @@ export class UserinfoComponent {
     this.rm.getUser()
       .subscribe(res => {
         this.user = res.user;
+        this.username = res.user.username;
 
         this.profile.getProfile(res.user.username)
           .subscribe(res => {
@@ -42,7 +45,7 @@ export class UserinfoComponent {
             this.mantra = res.profile.mantra;
             this.club = res.profile.club;
             this.gender = res.profile.gender;
-
+            this.city = res.profile.city;
           });
       });
   }

@@ -12,14 +12,11 @@ export class RegisterProvider {
   token: any;
   user: any;
 
-  // url = 'http://localhost:3000/api/register' || 'http://localhost:3000/api/register';
-  url = 'http://localhost:3000/api/register';
-  // loginUrl = 'http://localhost:3000/api/login' || 'http://localhost:3000/api/login';
-  loginUrl = 'http://localhost:3000/api/login';
-  auth = 'http://localhost:3000/api/protected';
-  // homeUrl = 'http://localhost:3000/api/home';
+  url = 'https://soccerchatapi.herokuapp.com/api/register';
+  loginUrl = 'https://soccerchatapi.herokuapp.com/api/login';
+  auth = 'https://soccerchatapi.herokuapp.com/api/protected';
 
-  socketHost: string = 'http://localhost:3000';
+  socketHost: string = 'https://soccerchatapi.herokuapp.com';
   socket: any;
   socketObserver: any;
 
@@ -28,20 +25,6 @@ export class RegisterProvider {
     private storage: Storage,
   ) { 
   }
-
-
-  // async checkAuthentication(){
-
-  //   const value = await this.storage.get("token");
-  //   this.token = value;
-
-  //   //console.log(value);
-  //   let headers = new HttpHeaders();
-  //   headers.append('Authorization', this.token);
-
-  //   await this.http.get(this.auth, {headers: headers});
-    
-  // }
 
   checkAuthentication(){
  
@@ -68,7 +51,7 @@ export class RegisterProvider {
  
   }
 
-  createUser(username, email, password): Observable<any> {
+  createUser(username, email, password?): Observable<any> {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
     return this.http
@@ -79,7 +62,7 @@ export class RegisterProvider {
         }, {headers: headers});
   }
 
-  loginUser(email, password): Observable<any> {
+  loginUser(email, password?): Observable<any> {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
 

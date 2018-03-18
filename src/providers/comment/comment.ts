@@ -18,12 +18,12 @@ export class CommentProvider {
 
   getPosts(): Observable<any> {
     return this.http
-        .get(`http://localhost:3000/api/user/${this.userId}/posts`);
+        .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}/posts`);
   }
 
   addPost(id, username, post): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/user/${username}/posts`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${username}/posts`, {
           id: id,
           username: username,
           post: post
@@ -32,12 +32,12 @@ export class CommentProvider {
 
   getComments(postId): Observable<any> {
     return this.http
-        .get(`http://localhost:3000/api/user/${this.userId}/comments/${postId}`);
+        .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}/comments/${postId}`);
   }
 
   postComment(postid, id, senderid, sendername, comment): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/user/${this.userId}/comments/${postid}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}/comments/${postid}`, {
           postid: postid,
           userid:id,
           senderId: senderid,
@@ -48,7 +48,7 @@ export class CommentProvider {
 
   addLike(postid): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/user/${this.userId}/comments/${postid}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}/comments/${postid}`, {
           postId: postid
         });
   }

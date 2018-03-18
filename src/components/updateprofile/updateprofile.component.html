@@ -9,7 +9,7 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Mantra</ion-label>
-      <ion-input type="text" [(ngModel)]="mantra" name="mantra" value="{{mantra}}"></ion-input>
+      <ion-textarea type="text" [(ngModel)]="mantra" name="mantra" value="{{mantra}}"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Your Favorite Team</ion-label>
@@ -20,11 +20,11 @@
     <ion-item no-lines>
       <ion-label color="primary" stacked >Gender</ion-label>
     </ion-item>
-    <ion-row radio-group [(ngModel)]="gender" [ngModelOptions]="{standalone: true}">
+    <ion-row radio-group [(ngModel)]="gender" [ngModelOptions]="{standalone: true}" class="genderRow">
       <ion-col>
         <ion-item no-lines>
           <ion-label>Male</ion-label>
-          <ion-radio name="male" value="Male" [checked]="gender === Male"></ion-radio>
+          <ion-radio class="gender" name="male" value="Male" [checked]="gender === Male"></ion-radio>
         </ion-item>
       </ion-col>
       <ion-col>
@@ -34,5 +34,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <button ion-button block color="bluecolor">Save Profile</button>
+    <ion-item>
+      <button ion-button block color="bluecolor">Save Profile</button>
+    </ion-item>
 </form>

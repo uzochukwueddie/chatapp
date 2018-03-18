@@ -3,6 +3,7 @@ import { ProfileProvider } from '../../providers/profile/profile';
 import { AlertController, Platform } from 'ionic-angular';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import * as io from 'socket.io-client';
+import { CountriesProvider } from '../../providers/countries/countries';
 
 
 @Component({
@@ -17,10 +18,12 @@ export class InterestComponent {
   players: any; 
   teams: any;
 
-  userPlayers: any;
-  userTeams: any;
+  userPlayers = [];
+  userTeams = [];
+  lastValue: string;
 
-  rooms: any[];
+  rooms = [];
+  teamsArray = [];
 
   socketHost: any;
   socket: any;
@@ -30,8 +33,9 @@ export class InterestComponent {
     private alertCtrl: AlertController,
     private rm: RoomsProvider,
     private platform: Platform,
+    private countries: CountriesProvider,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -45,6 +49,7 @@ export class InterestComponent {
 
   ngOnInit(){
     this.getUserData();
+    this.getCountries();
 
     this.rm.getRooms()
       .subscribe(res => {
@@ -62,34 +67,63 @@ export class InterestComponent {
             this.clubs = res.profile.favClub;
             this.userPlayers = res.profile.favPlayers;
             this.userTeams = res.profile.favTeams;
+
+            this.players = res.profile.favPlayers[res.profile.favPlayers.length-1]
           });
       });
   }
 
-  interestSubmit(){
-    this.profile.addInterest(this.userValue, this.clubs, this.players, this.teams)
-        .subscribe(res => {
-          this.socket.emit('refresh', {});
-          if(res.message){
-            let alert = this.alertCtrl.create({
-              title: res.message,
-              subTitle: 'You can add more players and teams',
-              buttons: ['OK']
-            });
-            alert.present();
-          }
+  getCountries(){
+    this.countries.getCountries()
+      .subscribe(res => {
+        this.teamsArray = res.country;
+      })
+  }
 
-          if(res.err){
-            let alert = this.alertCtrl.create({
-              title: 'Empty Fileds',
-              subTitle: 'You submitted empty fields for either Players or Teams.',
-              buttons: ['OK']
-            });
-            alert.present();
-          }
-        });
+  interestSubmit(){
+    this.profile.addInterest(this.userValue, this.clubs, this.players)
+      .subscribe(res => {
+        this.socket.emit('refresh', {});
+        if(res.message){
+          let alert = this.alertCtrl.create({
+            title: res.message,
+            subTitle: 'You can add more players and teams',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+
+        if(res.err){
+          let alert = this.alertCtrl.create({
+            title: 'Empty Fileds',
+            subTitle: 'You submitted empty fields for either Players or Teams.',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      })
+      
+      if(this.teams){
+        this.countries.addFavorite(this.teams, this.userValue)
+          .subscribe(res => {});
+      }
+
       this.players = '';
       this.teams = '';
+  }
+
+  deletePlayer(player){
+    this.profile.deleteValues(this.userValue, player)
+      .subscribe(res => {
+        this.socket.emit('refresh', {});
+      });
+  }
+
+  deleteTeam(team){
+    this.profile.deleteTeam(this.userValue, team)
+      .subscribe(res => {
+        this.socket.emit('refresh', {});
+      });
   }
 
 }

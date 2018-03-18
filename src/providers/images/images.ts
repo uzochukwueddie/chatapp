@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ImagesProvider {
-  apiURL = 'http://localhost:3000/api/v1/post/upload';
+  apiURL = 'https://soccerchatapi.herokuapp.com/api/v1/post/upload';
 
   constructor(
     public http: HttpClient,
@@ -16,7 +16,7 @@ export class ImagesProvider {
 
   addFile(name, img, room?, senderId?, sender?): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/v1/post/upload`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/v1/post/upload`, {
           file: name,
           img: img,
           room:room,
@@ -27,7 +27,7 @@ export class ImagesProvider {
 
   addImage(name, room?, senderId?, sender?): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/v1/post/upload`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/v1/post/upload`, {
           file: name,
           room:room,
           senderId: senderId,

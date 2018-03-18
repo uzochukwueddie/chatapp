@@ -1,7 +1,9 @@
-
-
-<ion-content *ngIf="userSame">
-    <button *ngIf="block" ion-item (click)="blockUser()">Block</button>
-    <button *ngIf="unblock" ion-item (click)="unBlockUser()">UnBlock</button>
-    <button *ngIf="!block && !unblock" ion-item>You are blocked by {{receiver}}</button>
+<ion-content *ngIf="userSame" class="popoverContent" scroll="false">
+    <div class="popover-inner-content">
+        <button *ngIf="block" ion-item (click)="blockUser()">Block</button>
+        <button *ngIf="!isFriend" ion-item (click)="sendRequest()">Send Request</button>
+        <button *ngIf="unblock" ion-item (click)="unBlockUser()" class="itemBtn">Unblock</button>
+        <button *ngIf="!block && !unblock" ion-item>You are blocked by {{receiver}}</button>
+    </div>
 </ion-content>
+

@@ -21,9 +21,8 @@ export class AccountComponent {
     private storage: Storage,
   ) {
     this.buttonsArray = [
-      {name: 'Blocked Users', component: 'BlockedusersPage'},
-      // {name: 'Account Settings', component: 'AccountsettingsPage'},
-      {name: 'Change Password', component: 'PasswordchangePage'}
+      {name: 'Blocked Users', "icon": 'people', component: 'BlockedusersPage'},
+      {name: 'Change Password', "icon": 'settings', component: 'PasswordchangePage'}
     ]
   }
 

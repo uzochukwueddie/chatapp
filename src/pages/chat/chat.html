@@ -1,15 +1,31 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>{{userName}}</ion-title>
+
+        <ion-row>
+            <ion-title class="titleBtn">
+                {{userName}}
+            </ion-title>
+        
+            <ion-col class="menuCol">
+                <button class="menuBtn" ion-button item-end clear (click)="friendListPage(userName)" end>
+                    <ion-icon name="menu" class="menuIcon"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+
+
     </ion-navbar>  
+
+    
 </ion-header>
 
-<ion-content padding>
+<ion-content>
     <ion-list>
         <chat-page></chat-page>
     </ion-list>
 </ion-content>
+
+
+
+
 

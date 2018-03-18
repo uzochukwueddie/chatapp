@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the CountriesPage page.
+ * Generated class for the EntercodePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,16 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-countries',
-  templateUrl: 'countries.html',
+  selector: 'page-entercode',
+  templateUrl: 'entercode.html',
 })
-export class CountriesPage {
+export class EntercodePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CountriesPage');
+    console.log('ionViewDidLoad EntercodePage');
   }
 
 }

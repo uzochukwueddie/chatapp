@@ -17,6 +17,7 @@ import { GroupProvider } from '../providers/group/group';
 import { ModalPage } from '../pages/modal/modal';
 import { CommentProvider } from '../providers/comment/comment';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { Facebook } from '@ionic-native/facebook';
 
 import { File } from '@ionic-native/file';
 import { FileChooser } from '@ionic-native/file-chooser';
@@ -30,6 +31,10 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { MessageModalPage } from '../pages/message-modal/message-modal';
 import { LocationProvider } from '../providers/location/location';
 import { PopoverPage } from '../pages/popover/popover';
+import { CountriesProvider } from '../providers/countries/countries';
+import { ResetProvider } from '../providers/reset/reset';
+
+import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 
 
 
@@ -54,6 +59,7 @@ import { PopoverPage } from '../pages/popover/popover';
     IonicStorageModule.forRoot(),
     SuperTabsModule.forRoot(),
     IonicImageViewerModule,
+    EmojiPickerModule.forRoot()
     
   ],
   bootstrap: [IonicApp],
@@ -72,6 +78,7 @@ import { PopoverPage } from '../pages/popover/popover';
     RoomsProvider,
     GroupProvider,
     CommentProvider,
+    Facebook,
     FileTransfer,
     File,
     FileChooser,
@@ -82,7 +89,9 @@ import { PopoverPage } from '../pages/popover/popover';
     MessageProvider,
     PhotoViewer,
     Geolocation,
-    LocationProvider 
+    LocationProvider,
+    CountriesProvider,
+    ResetProvider 
   ]
 })
 export class AppModule {}

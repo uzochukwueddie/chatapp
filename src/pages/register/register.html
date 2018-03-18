@@ -1,4 +1,4 @@
-<ion-content padding>
+<!-- <ion-content padding>
     <ion-card style="margin: 0px; border: none !important; width: 100%;" padding>
       <img src="http://placehold.it/10x10"  style="width:50%; margin: auto; padding:20px;"/>
     </ion-card>
@@ -18,4 +18,39 @@
       <button ion-button clear block color="bluecolor" (click)="LoginPage()">Already have an account?</button>
     </ion-list>
   
-</ion-content>
+</ion-content> -->
+
+
+<ion-content padding class="transparent-header">
+    <ion-header>
+      <ion-navbar>
+      </ion-navbar>
+    </ion-header>
+    <img class="logo" src="assets/imgs/logo-instagram.png" />
+    <div padding>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="username" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="email" [(ngModel)]="email" placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+      </ion-item>
+      <button ion-button block outline (click)="RegisterUser()" class="login-button">Register</button>
+    </div>
+    <div class="strike">
+      <span>OR</span>
+    </div>
+    <button ion-button block clear color="light" class="login-button" (click)="LoginPage()">
+      <ion-icon name="log-in"></ion-icon> Login here
+    </button>
+  </ion-content>
+
+  <!-- <ion-footer>
+    <ion-toolbar class="footer">
+      <div (click)="LoginPage()">
+        <span>Already have an account? <strong>Login here</strong>.</span>
+      </div>
+    </ion-toolbar>
+</ion-footer> -->

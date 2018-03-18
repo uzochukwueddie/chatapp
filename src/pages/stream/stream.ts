@@ -14,7 +14,6 @@ import { ProfileProvider } from '../../providers/profile/profile';
   templateUrl: 'stream.html',
 })
 export class StreamPage {
-  //@ViewChild("contentRef") contentHandle: Content;
 
   stream: any;
   user: any;
@@ -25,6 +24,8 @@ export class StreamPage {
   postLength = 0;
   commentLength: any;
   userData: any;
+
+  scrollElement: any;
 
   socketHost: any;
   socket: any;
@@ -42,8 +43,9 @@ export class StreamPage {
     private profile: ProfileProvider
   ) {
     this.stream = "now";
+    this.scrollElement = document.querySelector('div.scroll-content');
 
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -68,21 +70,12 @@ export class StreamPage {
 
     this.socket.on('new stream', (data) => {
       this.user2 = data.user;
-      this.streamArray.push(data.msg.posts);
+      this.streamArray.unshift(data.msg.posts);
     });
 
     this.socket.on('userOnline', (data) => {
       this.events.publish("onlineUser", data);
     });
-
-    // this.topOrBottom = this.contentHandle._tabsPlacement;
-    // this.contentBox = document.querySelector(".scroll-content")['style'];
-  
-    // if (this.topOrBottom == "top") {
-    //   this.tabBarHeight = this.contentBox.marginTop;
-    // } else if (this.topOrBottom == "bottom") {
-    //   this.tabBarHeight = this.contentBox.marginBottom
-    // }
 
   }
 
@@ -118,18 +111,20 @@ export class StreamPage {
   }
 
   getPost(){
-    this.cp.getPosts()
-      .subscribe(res => {
-        if(res.posts.length > 0) {
-          this.user = res.posts;
-          this.streamArray = res.posts;
-        }
+    setTimeout(() => {
+      this.cp.getPosts()
+        .subscribe(res => {
+          if(res.posts.length > 0) {
+            this.user = res.posts;
+            this.streamArray = res.posts;
+          }
 
-        if(res.top.length > 0) {
-          
-          this.topPostArray = res.top
-        }
-      });
+          if(res.top.length > 0) {
+            
+            this.topPostArray = res.top
+          }
+        });
+    }, 3000);
   }
 
   viewProfile(user){
@@ -152,17 +147,6 @@ export class StreamPage {
   }
 
   ionViewDidEnter(){
-    // this.topOrBottom = this.contentHandle._tabsPlacement;
-    // this.contentBox = document.querySelector(".scroll-content")['style'];
-
-    //this.myTab = document.querySelector('.tabbar.show-tabbar');
-  
-    // if (this.topOrBottom == "top") {
-    //   this.tabBarHeight = this.contentBox.marginTop;
-    // } else if (this.topOrBottom == "bottom") {
-    //   this.tabBarHeight = this.contentBox.marginBottom
-    // }
-
     this.loc.getCoordinates()
       .subscribe(res => {
         if(this.userData !== undefined){
@@ -174,27 +158,25 @@ export class StreamPage {
       });
   }
 
-  // scrollingFun(e) {
-  //   if (e.scrollTop > 10) {
-  //     //document.querySelector(".tabbar.show-tabbar")['style'].display = 'none';
-  //     //this.myTab.style.display = 'none';
+  numberFormatter(num, digits) {
+    var si = [
+      { value: 1, symbol: "" },
+      { value: 1E3, symbol: "k" },
+      { value: 1E6, symbol: "M" },
+      { value: 1E9, symbol: "G" },
+      { value: 1E12, symbol: "T" },
+      { value: 1E15, symbol: "P" },
+      { value: 1E18, symbol: "E" }
+    ];
+    var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    var i;
+    for (i = si.length - 1; i > 0; i--) {
+      if (num >= si[i].value) {
+        break;
+      }
+    }
+    return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+  }
 
-  //     if (this.topOrBottom == "top") {
-  //       this.contentBox.marginTop = 0;
-  //     } else if (this.topOrBottom == "bottom") {
-  //       this.contentBox.marginBottom = 0;
-  //     }
- 
-  //   } else {
-  //     // document.querySelector(".tabbar.show-tabbar")['style'].display = 'flex';
-  //     //this.myTab.style.display = 'flex';
-
-  //     if (this.topOrBottom == "top") {
-  //       this.contentBox.marginTop = this.tabBarHeight;
-  //     } else if (this.topOrBottom == "bottom") {
-  //       this.contentBox.marginBottom = this.tabBarHeight
-  //     }
-  //   }
-  // }
 
 }

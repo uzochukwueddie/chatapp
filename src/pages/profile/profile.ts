@@ -44,6 +44,9 @@ export class ProfilePage {
   socketHost: any;
   socket: any;
 
+  isProfile = false;
+  isNotProfile = false;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -56,13 +59,12 @@ export class ProfilePage {
     public http: HttpClient,
     private platform: Platform,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })
     this.userprofile = "overview";
     this.getId();
-
   }
 
   ionViewDidLoad(){
@@ -74,6 +76,10 @@ export class ProfilePage {
   }
 
   ionViewDidEnter(){
+    this.isProfile = true;
+    this.isNotProfile = true;
+
+
     this.profile.getProfile(this.userValue)
       .subscribe(res => {
         // this.fullname = res.profile.fullname;
@@ -90,7 +96,7 @@ export class ProfilePage {
       });
 
     this.http
-      .get(`http://localhost:3000/api/receiver/${this.userValue}`)
+      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue}`)
       .subscribe((res:any) => {
         this.requestArray = res.messages
         let arr = _.uniqBy(res.messages, 'message.sendername');
@@ -103,7 +109,7 @@ export class ProfilePage {
 
     this.socket.on('refreshPage', (data) => {
       this.http
-      .get(`http://localhost:3000/api/receiver/${this.userValue}`)
+      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue}`)
       .subscribe((res:any) => {
         this.requestArray = res.messages
         let arr = _.uniqBy(res.messages, 'message.sendername');
@@ -115,93 +121,7 @@ export class ProfilePage {
       });
     });
   }
-
-  // onSubmit(){
-  //   this.profile.addProfile(this.userValue, this.fullname, this.country, this.mantra, this.club, this.gender)
-  //       .subscribe(res => {
-  //         let toast = this.toastCtrl.create({
-  //           message: res.message,
-  //           duration: 3000,
-  //           position: 'bottom'
-  //         });
-  //         toast.present();
-  //       });
-  // }
-
-  // interestSubmit(){
-  //   this.profile.addInterest(this.userValue, this.clubs, this.players, this.teams)
-  //       .subscribe(res => {
-  //         let alert = this.alertCtrl.create({
-  //           title: res.message,
-  //           subTitle: 'You can add more players and teams',
-  //           buttons: ['OK']
-  //         });
-  //         alert.present();
-  //       })
-  // }
-
-  // showClubs(){
-  //   if(this.user.favClub.length > 0){
-  //     let alert = this.alertCtrl.create();
-  //     alert.setTitle('Favorite Clubs');
-  //     for(let i=0; i< this.user.favClub.length; i++) {
-  //       alert.addInput({type: 'radio', label: this.user.favClub[i]});
-  //     }
-  //     alert.addButton({
-  //       text: 'Ok',
-  //     });
-  //     alert.present();
-  //   }else {
-  //     let alert = this.alertCtrl.create({
-  //       title: 'Favorite Clubs',
-  //       subTitle: 'No Information Yet',
-  //       buttons: ['OK']
-  //     });
-  //     alert.present();
-  //   }
-  // }
-
-  // showPlayers(){
-  //   if(this.user.favPlayers.length > 0){
-  //     let alert = this.alertCtrl.create();
-  //     alert.setTitle('Favorite Players');
-  //     for(let i=0; i< this.user.favPlayers.length; i++) {
-  //       alert.addInput({type: 'radio', label: this.user.favPlayers[i]});
-  //     }
-  //     alert.addButton({
-  //       text: 'Ok',
-  //     });
-  //     alert.present();
-  //   } else {
-  //     let alert = this.alertCtrl.create({
-  //       title: 'Favorite Players',
-  //       subTitle: 'No Information Yet',
-  //       buttons: ['OK']
-  //     });
-  //     alert.present();
-  //   }
-  // }
-
-  // showTeams(){
-  //   if(this.user.favTeams.length > 0){
-  //     let alert = this.alertCtrl.create();
-  //     alert.setTitle('Favorite National Teams');
-  //     for(let i=0; i< this.user.favTeams.length; i++) {
-  //       alert.addInput({type: 'radio', label: this.user.favTeams[i]});
-  //     }
-  //     alert.addButton({
-  //       text: 'Ok',
-  //     });
-  //     alert.present();
-  //   }else {
-  //     let alert = this.alertCtrl.create({
-  //       title: 'Favorite National Teams',
-  //       subTitle: 'No Information Yet',
-  //       buttons: ['OK']
-  //     });
-  //     alert.present();
-  //   }
-  // }
+  
 
   getId() {
     this.storage.get("username").then(value => {

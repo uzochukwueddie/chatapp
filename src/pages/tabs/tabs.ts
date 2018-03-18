@@ -26,7 +26,7 @@ export class TabsPage {
     private platform: Platform,
     private rm: RoomsProvider,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });

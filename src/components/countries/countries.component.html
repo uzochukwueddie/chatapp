@@ -1,0 +1,22 @@
+<!-- <ion-spinner name="circles" *ngIf="countriesArray.length <= 0"></ion-spinner> -->
+
+<ion-item *ngFor="let country of countriesArray" class="roomItem">
+    <button (click)="CountryChatPage(country)" ion-item no-lines detail-none class="btn1">
+        <ion-avatar item-start>
+            <img src="http://placehold.it/50x50">
+        </ion-avatar>
+        <h2 class="roomName" text-wrap>{{country.name}}</h2>
+        <p class="fanslength">
+            <ion-icon name="person"></ion-icon>
+            {{country.fans.length}}
+        </p>
+        
+    </button>
+    
+    <button class="favBtn" ion-button clear item-end (click)="addToFavorite(country)">
+        <ion-icon name="add"></ion-icon>&nbsp;Add
+    </button>
+</ion-item>
+      
+      
+      

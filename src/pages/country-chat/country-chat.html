@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-navbar>
+      <ion-buttons left>
+        <button ion-button icon-only (click)="goBack()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+
+      <ion-row>
+        <ion-title class="titleBtn">
+          {{roomName.name}}
+        </ion-title>
+  
+        <ion-col class="menuCol">
+          <button class="menuBtn" ion-button item-end clear (click)="groupMenu()" end>
+            <ion-icon name="menu" class="menuIcon"></ion-icon>
+          </button>
+          
+          <!-- <button id="notification-button" ion-button item-end clear (click)="openModal()" >
+            <ion-icon name="notifications">
+              <ion-badge id="notifications-badge" *ngIf="requestNum > 0" color="danger">{{requestNum}}</ion-badge>
+            </ion-icon>              
+          </button> -->
+          
+        </ion-col>
+      </ion-row>
+    
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <div class="message-wrapper" *ngFor="let message of messageArray">
+  
+      <div *ngIf="userData.username !== message.from" class="left">
+        <div class="chat-bubble left slide-left" *ngIf="message.from">
+          <div class="message-detail" >
+            <span *ngIf="message.from" class="bold boldLeft">{{message.from}}</span>
+          </div>
+          <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
+          <img *ngIf="message.image && message.from" [src]="message.image" imageViewer >
+        </div>
+      </div>
+
+      <div *ngIf="userData.username === message.from" class="right">
+        <div class="chat-bubble right slide-right" *ngIf="message.from">
+          <div class="message-detail" >
+            <span *ngIf="message.from" class="bold">{{message.from}}</span>
+          </div>
+          <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
+          <img *ngIf="message.image && message.from" [src]="message.image" imageViewer >
+  
+        </div>
+      </div>
+  
+      <div class="cf"></div>
+  
+    </div>
+</ion-content>
+
+
+<ion-footer>
+    <ion-item class="inputToolbar">
+      <ion-input [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <!-- <button class="imgBtn" ion-button clear item-end (click)="getImage()">
+        <ion-icon name="image"></ion-icon>
+      </button>
+      <button class="imgBtn" ion-button clear item-end (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
+      </button> -->
+      <button ion-button clear item-end (click)="SendRoomMessage()">
+        <ion-icon class="footer-btn" name="send"></ion-icon>
+      </button>
+    </ion-item>
+</ion-footer>

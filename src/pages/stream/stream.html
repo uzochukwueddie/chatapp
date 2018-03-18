@@ -6,6 +6,7 @@
 
 
 <ion-content class="content">
+  
     <ion-segment [(ngModel)]="stream" no-border>
       <ion-segment-button value="now" isActive="true">
         Now
@@ -16,6 +17,7 @@
     </ion-segment>
 
     <div [ngSwitch]="stream">
+      <ion-spinner name="circles" *ngIf="streamArray.length <= 0 || topPostArray.length <= 0"></ion-spinner>
       <ion-list *ngSwitchCase="'now'" >
         <ion-item *ngFor="let stream of streamArray; let i = index" class="content-item1">
             <ion-card class="content-card1">
@@ -40,13 +42,15 @@
                 <ion-col>
                   <button ion-button icon-left clear small (click)="likeComment(stream)">
                     <ion-icon name="thumbs-up"></ion-icon>
-                    <div>{{stream.likes || postLength}}</div>
+                    <div>{{numberFormatter(stream.likes || postLength, 1)}}</div>
+                    <!-- <div>{{stream.likes || postLength}}</div> -->
                   </button>
                 </ion-col>
                 <ion-col>
                   <button ion-button icon-left clear small (click)="addComment(stream)">
                     <ion-icon name="text"></ion-icon>
-                    <div>{{stream.comment.length }}</div>
+                    <div>{{numberFormatter(stream.comment.length, 1)}}</div>
+                    <!-- <div>{{stream.comment.length}}</div> -->
                   </button>
                 </ion-col>
               </ion-row>
@@ -63,7 +67,7 @@
                 <ion-avatar class="ionAvatar" item-start>
                   <img class="userImg" src="http://placehold.it/50x50">
                 </ion-avatar>
-                <h2 class="username" (click)="viewProfile(top.username)">
+                <h2 class="username" ion-button clear (click)="viewProfile(top.username)">
                   {{ top.username }}
                 </h2>
                 <p class="postTime">{{GetPostTime(top.created)}}</p>

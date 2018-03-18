@@ -11,4 +11,93 @@ page-chat {
     .doneClass{
         color: #4aa1f3;
     }
+
+    .menuBtn {
+        color: white;
+        float: right;
+        padding: 0px;
+    }
+
+    .menuIcon {
+        color: white;
+        padding: 0px;
+    }
+
+    ion-content {
+        .nameCol{
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .username{
+            width: auto !important;
+            color: #4aa1f3;
+        }
+
+        .dateNote{
+            float: right;
+            padding: 0px;
+            margin: 0px;
+            right: 0px;
+            left: 0px;
+        }
+
+        .msgCol{
+            padding: 0px;
+            margin-top: 4px;
+            float: left;
+            width: auto !important;
+        }
+
+        .unreadCol{
+            padding: 0px;
+            margin: 0px;
+            right: 0px;
+            left: 0px;
+            float: right !important;
+            height: auto;
+            top: -19px;
+        }
+
+        .unread{
+            padding: 0px;
+            margin-top: 5px;
+            float: right;
+        }
+
+        .msg {
+            background: #4aa1f3;
+            border-radius: 0.8em; //12px
+            -moz-border-radius: 0.8em; //12px
+            -webkit-border-radius: 0.8em; //12px
+            color: #ffffff;
+            display: inline-block;
+            font-weight: bold;
+            line-height: 1.8em; //25px
+            margin-right: 5px;
+            text-align: center;
+            width: 1.8em; //25px
+            font-size: 10px;
+        }
+        
+
+        .rowCol{
+            width: auto !important;
+            margin-top: 3px;
+            margin-bottom: 0px !important;
+            height: 60px;
+        }
+
+        .rowCol2{
+            width: auto !important;
+            padding: 0px;
+            margin: 0px;
+            margin-bottom: 0px !important;
+        }
+
+        .myrow{
+            padding-bottom: 0px;
+            height: 60px;
+        }
+    }
 }

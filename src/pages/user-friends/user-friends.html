@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Your Friends List</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <div *ngFor="let friend of friends">
+      <div>
+          <ion-item (click)="PrivateChatPage(friend)">
+      
+              <ion-row class="myrow">
+                  <ion-col col-2>
+                      <ion-avatar item-start>
+                          <img src="http://placehold.it/50x50">
+                      </ion-avatar>
+                  </ion-col>
+                  <ion-col class="rowCol" col-5>
+                      <h2 class="username">
+                          {{friend.name}}
+                      </h2>
+      
+                  </ion-col>
+      
+                  <ion-col class="rowCol2" *ngIf="!checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)">
+                      <ion-col item-end>
+                          <h4 class="blocked">Blocked</h4>
+                      </ion-col>
+                  </ion-col>
+                  
+              </ion-row>
+              
+          </ion-item>
+      </div>
+    
+</div>
+    
+    
+    
+    
+</ion-content>

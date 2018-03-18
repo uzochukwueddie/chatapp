@@ -10,6 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomssearchComponent } from './roomssearch/roomssearch.component';
 import { ExpandableHeaderComponent } from './expandable-header/expandable-header';
+import { CountriesComponent } from './countries/countries.component';
 
 @NgModule({
 	declarations: [
@@ -22,7 +23,8 @@ import { ExpandableHeaderComponent } from './expandable-header/expandable-header
     ChatComponent,
     RoomsComponent,
     RoomssearchComponent,
-    ExpandableHeaderComponent
+    ExpandableHeaderComponent,
+    CountriesComponent
 	],
 	imports: [IonicModule],
 	exports: [
@@ -35,7 +37,8 @@ import { ExpandableHeaderComponent } from './expandable-header/expandable-header
     ChatComponent,
     RoomsComponent,
     RoomssearchComponent,
-    ExpandableHeaderComponent
+    ExpandableHeaderComponent,
+    CountriesComponent
 	]
 })
 export class ComponentsModule {}

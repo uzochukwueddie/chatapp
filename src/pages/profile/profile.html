@@ -1,25 +1,21 @@
-<ion-header>
-  <ion-toolbar no-border-top>
-      <ion-segment [(ngModel)]="userprofile">
-        <ion-segment-button value="overview">
-          Overview
-        </ion-segment-button>
-        <ion-segment-button value="profile">
-          Profile
-        </ion-segment-button>
-        <ion-segment-button value="interest">
-          Interest
-        </ion-segment-button>
-        <ion-segment-button value="account">
-          Account
-        </ion-segment-button>
-      </ion-segment>
-  </ion-toolbar>
-</ion-header>
+<ion-header no-border>
+    <ion-toolbar no-border transparent>
+        <ion-segment [(ngModel)]="userprofile" >
+          <ion-segment-button value="overview">
+            Overview
+          </ion-segment-button>
+          <ion-segment-button value="profile">
+            Profile
+          </ion-segment-button>
+          <ion-segment-button value="interest">
+            Interest
+          </ion-segment-button>
+          <ion-segment-button value="account">
+            Account
+          </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 
-
-<ion-content padding>
-  <ion-grid>
     <ion-row>
       <ion-col col-3>
         <button id="notification-button" ion-button clear (click)="openModal()">
@@ -37,8 +33,12 @@
         </button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <div [ngSwitch]="userprofile">
+
+  </ion-header>
+
+<ion-content>
+  
+  <div [ngSwitch]="userprofile" >
     <ion-list *ngSwitchCase="'overview'">
       <userinfo></userinfo>
     </ion-list>

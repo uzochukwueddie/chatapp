@@ -1,15 +1,21 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>MessageModal</ion-title>
+    <ion-title>Your Messages</ion-title>
 
-    <button ion-button block (click)="closeModal()">Close Modal</button>
+    <!-- <button ion-button block (click)="closeModal()">Close Modal</button> -->
+
+    <ion-buttons left>
+        <button ion-button icon-only (click)="closeModal()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<!-- <ion-content >
     <ion-list>
         <ion-item *ngFor="let request of msgRequest"> 
             <button *ngIf="checkIfBlocked(userData.blockedUsers, userData.blockedBy, request.message.sendername)" ion-item  (click)="readMsg(request)">
@@ -21,4 +27,57 @@
             </button>
         </ion-item>
       </ion-list>
+</ion-content> -->
+
+<ion-content>
+    <div *ngFor="let request of msgRequest">
+        <ion-item (click)="readMsg(request)"
+        *ngIf="checkIfBlocked(userData.blockedUsers, userData.blockedBy, request.message.sendername)">
+    
+        <ion-row class="myrow">
+            <ion-col col-2>
+                <ion-avatar item-start>
+                    <img src="http://placehold.it/50x50">
+                </ion-avatar>
+            </ion-col>
+            <ion-col class="rowCol" col-5>
+                <h2 class="username" *ngIf="request.message.body !== '' ">
+                    {{request.message.sendername}}
+                </h2>
+
+                <ion-col class="msgCol" *ngIf="request.message.body !== '' ">
+                    <h4 class="msgCol">
+                        <p>
+                            {{request.message.body.substr(0, 10)}}...
+                        </p>
+                            
+                    </h4>
+                </ion-col>
+
+            </ion-col>
+
+            <ion-col class="rowCol2" col-5>
+                <ion-col item-end>
+                    <h4 item-right class="dateNote">
+                        <span>
+                            {{GetTime(request.message.createdAt)}}
+                        </span>
+                    </h4>
+                </ion-col>
+
+                <ion-col item-end class="unreadCol">
+                    <h4 class="unread">
+                        <p item-right *ngIf="Increment(msgRequest, request.message.sendername, userData.username) > 0" class="msg">
+                            {{Increment(msgRequest, request.message.sendername, userData.username)}}
+                        </p>
+                    </h4>
+                </ion-col>
+                
+            </ion-col>
+            
+        </ion-row>
+            
+    </ion-item>
+        
+</div>
 </ion-content>

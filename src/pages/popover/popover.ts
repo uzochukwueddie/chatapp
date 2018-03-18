@@ -20,6 +20,9 @@ export class PopoverPage {
   block: boolean;
   unblock: boolean;
 
+  isFriend: boolean;
+  friendArr = [];
+
   socketHost: any;
   socket: any;
 
@@ -30,7 +33,7 @@ export class PopoverPage {
     public platform: Platform,
     private rm: RoomsProvider,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
@@ -41,9 +44,13 @@ export class PopoverPage {
 
   ionViewDidLoad(){
     this.getUserData();
+    
   }
 
   ionViewDidEnter(){
+    this.checkIfFriends();
+
+
     if(this.user.username === this.receiver){
       this.userSame = false;
     } else {
@@ -80,6 +87,11 @@ export class PopoverPage {
       });
     }
 
+
+    this.isFriend = _.includes(this.friendArr, this.receiver);
+    console.log(this.isFriend )
+
+
   }
 
   blockUser() {
@@ -115,6 +127,17 @@ export class PopoverPage {
         this.username = res.user.username;
         this.user = res.user;
       });
+  }
+
+  checkIfFriends(){
+    //let value = false;
+    if(this.user.friends.length > 0) {
+      _.forEach(this.user.friends, val => {
+        this.friendArr.push(val.name)
+      })
+    } 
+
+    //return value
   }
 
 }

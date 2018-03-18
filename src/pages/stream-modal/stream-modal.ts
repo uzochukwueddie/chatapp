@@ -28,7 +28,7 @@ export class StreamModalPage {
     private platform: Platform,
     private cp: CommentProvider
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

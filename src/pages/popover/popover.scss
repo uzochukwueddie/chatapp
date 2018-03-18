@@ -1,3 +1,37 @@
 page-popover {
+    .popoverContent{
+        overflow-y: hidden;
+    }
+
+    .popover {
+        height: auto !important;
+    }
+    .popover ion-header-bar {
+        position: relative;
+    }
+    .popover ion-content {
+        top: 0;
+        position: relative;
+    }
+    .popover-inner-content {
+        width: 100%;
+        // padding: 5px 20px;
+        border: none !important;
+        color: color($colors, graycolor);
+        overflow-y: hidden;
+    }
+
+    .itemBtn{
+        border: none !important;
+    }
+
+    .item-inner{
+        border: none !important;
+        overflow-y: hidden;
+    }
+
+    .popoverContent .scroll-content{
+        overflow: hidden;
+    }
 
 }

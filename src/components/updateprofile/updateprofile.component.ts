@@ -16,6 +16,8 @@ export class UpdateprofileComponent {
   mantra: string;
   club: string;
   gender: string;
+  city: string;
+  username: string;
 
   rooms: any[];
 
@@ -40,6 +42,7 @@ export class UpdateprofileComponent {
     this.rm.getUser()
       .subscribe(res => {
         this.userValue = res.user.username;
+        this.username = res.user.username;
 
         this.profile.getProfile(res.user.username)
           .subscribe(res => {
@@ -48,7 +51,7 @@ export class UpdateprofileComponent {
             this.mantra = res.profile.mantra;
             this.club = res.profile.club;
             this.gender = res.profile.gender;
-
+            this.city = res.profile.city;
           });
       });
   }

@@ -38,7 +38,7 @@ export class ChatComponent {
     private platform: Platform,
     private msg: MessageProvider,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -71,6 +71,8 @@ export class ChatComponent {
     this.socket.on('userOnline', (data) => {
       this.isOnline = data;
     });
+
+
     this.rm.getUser()
       .subscribe(res => {
         let params = {
@@ -79,10 +81,12 @@ export class ChatComponent {
         }
         this.socket.emit('online', params)
 
-        this.msg.getMessage(res.user._id, res.user.username)
-          .subscribe(res => {
-            this.msgArray = res.arr;
-          })
+        setTimeout(() => {
+          this.msg.getMessage(res.user._id, res.user.username)
+            .subscribe(res => {
+              this.msgArray = res.arr;
+            })
+        }, 4000);
       }); 
   }
 
@@ -145,8 +149,19 @@ export class ChatComponent {
   }
 
   GetTime = (time: number) => {
-    let date = moment(time).format("LT")
-    return date;
+    const todaysDate = new Date();
+    const date = new Date(time);
+
+    var a = moment(new Date(todaysDate));
+    var b = moment(new Date(date));
+    var c = a.diff(b, 'days') 
+
+    if(c === 0){
+      return moment(time).format("LT")
+    } else {
+      return moment(time).format("D/MM/YY")
+    }
+  
   }
 
   Increment = (arr, name1, name2) => {

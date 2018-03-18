@@ -15,16 +15,15 @@ export class ChatPage {
   userName: string;
 
   socketHost: any;
-  socket: any;
+  socket: any
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private rm: RoomsProvider,
     private platform: Platform,
-    // private msg: MessageProvider,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -39,6 +38,10 @@ export class ChatPage {
       .subscribe(res => {
         this.userName = res.user.username;
       });
+  }
+
+  friendListPage(event) {
+    this.navCtrl.push("UserFriendsPage", {"name": event});
   }
   
 

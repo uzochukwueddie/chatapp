@@ -1,53 +1,61 @@
-<ion-item *ngFor="let friend of friends">
-    <button *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)" ion-item  no-lines detail-none (click)="PrivateChatPage(friend)">
-        <ion-avatar item-start>
-        <img src="http://placehold.it/50x50">
-        </ion-avatar>
-            
-        <!-- <span *ngFor="let online of isOnline" >
-            <p class="online_span" *ngIf="online === friend.name"></p>
-        </span> -->
+<ion-spinner name="circles" *ngIf="msgArray.length <= 0"></ion-spinner>
 
-        <ion-grid >
-            <ion-row>
-                <ion-col width-70>
-                    <h2 item-left>{{friend.name}} </h2>
-                </ion-col>
-                <ion-col width-25>
-                    <h4 *ngFor="let msg of msgArray" item-right>
-                        <span *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
-                            {{GetTime(msg.message.createdAt)}}
-                        </span>
-                    </h4>
-                </ion-col>
-            </ion-row>
-
-        </ion-grid>
+<div *ngFor="let friend of friends">
+    <div *ngFor="let msg of msgArray">
+        <div *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+            <ion-item *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)" 
+            (click)="PrivateChatPage(friend)">
         
-        <h4 *ngFor="let msg of msgArray">
-            <!-- <span *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
-                {{GetTime(msg.message.createdAt)}}
-            </span> -->
-
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-75>
-                        <p *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
-                            <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
-                            </ion-icon> 
-                            {{msg.message.body.substr(0, 10)}}...
-                        </p>
+                <ion-row class="myrow">
+                    <ion-col col-2>
+                        <ion-avatar item-start>
+                            <img src="http://placehold.it/50x50">
+                        </ion-avatar>
                     </ion-col>
-
-                    <ion-col width-25>
-                        <p item-right *ngIf="Increment(msg.msg, friend.name, userName) > 0">
-                            {{Increment(msg.msg, friend.name, userName)}}
-                        </p>
+                    <ion-col class="rowCol" col-5>
+                        <h2 class="username">
+                            {{friend.name}}
+                        </h2>
+        
+                        <ion-col class="msgCol">
+                            <h4 *ngFor="let msg of msgArray" class="msgCol">
+                                <p *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+                                    <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
+                                    </ion-icon> 
+                                    {{msg.message.body.substr(0, 10)}}...
+                                </p>
+                                    
+                            </h4>
+                        </ion-col>
+        
                     </ion-col>
-
+        
+                    <ion-col class="rowCol2" col-5>
+                        <ion-col item-end>
+                            <h4 *ngFor="let msg of msgArray" item-right class="dateNote">
+                                <span *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+                                    {{GetTime(msg.message.createdAt)}}
+                                </span>
+                            </h4>
+                        </ion-col>
+        
+                        <ion-col item-end class="unreadCol">
+        
+                            <h4 *ngFor="let msg of msgArray" class="unread">
+                                <p item-right *ngIf="Increment(msg.msg, friend.name, userName) > 0" class="msg">
+                                    {{Increment(msg.msg, friend.name, userName)}}
+                                </p>
+                            </h4>
+                        </ion-col>
+                    </ion-col>
+                    
                 </ion-row>
-            </ion-grid>
-            
-        </h4>
-    </button>
-</ion-item>
+                
+            </ion-item>
+        </div>
+    </div>
+    
+</div>
+
+
+

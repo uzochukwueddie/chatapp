@@ -4,7 +4,10 @@ page-group-chat {
             background-color: color($colors, blue-color);
         }
     }
-    
+
+    .item-inner{
+        border: none !important;
+    }
 
     .back-button.show-back-button {
         display: none !important;
@@ -12,19 +15,36 @@ page-group-chat {
 
     #notification-button {            
         position: relative;
-        width: 42px;
-        top:1px;
+        width: 55px;
+        top:0px;
         right: 1px;
         overflow: visible!important;
         color: white;
+        padding-right: 50px;
+        float: right;
     }
 
     #notifications-badge {
         background-color: red;
         position: absolute;
-        top: -3px;
-        right: -3px;
-        border-radius: 100%;
+        top: 0px;
+        right: -5px;
+        float: left !important;
+        padding-right: 20px;
+        padding-left: 10px;
+        margin-right: 18px;
+        width: 50% !important;
+    }
+
+    .menuBtn {
+      color: white;
+      float: right;
+      padding: 0px;
+    }
+
+    .menuIcon {
+      color: white;
+      padding: 0px;
     }
 
 
@@ -158,6 +178,11 @@ page-group-chat {
       
       .bold {
         font-weight: bold;
+        color: white;
+      }
+
+      .boldLeft{
+        color: color($colors, graycolor);
       }
       
       .cf {
@@ -226,19 +251,66 @@ page-group-chat {
         float: left;
     }
 
+    .emoji-toggle-button {
+      font-style: normal;
+      padding: 5px;
+      cursor: pointer;
+      font-size: 3rem;
+      user-select: none;
+    }
     
-
+    .emoji-content-editable {
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 0.5rem 0.25rem;
+    }
     
+    pre.code-pre {
+      background: #1d1f20;
+      color: #fff;
+      white-space: pre-wrap;
+      padding: 2rem 1rem;
+      line-height: 1.5;
+    }
+    
+    .code-pre .code-input {
+      color: #f3ef9c;
+      font-family: monospace;
+      background: none;
+      outline: none;
+      border: none;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+    
+    .code-pre .code-special {
+      color: #88d2d0;
+    }
+    
+    .main {
+      text-align: center;
+    }
+    
+    header {
+      text-align: center;
+      font-family: 'Arial', 'Arial Black', 'Tahoma', 'Trebuchet MS', 'Verdana';
+    }
 
+    emoji-picker{
+      width: 100% !important;
+      right: 6px;
+    }
 
-    // .receiver-class{
-    //     background: #eae8e8 !important;
-    //     padding: 10px;
-    //     border-radius: 10px;
-    //     float: right;
-    //     width: auto;
-    //     word-wrap: break-word;
-    // }
+    emoji-content{
+      width: 100% !important;
+      // margin-left: 0px !important;
+      // right: -50px;
+    }
+
+    .inputToolbar{
+      margin-bottom: -44px;
+    }
+
     
 
 }

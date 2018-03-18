@@ -1,3 +1,35 @@
 interest {
+    .playerItem{
+        margin: 0px;
+        height: 5px;
+        padding-top: 5px;
+        padding-bottom: 0px;
+        bottom: -5px;
+    }
 
+    .deleteBtn{
+        float: right;
+        top: -15px;
+        padding: 0px;
+        margin: 0px;
+        height: auto;
+    }
+
+    .playerSpan{
+        margin-bottom: -20px;
+        height: auto;
+    }
+
+
+    ion-input{
+        font-size: 14px;
+    }
+
+    ion-textarea{
+        font-size: 14px;
+    }
+
+    ion-select{
+        font-size: 14px;
+    }
 }

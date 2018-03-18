@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ToastController, Platform, NavController } from 'ionic-angular';
+import { ToastController, Platform, NavController, Events } from 'ionic-angular';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import * as io from 'socket.io-client';
 
@@ -11,7 +11,7 @@ import * as io from 'socket.io-client';
 export class RoomsComponent {
   
   userData: any;
-  rooms: any[];
+  rooms = [];
 
   socketHost: any;
   socket: any;
@@ -21,8 +21,9 @@ export class RoomsComponent {
     private toastCtrl: ToastController,
     private rm: RoomsProvider,
     private platform: Platform,
+    private events: Events
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -39,10 +40,16 @@ export class RoomsComponent {
   }
 
   ngOnInit(){
-    this.rm.getRooms()
-      .subscribe(res => {
-        this.rooms = res.rooms;
-      });
+    this.getRooms();
+  }
+
+  getRooms(){
+    setTimeout(() => {
+      this.rm.getRooms()
+        .subscribe(res => {
+          this.rooms = res.rooms;
+        });
+    }, 3000);
   }
 
   GroupChatPage(room) {
@@ -50,6 +57,7 @@ export class RoomsComponent {
     
     this.rm.getUser()
       .subscribe(res => {
+        this.events.publish('userName', res);
         this.navCtrl.push("GroupChatPage", {data: room, user: res, tabIndex: ''});
     });
   }

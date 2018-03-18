@@ -1,5 +1,5 @@
-import { Component, ViewChild, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { Nav, Platform, AlertController, MenuController } from 'ionic-angular';
+import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -17,7 +17,7 @@ import { ProfileProvider } from '../providers/profile/profile';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp implements OnInit, DoCheck, OnDestroy {
+export class MyApp implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: string = "TabsPage";
@@ -25,9 +25,15 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
   roomUsers = [];
   roomData = [];
   username: any;
-  isFriend = false;
+  isFriend: any;
   userData: any;
   user: any;
+  checkUser = false;
+
+  friends = '';
+  notFriends = '';
+
+  countryRoomUsers = [];
 
   socketHost: any;
   socket: any;
@@ -39,7 +45,7 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
     private storage: Storage,
     private events: Events,
     private alertCtrl: AlertController,
-    private menuCtrl: MenuController,
+    // private menuCtrl: MenuController,
     private rm: RoomsProvider,
     private profile: ProfileProvider,
     private http: HttpClient
@@ -54,19 +60,33 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
       if(data.length > 0){
         this.roomUsers = data;
       }
-      
     });
+
+    this.events.subscribe('roomlist', (data) => {
+      if(data.length > 0){
+        this.countryRoomUsers = _.uniq(data);
+      }
+    });
+
+    
   }
 
-  ngDoCheck() {
+  ngAfterViewInit() {
+    //delete later
+    this.rm.getUser()
+      .subscribe(res => {
+        this.userData = res.user;
+      });
 
+    
   }
 
   initializeApp() {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost)
+      this.socket.connect()
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -77,7 +97,7 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
         if(loggedIn != null){
           this.storage.get("username").then(value => {
             this.http
-            .get(`http://localhost:3000/api/user/${value}`)
+            .get(`https://soccerchatapi.herokuapp.com/api/user/${value}`)
             .subscribe((res: any) => {
               let params = {
                 room: 'global',
@@ -96,7 +116,7 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
 
       this.events.subscribe('userName', (data) => {
         this.username = data.user.username;
-        this.userData = data.user
+        this.userData = data.user;
       });
   
       const params = {
@@ -104,65 +124,160 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
       }
       
       this.socket.emit('joinRequest', params, () => {
-          console.log('Joined');
-      });
+          
+      })
       
     });
   }
 
   showAlert(user) {
+    this.checkUser = this.checkIfFriends2(this.userData.friends, user.name);
 
-    _.forEach(this.userData.friends, (val) => {
-      if(val.name === user.name) {
-        this.isFriend = true;
-      } else if(val.name !== user.name) {
-        this.isFriend = false;
-      }
-    })
-
-    let alert = this.alertCtrl.create();
-    alert.setTitle(`${user.name}`)
-    alert.addInput({
-      type: "radio",
-      label: 'View Profile',
-      value: `${user.name}`,
-      handler: (data) => {
-        alert.dismiss();
-        this.menuCtrl.close('rightSide');
-        this.profile.getProfile(user.name)
-          .subscribe(res => {
-            console.log(res.profile)
-            alert.dismiss();
-            this.nav.push('UserprofilePage', {'profile': res.profile});
-          });
-      }
-    })
-
-    alert.addInput({
-      type: "radio",
-      label: 'Send Message',
-    })
-
-    alert.addInput({
-      type: "radio",
-      label: this.isFriend === true ? 'Friend' : 'Send Friend Request',
-      value: `${user.name}`,
-      handler: (data) => {
-        //alert.dismiss();
-        // this.menuCtrl.close('rightSide');
-        this.rm.postData(this.username, user.name)
+    if(this.checkUser === false){
+      let alert = this.alertCtrl.create();
+      alert.setTitle(`${user.name}`)
+      alert.addInput({
+        type: "radio",
+        label: 'View Profile',
+        value: `${user.name}`,
+        handler: (data) => {
+          alert.dismiss();
+          // this.menuCtrl.close('rightSide');
+          this.profile.getProfile(user.name)
             .subscribe(res => {
-              data.label = 'Friend Request Sent';
+              this.nav.push('UserprofilePage', {'profile': res.profile});
+            });
+        }
+      });
 
-              this.socket.emit('refresh', {});
-              this.socket.emit('request', {
-                sender: this.username,
-                receiver: user.name
-              });
-            })
-      }
-    })
-    alert.present()
+      alert.addInput({
+        type: "radio",
+        label: 'Send Request',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.rm.postData(this.username, user.name)
+              .subscribe(res => {
+                data.label = 'Friend Request Sent';
+                this.socket.emit('refresh', {});
+                this.socket.emit('request', {
+                  sender: this.username,
+                  receiver: user.name
+                });
+              })
+        }
+      });
+
+      alert.present();
+
+    } else {
+      let alert = this.alertCtrl.create();
+      alert.setTitle(`${user.name}`)
+      alert.addInput({
+        type: "radio",
+        label: 'View Profile',
+        value: `${user.name}`,
+        handler: (data) => {
+          alert.dismiss();
+          // this.menuCtrl.close('rightSide');
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              this.nav.push('UserprofilePage', {'profile': res.profile});
+            });
+        }
+      });
+
+      alert.present();
+    }
+  }
+
+  displayAlert(user) {
+    this.checkUser = this.checkIfFriends2(this.userData.friends, user.name);
+
+    if(this.checkUser === false){
+      let alert = this.alertCtrl.create();
+      alert.setTitle(`${user.name}`)
+      alert.addInput({
+        type: "radio",
+        label: 'View Profile',
+        value: `${user.name}`,
+        handler: (data) => {
+          alert.dismiss();
+          // this.menuCtrl.close('rightSide');
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              this.nav.push('UserprofilePage', {'profile': res.profile});
+            });
+        }
+      });
+
+      alert.addInput({
+        type: "radio",
+        label: 'Send Request',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.rm.postData(this.username, user.name)
+              .subscribe(res => {
+                data.label = 'Friend Request Sent';
+                this.socket.emit('refresh', {});
+                this.socket.emit('request', {
+                  sender: this.username,
+                  receiver: user.name
+                });
+              })
+        }
+      });
+
+      alert.present();
+
+    } else {
+      let alert = this.alertCtrl.create();
+      alert.setTitle(`${user.name}`)
+      alert.addInput({
+        type: "radio",
+        label: 'View Profile',
+        value: `${user.name}`,
+        handler: (data) => {
+          alert.dismiss();
+          // this.menuCtrl.close('rightSide');
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              this.nav.push('UserprofilePage', {'profile': res.profile});
+            });
+        }
+      });
+
+      alert.present();
+    }
+
+    
+  }
+
+  checkIfFriends(arr1, name?){
+    let value = false;
+
+    if(arr1.name === name){
+      value = true;
+      this.friends = 'Friends';
+    } else {
+      value = false;
+    }
+
+    return value
+  }
+
+  checkIfFriends2(arr1, name?){
+    let value = false;
+    if(arr1.length > 0) {
+      _.forEach(arr1, val => {
+        if(val.name === name){
+          value = true;
+        } else {
+          value = false;
+        }
+      });
+    } 
+
+    return value
   }
 
   logout() {
@@ -172,6 +287,6 @@ export class MyApp implements OnInit, DoCheck, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.events.unsubscribe('list');
+    this.socket.disconnect();
   }
 }

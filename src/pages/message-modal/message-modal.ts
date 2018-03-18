@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import * as io from 'socket.io-client';
 import { MessageProvider } from '../../providers/message/message';
 import { RoomsProvider } from '../../providers/rooms/rooms';
+import moment from 'moment';
 
 
 
@@ -34,11 +35,13 @@ export class MessageModalPage {
       let arr = _.uniqBy(msgArray, 'message.sendername');
       this.msgRequest = arr;
 
-      this.socketHost = 'http://localhost:3000';
+      this.socketHost = 'https://soccerchatapi.herokuapp.com';
       this.platform.ready().then(() => {
         this.socket = io(this.socketHost);
 
         this.userData = this.navParams.get('user');
+
+        console.log(this.userData)
       })
   }
 
@@ -96,6 +99,31 @@ export class MessageModalPage {
       value = true;
     } 
     return value
+  }
+
+  GetTime = (time: number) => {
+    const todaysDate = new Date();
+    const date = new Date(time);
+
+    var a = moment(new Date(todaysDate));
+    var b = moment(new Date(date));
+    var c = a.diff(b, 'days') 
+
+    if(c === 0){
+      return moment(time).format("LT")
+    } else {
+      return moment(time).format("D/MM/YY")
+    }
+  }
+
+  Increment = (arr, name1, name2) => {
+    let total = 0;
+    _.forEach(arr, val => {
+      if(val.message.isRead === false && val.message.sendername === name1 && val.message.receivername === name2){
+        total += 1;
+      }
+    });
+    return total
   }
 
   getUserData(){

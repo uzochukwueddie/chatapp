@@ -22,6 +22,7 @@ export class UserprofilePage {
   mantra: string;
   club: string;
   gender: string;
+  city: string;
 
   constructor(
     // public navCtrl: NavController, 
@@ -39,6 +40,7 @@ export class UserprofilePage {
   }
 
   ionViewDidEnter(){
+    this.username = this.userData.username;
     this.profile.getProfile(this.userData.username)
       .subscribe(res => {
         this.fullname = res.profile.fullname;
@@ -47,7 +49,8 @@ export class UserprofilePage {
         this.club = res.profile.club;
         this.gender = res.profile.gender;
         this.user = res.profile;
-      })
+        this.city = res.profile.city;
+      });
   }
 
   showClubs(){
