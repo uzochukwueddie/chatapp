@@ -27,27 +27,29 @@ export class RoomsProvider {
 
   getUser(): Observable<any>{
     return this.http
-      // .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}` || `https://soccerchatapi.herokuapp.com/api/user/${this.userId}`);
       .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`);
   }
 
-  postData(sender, receiver): Observable<any> {
+  postData(sender, receiver, senderId?): Observable<any> {
     return this.http
         .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
           sender: sender,
-          receiver: receiver
+          receiver: receiver,
+          senderId: senderId,
         });
   }
 
   returnUser(user): Observable<any>{
-    return this.http.get(`https://soccerchatapi.herokuapp.com/api/user/${user}`);
+    return this.http.get(`https://soccerchatapi.herokuapp.com/api/user/${user.replace(/ /g, '-')}`);
   }
 
-  acceptRequest(sender, receiver): Observable<any> {
+  acceptRequest(sender, receiver, senderId?, receiverId?): Observable<any> {
     return this.http
         .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
           senderName: sender,
-          receiverName: receiver
+          receiverName: receiver,
+          senderid: senderId,
+          receiverid: receiverId
         });
   }
 
@@ -107,7 +109,7 @@ export class RoomsProvider {
 
   getId() {
     this.storage.get("username").then(value => {
-      this.userId = value;
+      this.userId = value.replace(/ /g, '-')
     })
   }
 

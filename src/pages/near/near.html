@@ -8,23 +8,15 @@
 
 
 <ion-content >
-  <!-- <ion-grid>
-    <ion-row  justify-content-start>
-        <ion-col col-6 width-50 *ngFor="let user of nearByArray">
-            <button (click)="userProfile(user)">
-              <img src="http://placehold.it/150x150">
-              <span>
-                  {{user.username}} {{distance(userData.coords.latitude, userData.coords.longitude, user.coords.latitude, user.coords.longitude)}} miles
-              </span>
-            </button>
-        </ion-col>
-    </ion-row>
-  </ion-grid> -->
-
+  <ion-list>
+    <ion-item class="noResultItem" *ngIf="nearByArray.length <= 0">
+      <h2 class="noResult">No nearby user yet.</h2>
+    </ion-item>
+  </ion-list>
   <div class="pins">
     <ion-card class="pin" *ngFor="let user of nearByArray">
-      <button (click)="userProfile(user)">
-        <img src="http://placehold.it/150x150">
+      <button (click)="userProfile(user)" class="pinBtn">
+        <img class="userImage" src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.imageVersion}}/{{user.userImage}}">
         <ion-item>
           <small>{{user.username}}</small>
           <p><small>{{distance(userData.coords.latitude, userData.coords.longitude, user.coords.latitude, user.coords.longitude)}} miles</small></p>

@@ -10,12 +10,13 @@ import moment from 'moment';
 
 
 
+
 @IonicPage()
 @Component({
-  selector: 'page-message-modal',
-  templateUrl: 'message-modal.html',
+  selector: 'page-view-modal',
+  templateUrl: 'view-modal.html',
 })
-export class MessageModalPage {
+export class ViewModalPage {
 
   msgRequest = [];
   user: any;
@@ -34,16 +35,16 @@ export class MessageModalPage {
     private platform: Platform,
     private profile: ProfileProvider
   ) {
-      let msgArray = this.navParams.get('msgrequest');
-      let arr = _.uniqBy(msgArray, 'message.sendername');
-      this.msgRequest = arr;
+    let msgArray = this.navParams.get('msgrequest');
+    let arr = _.uniqBy(msgArray, 'message.sendername');
+    this.msgRequest = arr;
 
-      this.socketHost = 'https://soccerchatapi.herokuapp.com';
-      this.platform.ready().then(() => {
-        this.socket = io(this.socketHost);
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.platform.ready().then(() => {
+      this.socket = io(this.socketHost);
 
-        this.userData = this.navParams.get('user');
-      })
+      this.userData = this.navParams.get('user');
+    })
   }
 
   ionViewDidLoad() {

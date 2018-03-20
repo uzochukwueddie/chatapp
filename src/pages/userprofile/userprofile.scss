@@ -7,13 +7,13 @@ page-userprofile {
         }
     
         .menuIcon {
-            color: white;
+            color: #44a1f3;
             padding: 0px;
         }
     }
 
     .header-image {
-        background-image: url('http://placehold.it/10x10');
+        // background-image: url('http://placehold.it/10x10');
         height: 30vh;
         background-size: cover;
         background-position: center center;
@@ -33,20 +33,33 @@ page-userprofile {
         // background: #F5F5F5;
         position: relative !important;
     }
-    .circular {
+    div.circularBtn{
+        max-width: 200px;
+        max-height: 200px;
         width: 100px;
         height: 100px;
-        position: inherit;
+        // position: inherit;
         border-radius: 50%;
-        -webkit-border-radius: 150px;
-        -moz-border-radius: 150px;
-        border: solid white;
-        background: url('http://placehold.it/10x10') no-repeat;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         background-size: 100%;
         margin-top: -70px;
         margin-left: auto;
         margin-right: auto;
-        // margin-bottom: 50px;
+        background: #4aa1f3 no-repeat !important;
+        overflow: hidden;
+    }
+    div.circularBtn img{
+        width: auto;
+        height: auto;
+        min-width: 100%;
+        min-height: 100%;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        // position: absolute;
     }
     .profile-description {
         font-size: 15px;

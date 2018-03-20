@@ -46,7 +46,6 @@ export class ForgotpasswordPage {
 
   resetPage(){
     this.storage.get("email").then(value => {
-      console.log(value)
       this.navCtrl.push("NewpasswordPage", {"email": value});
     })
     

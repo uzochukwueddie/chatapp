@@ -44,7 +44,7 @@ export class CountryChatPage {
       }
   
       this.socket.emit('join country', this.params, () => {
-        //console.log(`User ${this.userData.username} has joined room ${this.roomName.name}`);
+        
       });
 
 

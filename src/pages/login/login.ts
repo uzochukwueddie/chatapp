@@ -98,11 +98,13 @@ LoginUser() {
   this.reg.loginUser(this.email, this.password)
       .subscribe(res => {
         this.loading.dismiss();
-        this.storage.set('token', res.token);
-        this.storage.set('username', res.user.username);
-        this.events.publish('user-name', res.user);
-        this.socket.emit('join stream', {"room": "stream"});
-        this.navCtrl.setRoot("TabsPage");
+        if(res.user){
+          this.storage.set('token', res.token);
+          this.storage.set('username', res.user.username);
+          this.events.publish('user-name', res.user);
+          this.socket.emit('join stream', {"room": "stream"});
+          this.navCtrl.setRoot("TabsPage");
+        }
       }, err => {
         this.loading.dismiss();
         let alert = this.alertCtrl.create({

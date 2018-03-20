@@ -1,9 +1,10 @@
+import { ViewModalPage } from './../pages/view-modal/view-modal';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Tabs } from 'ionic-angular';
 import { HttpClientModule } from "@angular/common/http";
 import { IonicStorageModule } from '@ionic/storage';
-import { SuperTabsModule } from 'ionic2-super-tabs';
+// import { SuperTabsModule } from 'ionic2-super-tabs';
 import { FormsModule }   from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -32,9 +33,9 @@ import { MessageModalPage } from '../pages/message-modal/message-modal';
 import { LocationProvider } from '../providers/location/location';
 import { PopoverPage } from '../pages/popover/popover';
 import { CountriesProvider } from '../providers/countries/countries';
-import { ResetProvider } from '../providers/reset/reset';
+import { ResetProvider } from '../providers/reset/reset'
 
-import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
+import { EmojiPickerModule } from '@ionic-tools/emoji-picker'
 
 
 
@@ -48,6 +49,7 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
     ModalPage,
     MessageModalPage,
     PopoverPage,
+    ViewModalPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
       tabsPlacement: "bottom"
     }),
     IonicStorageModule.forRoot(),
-    SuperTabsModule.forRoot(),
+    // SuperTabsModule.forRoot(),
     IonicImageViewerModule,
     EmojiPickerModule.forRoot()
     
@@ -68,12 +70,13 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
     ModalPage,
     MessageModalPage,
     PopoverPage,
-
+    ViewModalPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Tabs,
     RegisterProvider,
     RoomsProvider,
     GroupProvider,

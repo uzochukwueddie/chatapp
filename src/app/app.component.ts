@@ -1,11 +1,10 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 import * as _ from 'lodash';
-// import { GroupProvider } from '../providers/group/group';
 import { RoomsProvider } from '../providers/rooms/rooms';
 import * as io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
@@ -17,7 +16,7 @@ import { ProfileProvider } from '../providers/profile/profile';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp implements OnInit, AfterViewInit, OnDestroy {
+export class MyApp implements OnInit, OnDestroy {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: string = "TabsPage";
@@ -25,6 +24,7 @@ export class MyApp implements OnInit, AfterViewInit, OnDestroy {
   roomUsers = [];
   roomData = [];
   username: any;
+  userId: any;
   isFriend: any;
   userData: any;
   user: any;
@@ -45,7 +45,6 @@ export class MyApp implements OnInit, AfterViewInit, OnDestroy {
     private storage: Storage,
     private events: Events,
     private alertCtrl: AlertController,
-    // private menuCtrl: MenuController,
     private rm: RoomsProvider,
     private profile: ProfileProvider,
     private http: HttpClient
@@ -67,17 +66,6 @@ export class MyApp implements OnInit, AfterViewInit, OnDestroy {
         this.countryRoomUsers = _.uniq(data);
       }
     });
-
-    
-  }
-
-  ngAfterViewInit() {
-    //delete later
-    this.rm.getUser()
-      .subscribe(res => {
-        this.userData = res.user;
-      });
-
     
   }
 
@@ -96,16 +84,17 @@ export class MyApp implements OnInit, AfterViewInit, OnDestroy {
       this.storage.get('token').then(loggedIn => {
         if(loggedIn != null){
           this.storage.get("username").then(value => {
+            let newValue = value.replace(/ /g, '-');
             this.http
-            .get(`https://soccerchatapi.herokuapp.com/api/user/${value}`)
-            .subscribe((res: any) => {
-              let params = {
-                room: 'global',
-                user: res
-              }
-              this.socket.emit('online', params);
-            })
-          })
+            .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
+              .subscribe((res: any) => {
+                let params = {
+                  room: 'global',
+                  user: res
+                }
+                this.socket.emit('online', params);
+              });
+          });
           
           
           this.nav.setRoot("TabsPage");
@@ -115,6 +104,7 @@ export class MyApp implements OnInit, AfterViewInit, OnDestroy {
       });
 
       this.events.subscribe('userName', (data) => {
+        this.userId = data.user._id;
         this.username = data.user.username;
         this.userData = data.user;
       });
@@ -155,15 +145,16 @@ export class MyApp implements OnInit, AfterViewInit, OnDestroy {
         label: 'Send Request',
         value: `${user.name}`,
         handler: (data) => {
-          this.rm.postData(this.username, user.name)
-              .subscribe(res => {
-                data.label = 'Friend Request Sent';
-                this.socket.emit('refresh', {});
-                this.socket.emit('request', {
-                  sender: this.username,
-                  receiver: user.name
-                });
-              })
+          this.rm.postData(this.username, user.name, this.userId)
+            .subscribe(res => {
+              data.label = 'Friend Request Sent';
+              this.socket.emit('refresh', {});
+              this.socket.emit('request', {
+                sender: this.username,
+                receiver: user.name
+              });
+            })
+          
         }
       });
 

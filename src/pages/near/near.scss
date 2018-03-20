@@ -5,15 +5,24 @@ page-near {
 
 
     .pin {
-        display: inline-block;
+        display: block;
     }
 
     .card {
         margin-top: 10px;
     }
 
+    .card-md {
+        margin-top: 0;
+    }
+
     ion-avatar {
         margin: 0 !important;
+    }
+
+    .userImage{
+        width: 100%;
+        height: 120px;
     }
 
     .item ion-avatar img {

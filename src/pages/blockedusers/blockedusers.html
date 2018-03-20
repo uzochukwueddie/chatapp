@@ -11,6 +11,8 @@
     <ion-item *ngFor="let blocked of blockedUsers">
       <h2 *ngIf="blockedUsers.length > 0">{{blocked}}</h2>
     </ion-item>
-    <h2 *ngIf="noUser">No blocked users in your list</h2>
+    <ion-item class="noResultItem" *ngIf="noUser">
+      <h2 *ngIf="noUser" class="noResult">No blocked users in your list</h2>
+    </ion-item>
   </ion-list>
 </ion-content>

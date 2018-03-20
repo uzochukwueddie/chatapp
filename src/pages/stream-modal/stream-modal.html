@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Add a Post</ion-title>
+    <ion-title>Add Post</ion-title>
     <ion-buttons left>
       <button ion-button icon-only (click)="closeModal()">
           <ion-icon name="arrow-back"></ion-icon>
@@ -10,12 +10,17 @@
 
 </ion-header>
 
-
 <ion-content>
     <ion-grid>
       <ion-row>
         <ion-col col-12>
-          <ion-textarea [(ngModel)]="message" class="message" placeholder="Write Mesaage..."></ion-textarea>
+          <ion-item class="addImg">
+            <button class="imgBtn" ion-button clear item-start (click)="addImage()">
+              <ion-icon name="image"></ion-icon>
+            </button>
+            <ion-textarea [(ngModel)]="message" class="message" placeholder="Write Mesaage..."></ion-textarea>
+          </ion-item>
+          
         </ion-col>
         <ion-col col-12>
           <button class="addPost" ion-button block ion-button (click)="AddMessage()">
@@ -24,5 +29,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <img src="{{image}}">
 
 </ion-content>

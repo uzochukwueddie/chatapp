@@ -1,11 +1,38 @@
 page-privatechat {
     ion-header{
-        .userImg{
+        userImg{
             border-radius: 50%;
         }
 
+        .avatar{
+          max-width: 50px;
+          max-height: 50px;
+          width: 40px;
+          height: 40px;
+          position: inherit;
+          border-radius: 50%;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          background-size: 100%;
+          margin-top: 8px;
+          background: #4aa1f3 no-repeat !important;
+          overflow: hidden;
+        }
+        .avatar img{
+            width: auto;
+            height: auto;
+            min-width: 100%;
+            min-height: 100%;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: absolute;
+        }
+
         .avatarCol{
-            margin-left: -15px;
+            margin-left: -5px;
         }
 
         .titleCol{
@@ -18,7 +45,7 @@ page-privatechat {
             margin-bottom: 0px;
         }
 
-        .avatar{
+        avatar{
             margin-top: 8px;
         }
 
@@ -26,6 +53,14 @@ page-privatechat {
             font-size: 10px;
             color: white;
             margin-top: auto;
+        }
+
+        .back-button.show-back-button {
+            display: none !important;
+        }
+
+        backBtn {
+          margin-left: 3px
         }
     }
 
@@ -248,5 +283,9 @@ page-privatechat {
 
     .inputToolbar{
       margin-bottom: -44px;
+    }
+
+    .scroll-content{
+      bottom: 10px !important;
     }
 }

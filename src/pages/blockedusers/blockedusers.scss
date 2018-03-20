@@ -1,3 +1,14 @@
 page-blockedusers {
+    .noResultItem{
+        width: 100%;
+        height: 100px;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
 
+    .noResult{
+        color: #4aa1f3 !important;
+        text-align: center;
+    }
 }

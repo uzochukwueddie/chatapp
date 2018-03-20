@@ -19,7 +19,7 @@ export class PreviewModalPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PreviewModalPage');
+    
   }
 
 }

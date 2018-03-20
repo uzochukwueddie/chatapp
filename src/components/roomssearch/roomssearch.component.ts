@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import * as io from 'socket.io-client';
-import { Platform, NavController, AlertController } from 'ionic-angular';
+import { Platform, NavController, AlertController, Events } from 'ionic-angular';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class RoomssearchComponent {
     private rm: RoomsProvider,
     private platform: Platform,
     private alertCtrl: AlertController,
+    private events: Events
   ) {
 
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
@@ -37,9 +38,12 @@ export class RoomssearchComponent {
 
   GroupChatPage(room) {
     this.socket.connect();
+    this.showDiv = false;
+    this.club = ''
     
     this.rm.getUser()
       .subscribe(res => {
+        this.events.publish('userName', res);
         this.navCtrl.push("GroupChatPage", {data: room, user: res, tabIndex: ''});
     });
   }
@@ -48,7 +52,7 @@ export class RoomssearchComponent {
   roomSearch(event){
     this.showDiv = true;
     
-    this.rm.searchRoom(this.club)
+    this.rm.searchRoom(this.club.replace(/ /g, '-'))
       .subscribe(res => {
         if(res.rooms.length > 0){
           this.results = true;

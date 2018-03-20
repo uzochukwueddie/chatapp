@@ -8,8 +8,13 @@
       <ion-input type="text" [(ngModel)]="country" name="country" value="{{country}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Mantra</ion-label>
-      <ion-textarea type="text" [(ngModel)]="mantra" name="mantra" value="{{mantra}}"></ion-textarea>
+      <ion-label color="primary" stacked>Mantra&nbsp; (<span id="charLeft"></span> characters remaining)</ion-label>
+      <ion-textarea type="text" [(ngModel)]="mantra" 
+      name="mantra" 
+      value="{{mantra}}" 
+      id="mantra" 
+      (keyup)="checkLength()" 
+      maxlength="60"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Your Favorite Team</ion-label>

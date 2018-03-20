@@ -14,11 +14,14 @@
         </ion-row>
       </ion-navbar>
     </ion-header>
+
     
-    <div class="header-image"></div>
+    <div class="header-image" [style.background-image]="headerImage"></div>
     <div class="main-content" text-wrap text-center>
-        <div class="circular"></div>
-        <h2 *ngIf="username">{{username}}</h2>
+        <div class="circularBtn">
+            <img [style.background-image]="headerImage">
+        </div>
+        <h2 *ngIf="username" >{{username}}</h2>
         <p *ngIf="city || country">{{city}} &bull; {{country}}</p>
         <p class="profile-description" *ngIf="mantra">{{mantra}}</p>
         <hr>

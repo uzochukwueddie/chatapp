@@ -42,12 +42,10 @@ export class CountriesComponent {
 
 
   getCountries(){
-    setTimeout(() => {
-      this.countries.getCountries()
-        .subscribe(res => {
-          this.countriesArray = res.country;
-        });
-    }, 3000);
+    this.countries.getCountries()
+      .subscribe(res => {
+        this.countriesArray = res.country;
+      });
   }
 
   CountryChatPage(room){

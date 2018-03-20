@@ -5,6 +5,7 @@ import { ViewController } from 'ionic-angular';
 import * as _ from 'lodash';
 import * as io from 'socket.io-client';
 import { RoomsProvider } from '../../providers/rooms/rooms';
+import { ProfileProvider } from '../../providers/profile/profile';
 
 
 
@@ -28,6 +29,7 @@ export class ModalPage {
     public viewCtrl: ViewController,
     private rm: RoomsProvider,
     private platform: Platform,
+    private profile: ProfileProvider
   ) {
     this.dataUser = this.navParams.get('datauser');
     
@@ -51,15 +53,19 @@ export class ModalPage {
   }
 
   acceptRequest(friend) {
-    this.rm.acceptRequest(friend.username, this.dataUser.user.username )
+    this.profile.getProfile(friend.username)
       .subscribe(res => {
-        let index = this.friends.indexOf(friend);
+        this.rm.acceptRequest(friend.username, this.dataUser.user.username, res.profile._id, this.dataUser.user._id)
+          .subscribe(res => {
+            let index = this.friends.indexOf(friend);
 
-        if(index > -1){
-          this.friends.splice(index, 1);
-        }
-        this.socket.emit('refresh', {});
-      })
+            if(index > -1){
+              this.friends.splice(index, 1);
+            }
+            this.socket.emit('refresh', {});
+          });
+      });
+    
   }
 
   cancelRequest(friend) {

@@ -1,10 +1,11 @@
+import { ViewModalPage } from './../view-modal/view-modal';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { Storage } from '@ionic/storage';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import { ModalPage } from '../modal/modal';
-import { MessageModalPage } from '../message-modal/message-modal';
+// import { MessageModalPage } from '../message-modal/message-modal';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import * as io from 'socket.io-client';
@@ -57,7 +58,7 @@ export class ProfilePage {
     private rm: RoomsProvider,
     private modalCtrl: ModalController,
     public http: HttpClient,
-    private platform: Platform,
+    private platform: Platform
   ) {
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
@@ -96,7 +97,7 @@ export class ProfilePage {
       });
 
     this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue}`)
+      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue.replace(/ /g, '-')}`)
       .subscribe((res:any) => {
         this.requestArray = res.messages
         let arr = _.uniqBy(res.messages, 'message.sendername');
@@ -109,7 +110,7 @@ export class ProfilePage {
 
     this.socket.on('refreshPage', (data) => {
       this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue}`)
+      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue.replace(/ /g, '-')}`)
       .subscribe((res:any) => {
         this.requestArray = res.messages
         let arr = _.uniqBy(res.messages, 'message.sendername');
@@ -140,7 +141,7 @@ export class ProfilePage {
 
   openMsgModal(){
     this.socket.emit('refresh', {});
-    let modal = this.modalCtrl.create(MessageModalPage, {"msgrequest": this.requestArray, "user": this.user});
+    let modal = this.modalCtrl.create(ViewModalPage, {"msgrequest": this.requestArray, "user": this.user});
     modal.present();
   }
 

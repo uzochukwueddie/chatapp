@@ -19,7 +19,7 @@ export class TopPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TopPage');
+    
   }
 
 }

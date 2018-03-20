@@ -18,6 +18,7 @@ export class UpdateprofileComponent {
   gender: string;
   city: string;
   username: string;
+  maxText = 60;
 
   rooms: any[];
 
@@ -26,6 +27,7 @@ export class UpdateprofileComponent {
     private toastCtrl: ToastController,
     private rm: RoomsProvider,
   ) {
+    
     
   }
 
@@ -36,6 +38,10 @@ export class UpdateprofileComponent {
       .subscribe(res => {
         this.rooms = res.rooms;
       });
+  }
+
+  ngAfterViewInit(){
+    
   }
 
   getUserData(){
@@ -52,6 +58,9 @@ export class UpdateprofileComponent {
             this.club = res.profile.club;
             this.gender = res.profile.gender;
             this.city = res.profile.city;
+
+            let maxChar = this.maxText - this.mantra.length ;
+            document.getElementById('charLeft').innerHTML = `${maxChar}`;
           });
       });
   }
@@ -66,6 +75,17 @@ export class UpdateprofileComponent {
         });
         toast.present();
       });
+  }
+
+  checkLength(){
+    var text_length = this.mantra.length;
+    var text_remaining = this.maxText - text_length;
+
+    if(text_remaining > 0){
+      document.getElementById('charLeft').innerHTML = `${text_remaining}`
+    } else {
+      document.getElementById('charLeft').innerHTML = `${0}`
+    }
   }
 
 

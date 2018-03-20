@@ -24,7 +24,7 @@ export class AccountsettingsPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.user)
+    
   }
 
   showBlockedUsers(){

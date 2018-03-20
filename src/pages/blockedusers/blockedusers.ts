@@ -18,7 +18,6 @@ export class BlockedusersPage {
     public navParams: NavParams,
   ) {
     this.user = this.navParams.get('user');
-
     this.blockedUsers = this.user.blockedUsers;
 
     if(this.user.blockedUsers.length <= 0){

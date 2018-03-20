@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LocationProvider } from '../../providers/location/location';
 import { RoomsProvider } from '../../providers/rooms/rooms';
+import * as _ from 'lodash';
 
 
 
@@ -37,8 +38,9 @@ export class NearPage {
   ionViewDidEnter(){
     this.loc.getLocations(this.location)
       .subscribe(res => {
+        _.remove(res.nearby, {username: this.userData.username})
         this.nearByArray = res.nearby
-      })
+      });
   }
 
   distance(lat1, lon1, lat2, lon2) {

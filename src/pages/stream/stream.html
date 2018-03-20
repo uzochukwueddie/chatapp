@@ -1,6 +1,4 @@
 <ion-header no-border>
-    <!-- <expandable-header [scrollArea]="mycontent" headerHeight="50">
-    </expandable-header> -->
     
 </ion-header>
 
@@ -17,13 +15,15 @@
     </ion-segment>
 
     <div [ngSwitch]="stream">
-      <ion-spinner name="circles" *ngIf="streamArray.length <= 0 || topPostArray.length <= 0"></ion-spinner>
       <ion-list *ngSwitchCase="'now'" >
-        <ion-item *ngFor="let stream of streamArray; let i = index" class="content-item1">
+        <ion-item *ngIf="streamArray.length <= 0 && isComplete" class="noResultItem">
+          <h2 class="noResult">No streams today yet.</h2>
+        </ion-item>
+        <ion-item *ngFor="let stream of streamArray" class="content-item1">
             <ion-card class="content-card1">
-              <ion-item>
+              <ion-item class="cardItem">
                 <ion-avatar class="ionAvatar" item-start>
-                  <img class="userImg" src="http://placehold.it/50x50">
+                  <img class="userImg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{stream.user.imageVersion}}/{{stream.user.userImage}}">
                 </ion-avatar>
                 <h2 class="username" ion-button clear (click)="viewProfile(stream.username || stream.user.username)">
                     {{ stream.username || stream.user.username }}
@@ -31,8 +31,14 @@
                 <p class="postTime">{{GetPostTime(stream.created)}}</p>
                 <p text-wrap class="postCity" *ngIf="stream.user.city && stream.user.country"> @ {{ stream.user.city}}, {{ stream.user.country}}</p>
               </ion-item>
-            
-              <img class="postImage" src="http://placehold.it/50x30">
+
+              <div style="width: 100%;" *ngIf="stream.post === post">
+                <img class="postImage" width="100%" height="250" src="{{image}}">
+              </div>
+              
+              <div style="width: 100%;" *ngIf="stream.imageId" >
+                <img class="postImage" width="100%" height="250" (click)="viewImage(stream.imageVersion, stream.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{stream.imageVersion}}/{{stream.imageId}}">
+              </div>
             
               <ion-card-content>
                 <p text-wrap class="post">{{ stream.post}}</p>
@@ -43,14 +49,12 @@
                   <button ion-button icon-left clear small (click)="likeComment(stream)">
                     <ion-icon name="thumbs-up"></ion-icon>
                     <div>{{numberFormatter(stream.likes || postLength, 1)}}</div>
-                    <!-- <div>{{stream.likes || postLength}}</div> -->
                   </button>
                 </ion-col>
                 <ion-col>
                   <button ion-button icon-left clear small (click)="addComment(stream)">
                     <ion-icon name="text"></ion-icon>
                     <div>{{numberFormatter(stream.comment.length, 1)}}</div>
-                    <!-- <div>{{stream.comment.length}}</div> -->
                   </button>
                 </ion-col>
               </ion-row>
@@ -61,11 +65,15 @@
       </ion-list>
 
       <ion-list *ngSwitchCase="'top'">
-        <ion-item *ngFor="let top of topPostArray; let i = index" class="content-item1">
+        <ion-item *ngIf="topPostArray.length <= 0 && isComplete" class="noResultItem">
+          <h2 class="noResult">No top streams at the moment</h2>
+        </ion-item>
+        
+        <ion-item *ngFor="let top of topPostArray" class="content-item1">
             <ion-card class="content-card1">
               <ion-item>
                 <ion-avatar class="ionAvatar" item-start>
-                  <img class="userImg" src="http://placehold.it/50x50">
+                    <img class="userImg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{top.user.imageVersion}}/{{top.user.userImage}}">
                 </ion-avatar>
                 <h2 class="username" ion-button clear (click)="viewProfile(top.username)">
                   {{ top.username }}
@@ -74,7 +82,13 @@
                 <p text-wrap class="postCity" *ngIf="top.user.city && top.user.country"> @{{ top.user.city}}, {{ top.user.country}}</p>
               </ion-item>
             
-              <img class="postImage" src="http://placehold.it/50x30">
+              <div style="width: 100%;" *ngIf="top.post === post">
+                <img class="postImage" width="100%" height="250" src="{{image}}">
+              </div>
+              
+              <div style="width: 100%;" *ngIf="top.imageId" >
+                <img class="postImage" width="100%" height="250" (click)="viewImage(top.imageVersion, top.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{top.imageVersion}}/{{top.imageId}}">
+              </div>
             
               <ion-card-content>
                 <p text-wrap class="post">{{ top.post}}</p>
@@ -96,8 +110,6 @@
               </ion-row>
             
             </ion-card>
-
-
         </ion-item>
       </ion-list>
 

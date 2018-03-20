@@ -17,6 +17,14 @@ page-stream {
         border-radius: 2%;
     }
 
+    .cardItem{
+        padding-left: 10px !important;
+    }
+
+    .ionAvatar{
+        margin-left: 0px !important;
+    }
+
     .content-card1 .postImage {
         width: 88%;
         margin: 0 auto;
@@ -40,6 +48,7 @@ page-stream {
     .content-card1 .post {
         font-size: 14px;
         text-align: left;
+        margin-left: -7px;
     }
 
     .item-inner {
@@ -48,6 +57,31 @@ page-stream {
 
     .fab{
         background-color: #4aa1f3 !important;
+    }
+
+    .noResultItem{
+        width: 100%;
+        height: 100px;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    .noResult{
+        color: #4aa1f3 !important;
+        text-align: center;
+    }
+
+    .postImage{
+        display: block;
+        max-width:200px;
+        max-height:250px;
+        width: auto;
+        height: auto;
+        text-align: left;
+        padding: 0px;
+        margin: 0px;
+        margin-left: 10px !important
     }
 
 

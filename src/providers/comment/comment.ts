@@ -18,15 +18,16 @@ export class CommentProvider {
 
   getPosts(): Observable<any> {
     return this.http
-        .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}/posts`);
+        .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}/posts`)
   }
 
-  addPost(id, username, post): Observable<any> {
+  addPost(id?, username?, post?, image?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${username}/posts`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${username.replace(/ /g, '-')}/posts`, {
           id: id,
           username: username,
-          post: post
+          post: post,
+          image: image
         });
   }
 
@@ -55,7 +56,7 @@ export class CommentProvider {
 
   getId() {
     this.storage.get("username").then(value => {
-      this.userId = value;
+      this.userId = value.replace(/ /g, '-')
     })
   }
 

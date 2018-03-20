@@ -87,11 +87,7 @@ export class PopoverPage {
       });
     }
 
-
     this.isFriend = _.includes(this.friendArr, this.receiver);
-    console.log(this.isFriend )
-
-
   }
 
   blockUser() {

@@ -26,7 +26,8 @@ export class ChatComponent {
 
   msgArray = [];
 
-  isOnline = []
+  isOnline = [];
+  isComplete = false;
 
   socketHost: any;
   socket: any;
@@ -65,13 +66,6 @@ export class ChatComponent {
             });
         });
     });
-  }
-
-  ngAfterViewInit(){
-    this.socket.on('userOnline', (data) => {
-      this.isOnline = data;
-    });
-
 
     this.rm.getUser()
       .subscribe(res => {
@@ -79,15 +73,19 @@ export class ChatComponent {
           room: 'global',
           user: res
         }
-        this.socket.emit('online', params)
+        this.socket.emit('online', params);
 
-        setTimeout(() => {
-          this.msg.getMessage(res.user._id, res.user.username)
-            .subscribe(res => {
-              this.msgArray = res.arr;
-            })
-        }, 4000);
+        this.msg.getMessage(res.user._id, res.user.username)
+          .subscribe(res => {
+            this.msgArray = res.arr;
+          });
       }); 
+  }
+
+  ngAfterViewInit(){
+    this.socket.on('userOnline', (data) => {
+      this.isOnline = data;
+    });
   }
 
   getUserData(){
@@ -101,7 +99,7 @@ export class ChatComponent {
 
   PrivateChatPage(friend) {
     this.socket.emit('refresh', {});
-    this.navCtrl.push("PrivatechatPage", {"receiver": friend, "sender": this.user})
+    this.navCtrl.push("PrivatechatPage", {"receiver": friend, "sender": this.user, tabIndex: 2})
     this.msg.markMessage(this.userName)
       .subscribe(res => {})
   }

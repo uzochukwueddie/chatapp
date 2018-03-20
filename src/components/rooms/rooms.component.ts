@@ -44,12 +44,10 @@ export class RoomsComponent {
   }
 
   getRooms(){
-    setTimeout(() => {
-      this.rm.getRooms()
-        .subscribe(res => {
-          this.rooms = res.rooms;
-        });
-    }, 3000);
+    this.rm.getRooms()
+      .subscribe(res => {
+        this.rooms = res.rooms;
+      });
   }
 
   GroupChatPage(room) {

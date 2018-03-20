@@ -62,15 +62,15 @@
 
 <ion-footer>
     <ion-item class="inputToolbar">
-      <ion-input [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..."></ion-input>
       <!-- <button class="imgBtn" ion-button clear item-end (click)="getImage()">
         <ion-icon name="image"></ion-icon>
       </button>
       <button class="imgBtn" ion-button clear item-end (click)="takePicture()">
         <ion-icon name="camera"></ion-icon>
       </button> -->
-      <button ion-button clear item-end (click)="SendRoomMessage()">
+      <label for="msgInput" ion-button clear item-end (click)="SendRoomMessage()">
         <ion-icon class="footer-btn" name="send"></ion-icon>
-      </button>
+      </label>
     </ion-item>
 </ion-footer>

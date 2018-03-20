@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Content, Tabs } from 'ionic-angular';
 import * as io from 'socket.io-client';
 import * as _ from 'lodash';
 import { MessageProvider } from '../../providers/message/message';
@@ -48,6 +48,7 @@ export class PrivatechatPage {
   socket: any;
 
   params: any;
+  tabIndex: any;
 
   public eventMock;
   public eventPosMock;
@@ -63,7 +64,8 @@ export class PrivatechatPage {
     private msg: MessageProvider,
     private camera: Camera,
     private rm: RoomsProvider,
-    private profile: ProfileProvider
+    private profile: ProfileProvider,
+    private tabs: Tabs,
   ) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
@@ -74,8 +76,11 @@ export class PrivatechatPage {
       this.senderName = this.navParams.get('sender');
       this.senderId = this.navParams.get('sender');
 
+      this.tabIndex = this.navParams.get("tabIndex");
+      this.goToBottom();
+
       this.socket.on('new message', ( data) => {
-        this.scrollToBottom();
+        this.goToBottom();
         if(data.sender === this.senderName.username || data.sender === this.receiverName.name) {
           this.isAdded = true;
           this.msgArray.push(data)
@@ -90,13 +95,11 @@ export class PrivatechatPage {
       this.socket.emit('join privatechat', this.params);
 
       this.socket.on('start_typing',(data)=>{
-        this.scrollToBottom();
         if(data.sender === this.receiverName.name ){
           this.typing = true;
         }
       });
       this.socket.on('stop_typing',(data)=>{
-        this.scrollToBottom();
         if(data.sender === this.receiverName.name ){
           this.typing = false;
         }
@@ -128,7 +131,6 @@ export class PrivatechatPage {
 
   checkValue(value , arr){
     var status = '';
-   
     for(var i=0; i<arr.length; i++){
      var name = arr[i];
      if(name == value){
@@ -136,58 +138,41 @@ export class PrivatechatPage {
       break;
      }
     }
-  
     return status;
-   }
+  }
 
   ionViewDidEnter(){
-    this.scrollToBottom();
-
-    setTimeout(() => {
-      this.msg.getUserName(this.receiverName.name)
-        .subscribe(res => {
-          this.msg.getMessages(this.senderId._id, res.user._id)
-            .subscribe(res => {
-              if(res.messages){
-                this.msgArray = res.messages.message;
-              } else {
-                this.msgArray.push({})
-              }
-            });
-        });
-        console.log('Complete')
-        this.isComplete = true;
-    }, 3000);
-
-      let title = document.querySelector('.userTitle');
-
-      this.socket.on('userOnline', (data) => {
-        
-        let val = _.includes(data, this.receiverName.name);
-
-        if(val === true){
-          this.isOnline = true;
-          // (title as HTMLElement).style.transition = '500ms';
-          // (title as HTMLElement).style.transitionDelay = '2s';
-          (title as HTMLElement).style.marginTop = '8px';
-        } else {
-          this.isOnline = false;
-          // (title as HTMLElement).style.transition = '500ms';
-          // (title as HTMLElement).style.transitionDelay = '2s';
-          (title as HTMLElement).style.marginTop = '12px';
-        }
-
+    this.msg.getUserName(this.receiverName.name)
+      .subscribe(res => {
+        this.msg.getMessages(this.senderId._id, res.user._id)
+          .subscribe(res => {
+            if(res.messages){
+              this.msgArray = res.messages.message;
+            } else {
+              this.msgArray.push({})
+            }
+            this.goToBottom();
+          });
       });
 
+    let title = document.querySelector('.userTitle');
+    this.socket.on('userOnline', (data) => {
+      let val = _.includes(data, this.receiverName.name);
+
+      if(val === true){
+        this.isOnline = true;
+        (title as HTMLElement).style.marginTop = '8px';
+      } else {
+        this.isOnline = false;
+        (title as HTMLElement).style.marginTop = '12px';
+      }
+
+    });
+
     this.socket.emit('myonline', {room: 'global'});
-    // this.msg.markMessage(this.senderName.username, this.receiverName.name, this.conversationId)
-    //   .subscribe(res => {
-    //     //console.log(res)
-    //   })
 
     this.msg.markAsRead(this.conversationId)
       .subscribe(res => {
-        //console.log(res)
       });
   }
 
@@ -196,7 +181,6 @@ export class PrivatechatPage {
   }
 
   PrivateMessage() {
-    this.scrollToBottom();
     this.socket.connect();
 
     this.socket.emit('privateMessage', this.receiverName.name, this.senderName.username, {
@@ -212,6 +196,18 @@ export class PrivatechatPage {
     this.msg.saveMessage(this.senderId._id, this.receiverId, this.senderName.username, this.receiverName.name, this.message)
       .subscribe(res => {})
     this.message = "";
+  }
+
+  goBack() {
+    this.msg.markMessage(this.receiverName.name)
+      .subscribe(res => {})
+
+    if(this.tabIndex === 2){
+      //console.log(this.tabs.select(this.tabIndex))
+      this.tabs.select(this.tabIndex);
+    }else {
+      this.navCtrl.parent.select(1);
+    }
   }
 
   handleSelection(event: EmojiEvent) {
@@ -252,20 +248,18 @@ export class PrivatechatPage {
     }
     this.typingMessage = setTimeout(()=>{
      this.socket.emit('stop_typing', {sender: this.senderName.username, receiver: this.receiverName.name})
-    }, 500)
-
-
+    }, 500);
   }
 
   getImage(){
-    this.scrollToBottom();
+    this.goToBottom();
     this.socket.emit('add-img', this.receiverName.name, this.senderName.username, {
       image: this.image,
       room1: this.receiverName.name,
       room2: this.senderName.username,
       sender: this.senderName.username,
       receiver: this.receiverName.name
-    });
+    })
   }
 
   addImage(){
@@ -287,7 +281,7 @@ export class PrivatechatPage {
 
       this.msg.addImage(this.image, this.senderName.username, this.receiverName.name, this.senderId._id, this.receiverId,)
         .subscribe(res => {
-
+          this.goToBottom();
         })
 
     }, (err) => {
@@ -302,12 +296,12 @@ export class PrivatechatPage {
       });
   }
 
-  scrollToBottom() {
+  goToBottom() {
     setTimeout(() => {
-        if (this.content.scrollToBottom) {
-            this.content.scrollToBottom();
-        }
-    }, 1);
+      if (this.content._scroll) {
+        this.content.scrollToBottom();
+      }
+    }, 1)
 
   }
   

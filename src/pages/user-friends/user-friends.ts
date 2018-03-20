@@ -39,7 +39,7 @@ export class UserFriendsPage {
   PrivateChatPage(friend){
     this.checkUser = this.checkIfBlocked(this.user.blockedUsers, this.user.blockedBy, friend.name);
     if(this.checkUser === true){
-      this.navCtrl.push("PrivatechatPage", {"receiver": friend, "sender": this.user})
+      this.navCtrl.push("PrivatechatPage", {"receiver": friend, "sender": this.user, tabIndex: 2})
     } else {
       let alert = this.alertCtrl.create({
         title: this.blocked,

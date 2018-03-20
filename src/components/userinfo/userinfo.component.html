@@ -1,6 +1,10 @@
-<div class="header-image"></div>
+<div class="header-image" [style.background-image]="headerImage"></div>
 <div class="main-content" text-wrap text-center>
-    <div class="circular"></div>
+    <div class="circularBtn" (click)="addImage()" ion-button clear>
+        <img src="{{userImg}}">
+        <img *ngIf="headerImage" [style.background-image]="headerImage">
+    </div>
+
     <h2 *ngIf="username">{{username}}</h2>
     <p *ngIf="city || country">{{city}} &bull; {{country}}</p>
     <p class="profile-description" *ngIf="mantra">{{mantra}}</p>

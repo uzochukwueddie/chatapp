@@ -6,6 +6,7 @@ import { CommentProvider } from '../../providers/comment/comment';
 import moment from "moment";
 import { LocationProvider } from '../../providers/location/location';
 import { ProfileProvider } from '../../providers/profile/profile';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 
 @IonicPage()
@@ -24,6 +25,9 @@ export class StreamPage {
   postLength = 0;
   commentLength: any;
   userData: any;
+  isComplete = false;
+  image: any;
+  post: string;
 
   scrollElement: any;
 
@@ -40,7 +44,8 @@ export class StreamPage {
     private events: Events,
     private loc: LocationProvider,
     private alertCtrl: AlertController,
-    private profile: ProfileProvider
+    private profile: ProfileProvider,
+    private photoViewer: PhotoViewer
   ) {
     this.stream = "now";
     this.scrollElement = document.querySelector('div.scroll-content');
@@ -54,27 +59,29 @@ export class StreamPage {
   ionViewDidLoad() {
     this.getPost();
 
-    this.rm.getUser()
-      .subscribe(res => {
-        this.userData = res.user;
-        let params = {
-          room: 'global',
-          user: res
-        }
-        this.socket.emit('online', params);
+    this.platform.ready().then(() => {
+      this.rm.getUser()
+        .subscribe(res => {
+          this.userData = res.user;
+          let params = {
+            room: 'global',
+            user: res.user.username
+          }
+          this.socket.emit('online', params);
+        });
+
+      this.socket.on('refreshPage', (data) => {
+        this.getPost();
+      })
+
+      this.socket.on('new stream', (data) => {
+        this.user2 = data.user;
+        this.streamArray.unshift(data.msg.posts);
       });
 
-    this.socket.on('refreshPage', (data) => {
-      this.getPost();
-    })
-
-    this.socket.on('new stream', (data) => {
-      this.user2 = data.user;
-      this.streamArray.unshift(data.msg.posts);
-    });
-
-    this.socket.on('userOnline', (data) => {
-      this.events.publish("onlineUser", data);
+      this.socket.on('userOnline', (data) => {
+        this.events.publish("onlineUser", data);
+      });
     });
 
   }
@@ -83,6 +90,10 @@ export class StreamPage {
     this.rm.getUser()
       .subscribe(res => {
         let modal = this.modalCtrl.create("StreamModalPage", {"pageuser": res});
+        modal.onDidDismiss(data => {
+          this.image = data.postImg
+          this.post = data.post
+        });
         modal.present();
         this.socket.emit('join stream', {"room": "stream"})
       });
@@ -111,20 +122,17 @@ export class StreamPage {
   }
 
   getPost(){
-    setTimeout(() => {
-      this.cp.getPosts()
-        .subscribe(res => {
-          if(res.posts.length > 0) {
-            this.user = res.posts;
-            this.streamArray = res.posts;
-          }
+    this.cp.getPosts()
+      .subscribe(res => {
+        if(res.posts.length > 0) {
+          this.user = res.posts;
+          this.streamArray = res.posts;
+        }
 
-          if(res.top.length > 0) {
-            
-            this.topPostArray = res.top
-          }
-        });
-    }, 3000);
+        if(res.top.length > 0) {
+          this.topPostArray = res.top
+        }
+      });
   }
 
   viewProfile(user){
@@ -146,13 +154,18 @@ export class StreamPage {
     alert.present()
   }
 
+  viewImage(value1, value2){
+    const url = `http://res.cloudinary.com/soccerkik/image/upload/v${value1}/${value2}`
+    this.photoViewer.show(url)
+  }
+
   ionViewDidEnter(){
     this.loc.getCoordinates()
       .subscribe(res => {
         if(this.userData !== undefined){
           this.loc.addLocation(this.userData._id, res)
             .subscribe(res => {
-              //console.log(res);
+              
             });
         }
       });

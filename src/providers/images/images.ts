@@ -35,4 +35,22 @@ export class ImagesProvider {
         });
   }
 
+  postImage(name, room?, senderId?, sender?): Observable<any> {
+    return this.http
+        .post(`https://soccerchatapi.herokuapp.com/api/v1/post/image`, {
+          file: name,
+          room:room,
+          senderId: senderId,
+          sender: sender
+        });
+  }
+
+  addProfilePic(username, image): Observable<any> {
+    return this.http
+      .post(`https://soccerchatapi.herokuapp.com/api/v1/profile/image/${username.replace(/ /g, '-')}`, {
+        username: username,
+        image: image
+      });
+  }
+
 }

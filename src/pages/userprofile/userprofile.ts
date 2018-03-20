@@ -4,6 +4,7 @@ import { PopoverController } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import { PopoverPage } from '../popover/popover';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @IonicPage()
@@ -24,13 +25,18 @@ export class UserprofilePage {
   gender: string;
   city: string;
 
+  headerImage: any;
+  userImage: any;
+  imgVersion = 0;
+
   constructor(
     // public navCtrl: NavController, 
     public navParams: NavParams,
     private profile: ProfileProvider,
     private rm: RoomsProvider,
     private alertCtrl: AlertController,
-    public popoverCtrl: PopoverController
+    public popoverCtrl: PopoverController,
+    private sanitization: DomSanitizer,
   ) {
     this.userData = this.navParams.get('profile');
   }
@@ -50,6 +56,12 @@ export class UserprofilePage {
         this.gender = res.profile.gender;
         this.user = res.profile;
         this.city = res.profile.city;
+
+        this.userImage = res.profile.userImage
+        this.imgVersion = res.profile.imageVersion
+
+        let url = `http://res.cloudinary.com/soccerkik/image/upload/v${this.imgVersion}/${this.userImage}`;
+        this.headerImage = this.sanitization.bypassSecurityTrustStyle(`url(${url})`);
       });
   }
 

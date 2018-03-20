@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, Platform } from 'ionic-angular';
 import * as io from 'socket.io-client';
-import { RoomsProvider } from '../../providers/rooms/rooms';
 
 
 @IonicPage()
@@ -24,7 +23,6 @@ export class TabsPage {
     // public navCtrl: NavController, 
     // public navParams: NavParams
     private platform: Platform,
-    private rm: RoomsProvider,
   ) {
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
@@ -32,22 +30,11 @@ export class TabsPage {
     });
   }
 
-  ionViewDidLoad(){
-    
-  }
-
   clickTab() {
-    this.socket.emit('refresh', {});
-    this.socket.emit('refreshUser', {});
-
-    this.rm.getUser()
-        .subscribe(res => {
-          // let params = {
-          //   room: 'global',
-          //   user: res
-          // }
-          //this.socket.emit('online', params);
-        });
+    this.platform.ready().then(() => {
+      this.socket.emit('refresh', {});
+      this.socket.emit('refreshUser', {});
+    });
   }
 
 }

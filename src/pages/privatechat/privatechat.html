@@ -1,23 +1,28 @@
 
 <ion-header>
   <ion-navbar>
+    <ion-buttons left class="backBtn">
+      <button ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
 
     <ion-row>
       <ion-col col-2 class="avatarCol">
         <ion-avatar item-start class="avatar">
-            <img class="userImg" src="http://placehold.it/30x30">
+          <img class="userImg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{receiverName.friendId.imageVersion}}/{{receiverName.friendId.userImage}}">
         </ion-avatar>
       </ion-col>
       
       <ion-col col-10>
         <ion-title class="titleCol" (click)="viewProfile(receiverName.name)">
-            <h2 class="userTitle">
-              {{receiverName.name}}
-              <p *ngIf="isOnline && receiverName.name && !typing" class="online">
-                Online
-              </p>
-              <p  *ngIf="typing" class="online">{{receiverName.name}} is typing ....</p>
-            </h2>
+          <h2 class="userTitle">
+            {{receiverName.name}}
+            <p *ngIf="isOnline && receiverName.name && !typing" class="online">
+              Online
+            </p>
+            <p  *ngIf="typing" class="online">{{receiverName.name}} is typing ....</p>
+          </h2>
         </ion-title>
       </ion-col>
         
@@ -28,9 +33,7 @@
 </ion-header>
 
 
-<ion-content style="margin-top:10px">
-  <ion-spinner name="circles" *ngIf="msgArray.length <= 0 && !isComplete"></ion-spinner>
-
+<ion-content style="margin-top:10px; margin-bottom: 10px">
   <div class="message-wrapper" *ngFor="let message of msgArray">
 
       <div *ngIf="senderName.username !== receiverName.name && senderName.username !== message.sendername" class="left">
@@ -52,12 +55,14 @@
       <div *ngIf="senderName.username !== receiverName.name && senderName.username !== message.sender" class="left">
         <div class="chat-bubble left slide-left" *ngIf="message.sender">
           <div *ngIf="message.text && message.sender && isAdded" class="message" [innerHTML]="message.text" autolinker></div>
+          <img *ngIf="message.image && message.sender" class="imgMsg" [src]="message.image" imageViewer >
         </div>
       </div>
   
       <div *ngIf="senderName.username === message.sender" class="right">
         <div class="chat-bubble right slide-right" *ngIf="message.sender">
           <div *ngIf="message.text && message.sender && isAdded" class="message" [innerHTML]="message.text" autolinker></div>
+          <img *ngIf="message.image && message.sender" class="imgMsg" [src]="message.image" imageViewer >
         </div>
       </div>
   
@@ -74,14 +79,10 @@
 
 <ion-footer no-border>
     <ion-item class="inputToolbar">
-      <ion-input [(ngModel)]="message" placeholder="Send a message..." (keypress)="isTyping()"></ion-input>
+      <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..." (keypress)="isTyping()"></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="addImage()">
         <ion-icon name="image"></ion-icon>
       </button>
-      <button class="imgBtn" ion-button clear item-end (click)="cameraImage()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
-
 
       <div 
         class="emoji-content-editable"
@@ -97,9 +98,9 @@
       </button>
 
 
-      <button ion-button clear item-end (click)="PrivateMessage()">
+      <label for="msgInput" ion-button clear item-end (click)="PrivateMessage()">
         <ion-icon class="footer-btn" name="send"></ion-icon>
-      </button>
+      </label>
     </ion-item>
 
     <div>

@@ -87,7 +87,7 @@ constructor(
   private profile: ProfileProvider
 ) {
   this.roomName = this.navParams.get("data");
-  // this.tabBarElement = document.querySelector('super-tabs-toolbar');
+  
   this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
   this.socketHost = 'https://soccerchatapi.herokuapp.com';
@@ -111,14 +111,11 @@ constructor(
       }
     });
 
-    setTimeout(() => {
-      this.messageProvider.getRommMessages(this.roomName.name || this.roomName)
-        .subscribe(res => {
-          this.msgArray = res.room;
-          this.getToBottom();
-        });
-        this.isComplete = true;
-    }, 3000);
+    this.messageProvider.getRommMessages(this.roomName.name || this.roomName)
+      .subscribe(res => {
+        this.msgArray = res.room;
+        this.getToBottom();
+      });
 
     this.params = {
       room: this.roomName.name || this.roomName,
@@ -127,7 +124,7 @@ constructor(
     }
 
     this.socket.emit('join', this.params, () => {
-      //console.log(`User ${this.userData.user.username} has joined room ${this.roomName.name}`);
+      
     });
 
   });
@@ -146,10 +143,10 @@ ionViewDidLoad(){
 }
 
 SendMessage() {
-  
   this.socket.connect();
   if(this.message && this.message !== ''){
-    this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${this.roomName.name || this.roomName}`)
+    let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
+    this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
       .subscribe((res: any) => {
         this.socket.emit('createMessage', {
           text: this.message,
@@ -165,7 +162,8 @@ SendMessage() {
 
 
 handleSelection(event: EmojiEvent) {
-  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${this.roomName.name || this.roomName}`)
+  let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
+  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
     .subscribe((res: any) => {
       this.emojiContent = this.emojiContent.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.emojiContent.slice(this._lastCaretEvent.caretOffset);
       this.eventMock = JSON.stringify(event);
@@ -196,7 +194,7 @@ toggleFunction(){
 saveRoomMessage(room, senderId, name, msg){
   this.messageProvider.roomMessage(room, senderId, name, msg)
     .subscribe(res => {
-      //console.log(res);
+      
     })
 }
 
@@ -264,7 +262,8 @@ ionViewWillLeave() {
 }
 
 addImage(){
-  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${this.roomName.name || this.roomName}`)
+  let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
+  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
     .subscribe((res: any) => {
       this.socket.emit('add-image', { 
         image: this.imageNewPath,
@@ -279,7 +278,7 @@ addImage(){
 
 getImage(){
   const options: CameraOptions = {
-    quality: 100,
+    quality: 50,
     destinationType: this.camera.DestinationType.DATA_URL,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
     allowEdit: false,
@@ -304,43 +303,43 @@ getImage(){
 }
 
 
-takePicture(){
-  const options: CameraOptions = {
-    quality: 85,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    sourceType: this.camera.PictureSourceType.CAMERA,
-    allowEdit: false,
-    correctOrientation: true,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE,
-    targetWidth: 220,
-    targetHeight: 200
-  };
+// takePicture(){
+//   const options: CameraOptions = {
+//     quality: 85,
+//     destinationType: this.camera.DestinationType.DATA_URL,
+//     sourceType: this.camera.PictureSourceType.CAMERA,
+//     allowEdit: false,
+//     correctOrientation: true,
+//     encodingType: this.camera.EncodingType.JPEG,
+//     mediaType: this.camera.MediaType.PICTURE,
+//     targetWidth: 220,
+//     targetHeight: 200
+//   };
 
-  this.camera.getPicture(options).then((imgUrl) => {
-    this.imageNewPath = 'data:image/jpeg;base64,' + imgUrl;
+//   this.camera.getPicture(options).then((imgUrl) => {
+//     this.imageNewPath = 'data:image/jpeg;base64,' + imgUrl;
 
-    this.addImage();
-    let roomName = this.roomName.name || this.roomName;
-    this.imagesProvider.addImage(this.imageNewPath, roomName, this.userData.user._id, this.userData.user.username)
-      .subscribe(res => {
+//     this.addImage();
+//     let roomName = this.roomName.name || this.roomName;
+//     this.imagesProvider.addImage(this.imageNewPath, roomName, this.userData.user._id, this.userData.user.username)
+//       .subscribe(res => {
 
-      })
+//       })
 
-  }, (err) => {
+//   }, (err) => {
     
-  });
-}
+//   });
+// }
 
 
   
 
 getToBottom() {
   setTimeout(() => {
-      if (this.content.scrollToBottom) {
+      if (this.content._scroll) {
           this.content.scrollToBottom();
       }
-  }, 1);
+  }, 1)
 
 //   this.mutationObserver = new MutationObserver((mutations) => {
 //     this.content.scrollToBottom();

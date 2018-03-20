@@ -12,17 +12,17 @@ export class MessageProvider {
 
   getMessages(sender, receiver): Observable<any>{
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/user/message/${sender}/${receiver}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/user/message/${sender.replace(/ /g, '-')}/${receiver.replace(/ /g, '-')}`);
   }
 
   getMessage(id, sendername): Observable<any>{
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/message/${id}/${sendername}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/message/${id}/${sendername.replace(/ /g, '-')}`);
   }
 
   saveMessage(sender, receiver, sendername, receivername, message?): Observable<any> {
     return this.http 
-      .post(`https://soccerchatapi.herokuapp.com/api/user/message/${sender}/${receiver}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/user/message/${sender.replace(/ /g, '-')}/${receiver.replace(/ /g, '-')}`, {
         sender: sender,
         receiver: receiver,
         sendername: sendername,
@@ -33,7 +33,7 @@ export class MessageProvider {
 
   markMessage(receiver): Observable<any> {
     return this.http 
-      .post(`https://soccerchatapi.herokuapp.com/api/chatmessages/${receiver}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/chatmessages/${receiver.replace(/ /g, '-')}`, {
         // sender: sender,
         receiver: receiver
       });
@@ -41,12 +41,12 @@ export class MessageProvider {
 
   getRommMessages(room): Observable<any>{
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/roomname/${room}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/roomname/${room.replace(/ /g, '-')}`);
   }
 
   roomMessage(room, senderId, name, msg?): Observable<any> {
     return this.http
-      .post(`https://soccerchatapi.herokuapp.com/api/roomname/${room}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/roomname/${room.replace(/ /g, '-')}`, {
         room: room,
         senderId: senderId,
         name: name,
@@ -75,7 +75,7 @@ export class MessageProvider {
 
   getUserName(username): Observable<any>{
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/user/${username}`)
+      .get(`https://soccerchatapi.herokuapp.com/api/user/${username.replace(/ /g, '-')}`)
   }
 
 }

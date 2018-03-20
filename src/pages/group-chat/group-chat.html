@@ -31,7 +31,6 @@
 
 
 <ion-content>
-  <ion-spinner name="circles" *ngIf="msgArray.length <= 0 && !isComplete"></ion-spinner>
   <div class="message-wrapper" *ngFor="let message of msgArray">
 
     <div *ngIf="userData.user.username !== message.name" class="left">
@@ -43,7 +42,7 @@
         </div>
         <div *ngIf="message.message" class="message" [innerHTML]="message.message" autolinker></div>
         
-        <img *ngIf="message.imageId && message.name" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        <img *ngIf="message.imageId && message.name" class="imgMsg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
 
       </div>
     </div>
@@ -59,7 +58,7 @@
         </div>
         <div *ngIf="message.message" class="message" [innerHTML]="message.message" autolinker></div>
         
-        <img *ngIf="message.imageId && message.name" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        <img *ngIf="message.imageId && message.name" class="imgMsg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
       </div>
     </div>
 
@@ -74,7 +73,7 @@
         <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
 
 
-        <img *ngIf="message.image && message.from" [src]="message.image" imageViewer >
+        <img *ngIf="message.image && message.from" class="imgMsg" [src]="message.image" imageViewer >
 
       </div>
     </div>
@@ -87,7 +86,7 @@
         </div>
         <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
 
-        <img *ngIf="message.image && message.from" [src]="message.image" imageViewer >
+        <img *ngIf="message.image && message.from" class="imgMsg" [src]="message.image" imageViewer >
 
       </div>
     </div>
@@ -106,15 +105,10 @@
 
 <ion-footer>
     <ion-item class="inputToolbar">
-      <ion-input [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..."></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="getImage()">
         <ion-icon name="image"></ion-icon>
       </button>
-
-      <button class="imgBtn" ion-button clear item-end (click)="takePicture()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
-
 
       <div 
         class="emoji-content-editable"
@@ -129,9 +123,9 @@
         😄
       </button>
 
-      <button ion-button clear item-end (click)="SendMessage()">
+      <label for="msgInput" ion-button clear item-end (click)="SendMessage()">
         <ion-icon class="footer-btn" name="send"></ion-icon>
-      </button>
+      </label>
       
     </ion-item>
 

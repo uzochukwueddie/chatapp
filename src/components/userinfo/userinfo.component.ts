@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { RoomsProvider } from '../../providers/rooms/rooms';
-import { AlertController } from 'ionic-angular';
+import { AlertController, ToastController, Platform } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagesProvider } from '../../providers/images/images';
+import { DomSanitizer } from '@angular/platform-browser';
+import * as io from 'socket.io-client';
 
 
 @Component({
@@ -19,17 +23,43 @@ export class UserinfoComponent {
   gender: string;
   city: string;
   username: string;
+  image: any;
+  userImage: any;
+  imgVersion = 0;
+  headerImage: any;
+  userImg: any;
+
+  socketHost: any;
+  socket: any;
 
   constructor(
     private profile: ProfileProvider,
     private rm: RoomsProvider,
     private alertCtrl: AlertController,
+    private camera: Camera,
+    private imageProvider: ImagesProvider,
+    private toastCtrl: ToastController,
+    private sanitization: DomSanitizer,
+    private platform: Platform
   ) {
-    
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.platform.ready().then(() => {
+      this.socket = io(this.socketHost);
+
+      this.socket.emit('user image', {
+        room: 'profilepic'
+      });
+    })
   }
 
   ngOnInit(){
     this.getUserData();
+
+    this.platform.ready().then(() => {
+      this.socket.on('profile image', (data) => {
+        this.userImg = data.image
+      });
+    })
   }
 
   getUserData(){
@@ -46,6 +76,12 @@ export class UserinfoComponent {
             this.club = res.profile.club;
             this.gender = res.profile.gender;
             this.city = res.profile.city;
+
+            this.userImage = res.profile.userImage
+            this.imgVersion = res.profile.imageVersion
+
+            let url = `http://res.cloudinary.com/soccerkik/image/upload/v${this.imgVersion}/${this.userImage}`;
+            this.headerImage = this.sanitization.bypassSecurityTrustStyle(`url(${url})`);
           });
       });
   }
@@ -111,6 +147,40 @@ export class UserinfoComponent {
       });
       alert.present();
     }
+  }
+
+  addImage(){
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: false,
+      correctOrientation: true,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+  
+    this.camera.getPicture(options).then((imgUrl) => {
+      this.image = 'data:image/jpeg;base64,' + imgUrl;
+
+      this.socket.emit('profile-img', {
+        image: this.image,
+        room: 'profilepic'
+      });
+
+      this.imageProvider.addProfilePic(this.username, this.image)
+        .subscribe(res => {
+          let toast = this.toastCtrl.create({
+            message: res.message,
+            duration: 3000,
+            position: 'bottom'
+          });
+          toast.present();
+        })
+
+    }, (err) => {
+      
+    });
   }
 
 }
