@@ -87,7 +87,7 @@ export class MyApp implements OnInit, OnDestroy {
           this.storage.get("username").then(value => {
             let newValue = value.replace(/ /g, '-');
             this.http
-            .get(`https://soccerchatapi.herokuapp.com//api/user/${newValue}`)
+            .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
               .subscribe((res: any) => {
                 let params = {
                   room: 'global',

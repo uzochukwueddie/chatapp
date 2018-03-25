@@ -12,12 +12,12 @@ export class ProfileProvider {
 
   public getProfile(username): Observable<any>{
     return this.http
-        .get(`https://soccerchatapi.herokuapp.com//api/user/profile/${username.replace(/ /g, '-')}`);
+        .get(`https://soccerchatapi.herokuapp.com/api/user/profile/${username.replace(/ /g, '-')}`);
   }
 
   addProfile(username, fullname, country, mantra, club, gender): Observable<any>{
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/user/profile/${username.replace(/ /g, '-')}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/profile/${username.replace(/ /g, '-')}`, {
           username: username,
           name: fullname,
           country: country,
@@ -29,7 +29,7 @@ export class ProfileProvider {
 
   addInterest(username, club, players): Observable<any>{
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/user/interest/${username.replace(/ /g, '-')}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/interest/${username.replace(/ /g, '-')}`, {
           username: username,
           clubs: club,
           players: players
@@ -38,7 +38,7 @@ export class ProfileProvider {
 
   deleteValues(username?, playername?): Observable<any>{
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/favplayer/delete/${username.replace(/ /g, '-')}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/favplayer/delete/${username.replace(/ /g, '-')}`, {
           playerUser: username,
           playername: playername
         });
@@ -46,7 +46,7 @@ export class ProfileProvider {
 
   deleteTeam(username?, teamname?): Observable<any>{
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/favteam/delete/${username.replace(/ /g, '-')}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/favteam/delete/${username.replace(/ /g, '-')}`, {
           teamUser: username,
           teamname: teamname
         });
@@ -54,7 +54,7 @@ export class ProfileProvider {
 
   changePassword(password, cpassword, username): Observable<any> {
     return this.http
-      .post(`https://soccerchatapi.herokuapp.com//api/user/change-password/${username.replace(/ /g, '-')}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/user/change-password/${username.replace(/ /g, '-')}`, {
         password: password,
         cpassword: cpassword,
         username: username

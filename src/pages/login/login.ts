@@ -37,7 +37,7 @@ export class LoginPage {
   isLoggedIn: boolean = false;
   users: any;
 
-  auth = 'https://soccerchatapi.herokuapp.com//api/protected';
+  auth = 'https://soccerchatapi.herokuapp.com/api/protected';
 
   constructor(
     public navCtrl: NavController, 

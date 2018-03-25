@@ -153,7 +153,7 @@ SendMessage() {
   this.socket.connect();
   if(this.message && this.message !== ''){
     let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-    this.http.get(`https://soccerchatapi.herokuapp.com//api/room/${roomname}`)
+    this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
       .subscribe((res: any) => {
         this.socket.emit('createMessage', {
           text: this.message,
@@ -170,7 +170,7 @@ SendMessage() {
 
 handleSelection(event: EmojiEvent) {
   let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-  this.http.get(`https://soccerchatapi.herokuapp.com//api/room/${roomname}`)
+  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
     .subscribe((res: any) => {
       this.emojiContent = this.emojiContent.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.emojiContent.slice(this._lastCaretEvent.caretOffset);
       this.eventMock = JSON.stringify(event);
@@ -270,7 +270,7 @@ ionViewWillLeave() {
 
 addImage(){
   let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-  this.http.get(`https://soccerchatapi.herokuapp.com//api/room/${roomname}`)
+  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
     .subscribe((res: any) => {
       this.socket.emit('add-image', { 
         image: this.imageNewPath,

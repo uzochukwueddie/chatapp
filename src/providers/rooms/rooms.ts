@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class RoomsProvider {
   token: any;
-  url = 'https://soccerchatapi.herokuapp.com//api/home';
+  url = 'https://soccerchatapi.herokuapp.com/api/home';
   userId: any;
 
   constructor(
@@ -27,12 +27,12 @@ export class RoomsProvider {
 
   getUser(): Observable<any>{
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com//api/user/${this.userId}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`);
   }
 
   postData(sender, receiver, senderId?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/user/${this.userId}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
           sender: sender,
           receiver: receiver,
           senderId: senderId,
@@ -40,12 +40,12 @@ export class RoomsProvider {
   }
 
   returnUser(user): Observable<any>{
-    return this.http.get(`https://soccerchatapi.herokuapp.com//api/user/${user.replace(/ /g, '-')}`);
+    return this.http.get(`https://soccerchatapi.herokuapp.com/api/user/${user.replace(/ /g, '-')}`);
   }
 
   acceptRequest(sender, receiver, senderId?, receiverId?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/user/${this.userId}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
           senderName: sender,
           receiverName: receiver,
           senderid: senderId,
@@ -55,7 +55,7 @@ export class RoomsProvider {
 
   cancelRequest(sender, receiver): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/user/${this.userId}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
           sendername: sender,
           receivername: receiver
         });
@@ -63,7 +63,7 @@ export class RoomsProvider {
 
   addFavorite(id, room, user): Observable<any> {
     return this.http
-        .post('https://soccerchatapi.herokuapp.com//api/home', {
+        .post('https://soccerchatapi.herokuapp.com/api/home', {
           id: id,
           roomName: room,
           user: user
@@ -72,14 +72,14 @@ export class RoomsProvider {
 
   searchRoom(room): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/search-room`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/search-room`, {
           room: room
         })
   }
 
   addRoom(name, country): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com//api/add-room`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/add-room`, {
           room: name,
           country: country
         });
@@ -87,7 +87,7 @@ export class RoomsProvider {
 
   blockUser(user1, user2): Observable<any> {
     return this.http
-      .post(`https://soccerchatapi.herokuapp.com//api/block-user`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/block-user`, {
         user1: user1,
         user2: user2
       });
@@ -95,7 +95,7 @@ export class RoomsProvider {
 
   unblockUser(user1, user2): Observable<any> {
     return this.http
-      .post(`https://soccerchatapi.herokuapp.com//api/unblock-user`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/unblock-user`, {
         user1: user1,
         user2: user2
       });

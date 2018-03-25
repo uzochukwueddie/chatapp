@@ -108,7 +108,7 @@ export class ProfilePage {
 
     // if(this.userValue){
     //   this.http
-    //     .get(`https://soccerchatapi.herokuapp.com//api/receiver/${this.userValue.replace(/ /g, '-')}`)
+    //     .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue.replace(/ /g, '-')}`)
     //       .subscribe((res:any) => {
     //         this.requestArray = res.messages
     //         let arr = _.uniqBy(res.messages, 'message.sendername');
@@ -121,7 +121,7 @@ export class ProfilePage {
 
     //   this.socket.on('refreshPage', (data) => {
     //     this.http
-    //     .get(`https://soccerchatapi.herokuapp.com//api/receiver/${this.userValue.replace(/ /g, '-')}`)
+    //     .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue.replace(/ /g, '-')}`)
     //       .subscribe((res:any) => {
     //         this.requestArray = res.messages
     //         let arr = _.uniqBy(res.messages, 'message.sendername');
