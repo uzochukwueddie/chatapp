@@ -38,7 +38,7 @@ export class RegisterPage {
     private loadingCtrl: LoadingController,
     private platform: Platform,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })

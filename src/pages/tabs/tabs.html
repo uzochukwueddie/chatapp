@@ -23,9 +23,9 @@
 <ion-tabs>
     <ion-tab [root]="tab1Root" tabIcon="globe" tabTitle="Streams" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="home" tabTitle="Rooms" (ionSelect)="clickTab()"></ion-tab>
-    <ion-tab [root]="tab3Root" tabIcon="chatboxes" tabTitle="Chat" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab3Root" tabIcon="chatboxes" [tabBadge] = "msgNum > 0 ? msgNum : null" tabTitle="Chat" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab4Root" tabIcon="people" tabTitle="Nearby" (ionSelect)="clickTab()"></ion-tab>
-    <ion-tab [root]="tab5Root" tabIcon="person" tabTitle="Profile" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab5Root" tabIcon="person" [tabBadge] = "requestNum > 0 ? requestNum : null" tabTitle="Profile" (ionSelect)="clickTab()"></ion-tab>
     
 </ion-tabs>
 

@@ -50,6 +50,7 @@ export class GroupChatPage {
   name: string;
   requestNum = 0;
   isComplete = false;
+  welcome: string;
 
 
   image: any;
@@ -90,7 +91,7 @@ constructor(
   
   this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
-  this.socketHost = 'https://soccerchatapi.herokuapp.com';
+  this.socketHost = 'https://soccerchatapi.herokuapp.com/';
   this.platform.ready().then(() => {
     this.socket = io(this.socketHost);
     
@@ -133,6 +134,12 @@ constructor(
 ionViewDidLoad(){ 
   this.getToBottom();
 
+  this.socket.on('welcomeMsg', (data) => {
+    setTimeout(() => {
+      this.welcome = data;
+    }, 2000)
+  })
+
   this.socket.on('usersList', (data) => {
     this.events.publish('list', data);
   });
@@ -146,7 +153,7 @@ SendMessage() {
   this.socket.connect();
   if(this.message && this.message !== ''){
     let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-    this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
+    this.http.get(`https://soccerchatapi.herokuapp.com//api/room/${roomname}`)
       .subscribe((res: any) => {
         this.socket.emit('createMessage', {
           text: this.message,
@@ -163,7 +170,7 @@ SendMessage() {
 
 handleSelection(event: EmojiEvent) {
   let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
+  this.http.get(`https://soccerchatapi.herokuapp.com//api/room/${roomname}`)
     .subscribe((res: any) => {
       this.emojiContent = this.emojiContent.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.emojiContent.slice(this._lastCaretEvent.caretOffset);
       this.eventMock = JSON.stringify(event);
@@ -263,7 +270,7 @@ ionViewWillLeave() {
 
 addImage(){
   let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
+  this.http.get(`https://soccerchatapi.herokuapp.com//api/room/${roomname}`)
     .subscribe((res: any) => {
       this.socket.emit('add-image', { 
         image: this.imageNewPath,

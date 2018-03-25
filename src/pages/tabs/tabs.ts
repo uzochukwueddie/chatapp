@@ -1,6 +1,11 @@
+import { MessageProvider } from './../../providers/message/message';
+import { RoomsProvider } from './../../providers/rooms/rooms';
 import { Component } from '@angular/core';
 import { IonicPage, Platform } from 'ionic-angular';
 import * as io from 'socket.io-client';
+import { HttpClient } from '@angular/common/http';
+import * as _ from 'lodash';
+
 
 
 @IonicPage()
@@ -14,27 +19,96 @@ export class TabsPage {
   tab2Root = "HomePage";
   tab3Root = "ChatPage";
   tab4Root = "NearPage";
-  tab5Root = "ProfilePage"
+  tab5Root = "ProfilePage";
+
+  requestNum: number;
+  userValue: any;
+  msgArray = [];
+  msgNum: number = 0;
+  numMsg = 0;
+  numReq = 0;
+
+  user: any;
+
+  badgeElement;
 
   socketHost: any;
   socket: any;
 
   constructor(
-    // public navCtrl: NavController, 
-    // public navParams: NavParams
     private platform: Platform,
+    private rm: RoomsProvider,
+    public http: HttpClient,
+    private msg: MessageProvider
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.badgeElement = document.querySelector('.badge-md');
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
   }
 
-  clickTab() {
-    this.platform.ready().then(() => {
-      this.socket.emit('refresh', {});
-      this.socket.emit('refreshUser', {});
+  ionViewDidLoad(){
+    this.getUserData();
+  }
+
+  ionViewWillEnter(){
+  }
+
+  ionViewDidEnter(){
+    this.socket.on('refreshPage', (data) => {
+      this.getUserData();
+
+      this.msgNum--;
+
+      if(this.msgNum <= 0){
+        this.msgNum = null;
+      }
     });
+  }
+
+
+  clickTab() {
+    this.socket.emit('refresh', {});
+    this.socket.emit('refreshUser', {});
+
+    this.platform.ready().then(() => {
+      // this.socket.emit('refresh', {});
+      // this.socket.emit('refreshUser', {});
+    });
+  }
+
+  getUserData(){
+    this.rm.getUser()
+      .subscribe(res => {
+        if(res.user){
+          this.userValue = res.user.username;
+          this.user = res.user;
+          if(res.user.request.length > 0){
+            this.requestNum = res.user.request.length;
+          }
+
+          this.msg.getMessage(res.user._id, res.user.username)
+            .subscribe(res => {
+              this.msgArray = res.arr; 
+
+                let newArr = []
+                _.forEach(this.msgArray, value => {
+                  _.forEach(value.msg, val => {
+                    if(val.isRead === false && val.receivername === this.userValue){
+                      //let sum = _.sumBy(value.msg, i => (i.isRead === false && i.receivername === this.userValue? 1 : 0));
+                      newArr.push(1)
+                      //let arr = newArr.slice(0, -1)
+                      
+                      this.msgNum = _.sum(newArr);
+                      
+                    }
+                  });
+                });
+            });
+          
+        }
+      });
   }
 
 }

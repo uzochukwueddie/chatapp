@@ -1,24 +1,26 @@
-<!-- <ion-list>
+
+
+<ion-spinner *ngIf="!isComplete"></ion-spinner>
+
+<ion-list>
     <ion-item class="noResultItem" *ngIf="msgArray.length <= 0 && isComplete">
-        <h2 class="noResult">No conversation started.</h2>
+        <h2 class="noResult" text-wrap>
+            No active chat. You can send friend request to users from chat rooms.
+        </h2>
     </ion-item>
-</ion-list> -->
+</ion-list>
+
+
 
 <div *ngFor="let friend of friends">
-    <ion-list>
-        <ion-item class="noResultItem" *ngIf="msgArray.length <= 0">
-            <h2 class="noResult" text-wrap>
-                No active chat. You can send friend request to users from chat rooms.
-            </h2>
-        </ion-item>
-    </ion-list>
+    
     <div *ngFor="let msg of msgArray">
         <div *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
             <ion-item *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)" 
             (click)="PrivateChatPage(friend)">
         
                 <ion-row class="myrow">
-                    <ion-col col-2>
+                    <ion-col col-2 class="imgCol">
                         <ion-avatar item-start>
                             <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.friendId.imageVersion}}/{{friend.friendId.userImage}}">
                         </ion-avatar>
@@ -31,12 +33,17 @@
                         <ion-col class="msgCol">
                             <h4 *ngFor="let msg of msgArray" class="msgCol">
                                 <p *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name && msg.message.body !== ''">
-                                    <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
-                                    </ion-icon> 
-                                    {{msg.message.body.substr(0, 10)}}...
+                                    <span *ngIf="senderName !== friend.name || !usertyping">
+                                        <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
+                                        </ion-icon> 
+                                        {{msg.message.body.substr(0, 10)}}...
+                                    </span>
+
+                                    <span *ngIf="senderName === friend.name && usertyping" class="typing">typing...</span>
                                 </p>
-                                    
+                                
                             </h4>
+                            
                         </ion-col>
         
                     </ion-col>

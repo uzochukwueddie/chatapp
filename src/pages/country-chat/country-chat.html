@@ -16,12 +16,6 @@
             <ion-icon name="menu" class="menuIcon"></ion-icon>
           </button>
           
-          <!-- <button id="notification-button" ion-button item-end clear (click)="openModal()" >
-            <ion-icon name="notifications">
-              <ion-badge id="notifications-badge" *ngIf="requestNum > 0" color="danger">{{requestNum}}</ion-badge>
-            </ion-icon>              
-          </button> -->
-          
         </ion-col>
       </ion-row>
     
@@ -31,6 +25,7 @@
 
 
 <ion-content>
+    <p class="welcome">{{welcome}}</p>
     <div class="message-wrapper" *ngFor="let message of messageArray">
   
       <div *ngIf="userData.username !== message.from" class="left">

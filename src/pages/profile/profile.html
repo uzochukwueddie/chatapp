@@ -24,21 +24,13 @@
             </ion-icon>              
         </button>
       </ion-col>
-
-      <ion-col col-3>
-        <button id="notification-button" ion-button clear (click)="openMsgModal()">
-            <ion-icon name="globe">
-              <ion-badge id="notifications-badge" color="danger" *ngIf="msgRequest > 0">{{msgRequest}}</ion-badge>
-            </ion-icon>              
-        </button>
-      </ion-col>
     </ion-row>
 
   </ion-header>
 
 <ion-content>
-  
-  <div [ngSwitch]="userprofile" >
+  <ion-spinner *ngIf="!isComplete"></ion-spinner>
+  <div [ngSwitch]="userprofile" *ngIf="isComplete">
     <ion-list *ngSwitchCase="'overview'">
       <userinfo></userinfo>
     </ion-list>

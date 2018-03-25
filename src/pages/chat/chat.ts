@@ -14,6 +14,8 @@ export class ChatPage {
 
   userName: string;
 
+  senderName: string;
+
   socketHost: any;
   socket: any
 
@@ -23,7 +25,7 @@ export class ChatPage {
     private rm: RoomsProvider,
     private platform: Platform,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });

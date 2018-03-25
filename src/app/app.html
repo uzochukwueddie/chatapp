@@ -9,7 +9,7 @@
         <ion-list>
             <ion-item *ngFor="let user of countryRoomUsers">
                 <ion-avatar item-left>
-                    <img src="http://placehold.it/30x30">
+                    <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.userdata.imageVersion}}/{{user.userdata.userImage}}">
                 </ion-avatar>
                 <h2 class="senderName" *ngIf="username !== user.name">
                     <button menuClose ion-button clear (click)="displayAlert(user)">
@@ -42,7 +42,7 @@
         <ion-list>
             <ion-item *ngFor="let user of roomUsers">
                 <ion-avatar item-left>
-                    <img src="http://placehold.it/30x30">
+                    <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.userdata.imageVersion}}/{{user.userdata.userImage}}">
                 </ion-avatar>
                 <h2 class="senderName" *ngIf="username !== user.name">
                     <button menuClose ion-button clear (click)="showAlert(user)">

@@ -28,6 +28,10 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'favorites'">
+      <ion-spinner *ngIf="!isComplete"></ion-spinner>
+      <ion-item *ngIf="clubLength <= 0 && isComplete" class="noResultItem">
+        <h2 class="noResult">No favorite teams yet.</h2>
+      </ion-item>
       <ion-item *ngFor="let club of clubs">
           <button ion-item  (click)="GroupChatPage(club)" no-lines detail-none class="btn1">
               <ion-avatar item-start>

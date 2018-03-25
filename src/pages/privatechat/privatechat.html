@@ -14,14 +14,14 @@
         </ion-avatar>
       </ion-col>
       
-      <ion-col col-10>
+      <ion-col col-10 class="nameCol">
         <ion-title class="titleCol" (click)="viewProfile(receiverName.name)">
           <h2 class="userTitle">
             {{receiverName.name}}
             <p *ngIf="isOnline && receiverName.name && !typing" class="online">
               Online
             </p>
-            <p  *ngIf="typing" class="online">{{receiverName.name}} is typing ....</p>
+            <p  *ngIf="typing" class="online">{{receiverName.name}} is typing...</p>
           </h2>
         </ion-title>
       </ion-col>
@@ -77,7 +77,7 @@
 
 
 
-<ion-footer no-border>
+<ion-footer no-border react-to-keyboard>
     <ion-item class="inputToolbar">
       <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..." (keypress)="isTyping()"></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="addImage()">
@@ -92,15 +92,16 @@
         contenteditable="true">
       </div>
 
-      <button ion-button clear item-end
+      <button class="emojiBtn" ion-button clear item-end
         (click)="toggleFunction()">
         😄
       </button>
 
 
-      <label for="msgInput" ion-button clear item-end (click)="PrivateMessage()">
+      <button class="msgBtn" ion-button clear item-end (click)="PrivateMessage()">
         <ion-icon class="footer-btn" name="send"></ion-icon>
-      </label>
+      </button>
+      
     </ion-item>
 
     <div>

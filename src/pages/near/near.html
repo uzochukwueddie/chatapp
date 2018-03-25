@@ -8,21 +8,24 @@
 
 
 <ion-content >
+  <ion-spinner *ngIf="!isComplete"></ion-spinner>
   <ion-list>
-    <ion-item class="noResultItem" *ngIf="nearByArray.length <= 0">
+    <ion-item class="noResultItem" *ngIf="nearByArray.length <= 0 && isComplete">
       <h2 class="noResult">No nearby user yet.</h2>
     </ion-item>
   </ion-list>
-  <div class="pins">
-    <ion-card class="pin" *ngFor="let user of nearByArray">
-      <button (click)="userProfile(user)" class="pinBtn">
-        <img class="userImage" src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.imageVersion}}/{{user.userImage}}">
-        <ion-item>
-          <small>{{user.username}}</small>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="rowCol" col-6 col-md-4 col-xl-3 *ngFor="let user of nearByArray" (click)="userProfile(user)">
+        <img class="image-container" src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.imageVersion}}/{{user.userImage}}">
+        <ion-item class="itemRow">
+          <small class="smallUsername">{{user.username}}</small>
           <p><small>{{distance(userData.coords.latitude, userData.coords.longitude, user.coords.latitude, user.coords.longitude)}} miles</small></p>
         </ion-item>
-      </button>
-    </ion-card>
-  </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>

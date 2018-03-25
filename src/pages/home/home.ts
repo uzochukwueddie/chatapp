@@ -17,6 +17,8 @@ export class HomePage {
   userData: any;
 
   clubs: any;
+  isComplete = false;
+  clubLength = 0;
 
 
   // private tabBarHeight;
@@ -34,7 +36,7 @@ export class HomePage {
     private events: Events
   ) {
     this.chatrooms = "clubs";
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -68,10 +70,14 @@ export class HomePage {
   }
 
   getUserData(){
-    this.rm.getUser()
-      .subscribe(res => {
-        this.clubs = res.user.favClub;
-      });
+    setTimeout(() => {
+      this.rm.getUser()
+        .subscribe(res => {
+          this.clubs = res.user.favClub;
+          this.clubLength = res.user.favClub.length;
+        });
+        this.isComplete = true
+    }, 2000);
   }
 
   ionViewWillLeave() {

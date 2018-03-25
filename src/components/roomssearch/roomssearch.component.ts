@@ -29,7 +29,7 @@ export class RoomssearchComponent {
     private events: Events
   ) {
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });

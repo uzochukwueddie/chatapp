@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, Content, Tabs } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Content, ViewController } from 'ionic-angular';
 import * as io from 'socket.io-client';
 import * as _ from 'lodash';
 import { MessageProvider } from '../../providers/message/message';
@@ -65,11 +65,12 @@ export class PrivatechatPage {
     private camera: Camera,
     private rm: RoomsProvider,
     private profile: ProfileProvider,
-    private tabs: Tabs,
+    private viewCtrl: ViewController,
   ) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
       this.receiverName = this.navParams.get('receiver');
@@ -104,12 +105,15 @@ export class PrivatechatPage {
           this.typing = false;
         }
       });
-    });
 
+
+    });
 
   }
 
   ionViewDidLoad() {
+    this.socket.emit('refresh', {});
+    
     this.rm.getUser()
       .subscribe(res => {
         let params = {
@@ -171,9 +175,6 @@ export class PrivatechatPage {
 
     this.socket.emit('myonline', {room: 'global'});
 
-    this.msg.markAsRead(this.conversationId)
-      .subscribe(res => {
-      });
   }
 
   ionViewWillLeave() {
@@ -194,20 +195,18 @@ export class PrivatechatPage {
     this.socket.emit('refresh', {});
 
     this.msg.saveMessage(this.senderId._id, this.receiverId, this.senderName.username, this.receiverName.name, this.message)
-      .subscribe(res => {})
+      .subscribe(res => {
+        this.socket.emit('refresh', {})
+      })
     this.message = "";
   }
 
   goBack() {
-    this.msg.markMessage(this.receiverName.name)
+    this.msg.markMessage(this.receiverName.name, this.senderName.username)
       .subscribe(res => {})
-
-    if(this.tabIndex === 2){
-      //console.log(this.tabs.select(this.tabIndex))
-      this.tabs.select(this.tabIndex);
-    }else {
-      this.navCtrl.parent.select(1);
-    }
+    
+    this.socket.emit('refresh', {});
+    this.viewCtrl.dismiss();
   }
 
   handleSelection(event: EmojiEvent) {

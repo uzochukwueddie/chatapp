@@ -21,6 +21,7 @@ export class CountryChatPage {
   userData: any;
   message: any;
   messageArray = [];
+  welcome: string;
 
   constructor(
     public navCtrl: NavController, 
@@ -34,7 +35,7 @@ export class CountryChatPage {
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -61,6 +62,12 @@ export class CountryChatPage {
   ionViewDidLoad() {
     this.socket.on('roomList', (data) => {
       this.events.publish('roomlist', data);
+    });
+
+    this.socket.on('welcomeMessage', (data) => {
+      setTimeout(() => {
+        this.welcome = data;
+      }, 2000)
     });
   }
 

@@ -25,9 +25,13 @@ export class StreamPage {
   postLength = 0;
   commentLength: any;
   userData: any;
-  isComplete = false;
   image: any;
   post: string;
+  userimg: any;
+  isUserImg = false;
+  isUser: string;
+
+  isComplete = false;
 
   scrollElement: any;
 
@@ -50,7 +54,7 @@ export class StreamPage {
     this.stream = "now";
     this.scrollElement = document.querySelector('div.scroll-content');
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -60,21 +64,14 @@ export class StreamPage {
     this.getPost();
 
     this.platform.ready().then(() => {
-      this.rm.getUser()
-        .subscribe(res => {
-          this.userData = res.user;
-          let params = {
-            room: 'global',
-            user: res.user.username
-          }
-          this.socket.emit('online', params);
-        });
-
       this.socket.on('refreshPage', (data) => {
         this.getPost();
       })
 
       this.socket.on('new stream', (data) => {
+        this.isUserImg = data.isUser;
+        this.isUser = data.sender;
+        this.userimg = `http://res.cloudinary.com/soccerkik/image/upload/v${data.user.imageVersion}/${data.user.userImage}`
         this.user2 = data.user;
         this.streamArray.unshift(data.msg.posts);
       });
@@ -86,6 +83,28 @@ export class StreamPage {
 
   }
 
+  ionViewDidEnter(){
+    this.loc.getCoordinates()
+      .subscribe(res => {
+        if(this.userData !== undefined){
+          this.loc.addLocation(this.userData._id, res)
+            .subscribe(res => {
+              
+            });
+        }
+      });
+
+    this.rm.getUser()
+      .subscribe(res => {
+        this.userData = res.user;
+        let params = {
+          room: 'global',
+          user: res.user.username
+        }
+        this.socket.emit('online', params);
+      });
+  }
+
   showModal() {
     this.rm.getUser()
       .subscribe(res => {
@@ -95,7 +114,7 @@ export class StreamPage {
           this.post = data.post
         });
         modal.present();
-        this.socket.emit('join stream', {"room": "stream"})
+        this.socket.emit('join stream', {"room": "stream"});
       });
   }
 
@@ -122,17 +141,20 @@ export class StreamPage {
   }
 
   getPost(){
-    this.cp.getPosts()
-      .subscribe(res => {
-        if(res.posts.length > 0) {
-          this.user = res.posts;
-          this.streamArray = res.posts;
-        }
+    setTimeout(() => {
+      this.cp.getPosts()
+        .subscribe(res => {
+          if(res.posts.length > 0) {
+            this.user = res.posts;
+            this.streamArray = res.posts;
+          }
 
-        if(res.top.length > 0) {
-          this.topPostArray = res.top
-        }
-      });
+          if(res.top.length > 0) {
+            this.topPostArray = res.top
+          }
+        });
+        this.isComplete = true
+    }, 2000);
   }
 
   viewProfile(user){
@@ -157,18 +179,6 @@ export class StreamPage {
   viewImage(value1, value2){
     const url = `http://res.cloudinary.com/soccerkik/image/upload/v${value1}/${value2}`
     this.photoViewer.show(url)
-  }
-
-  ionViewDidEnter(){
-    this.loc.getCoordinates()
-      .subscribe(res => {
-        if(this.userData !== undefined){
-          this.loc.addLocation(this.userData._id, res)
-            .subscribe(res => {
-              
-            });
-        }
-      });
   }
 
   numberFormatter(num, digits) {

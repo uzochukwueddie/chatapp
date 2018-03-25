@@ -31,7 +31,7 @@ export class StreamModalPage {
     private cp: CommentProvider,
     private camera: Camera,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -39,6 +39,10 @@ export class StreamModalPage {
 
       this.id = this.user.user._id;
       this.username = this.user.user.username;
+
+      this.socket.on('post stream', (data) => {
+        
+      });
     })
   }
 
@@ -47,7 +51,7 @@ export class StreamModalPage {
   }
 
   AddMessage() {
-    if(this.message !== undefined){
+    if(this.message !== undefined || this.message !== ''){
       this.cp.addPost(this.id, this.username, this.message, this.image)
         .subscribe(res => {
           this.socket.emit('streamMessage', {
@@ -56,6 +60,7 @@ export class StreamModalPage {
             room: "stream",
             post: res
           });
+          this.socket.emit('refresh', {});
           let img = {"postImg": this.image, "post": this.message}
           this.viewCtrl.dismiss(img)
           this.message = "";
@@ -64,7 +69,8 @@ export class StreamModalPage {
   }
 
   closeModal() {
-    this.viewCtrl.dismiss();
+    let img = {"postImg": '', "post": ''}
+    this.viewCtrl.dismiss(img)
   }
 
   getImage(){
@@ -93,7 +99,7 @@ export class StreamModalPage {
       this.getImage()
 
     }, (err) => {
-      
+      console.log(err)
     });
   }
 

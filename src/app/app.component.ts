@@ -70,7 +70,7 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   initializeApp() {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost)
@@ -78,7 +78,8 @@ export class MyApp implements OnInit, OnDestroy {
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByHexString('#4aa1f3');
       this.splashScreen.hide();
 
       this.storage.get('token').then(loggedIn => {
@@ -86,7 +87,7 @@ export class MyApp implements OnInit, OnDestroy {
           this.storage.get("username").then(value => {
             let newValue = value.replace(/ /g, '-');
             this.http
-            .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
+            .get(`https://soccerchatapi.herokuapp.com//api/user/${newValue}`)
               .subscribe((res: any) => {
                 let params = {
                   room: 'global',
@@ -132,7 +133,6 @@ export class MyApp implements OnInit, OnDestroy {
         value: `${user.name}`,
         handler: (data) => {
           alert.dismiss();
-          // this.menuCtrl.close('rightSide');
           this.profile.getProfile(user.name)
             .subscribe(res => {
               this.nav.push('UserprofilePage', {'profile': res.profile});

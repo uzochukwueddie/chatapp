@@ -1,3 +1,4 @@
+import { Keyboard } from '@ionic-native/keyboard';
 import { ViewModalPage } from './../pages/view-modal/view-modal';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -81,6 +82,7 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker'
     RoomsProvider,
     GroupProvider,
     CommentProvider,
+    Keyboard,
     Facebook,
     FileTransfer,
     File,

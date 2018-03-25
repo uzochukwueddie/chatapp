@@ -1,10 +1,7 @@
-<ion-header no-border>
-    
-</ion-header>
+<!-- <ion-header no-border></ion-header> -->
 
 
 <ion-content class="content">
-  
     <ion-segment [(ngModel)]="stream" no-border>
       <ion-segment-button value="now" isActive="true">
         Now
@@ -16,13 +13,17 @@
 
     <div [ngSwitch]="stream">
       <ion-list *ngSwitchCase="'now'" >
+        <ion-spinner *ngIf="!isComplete"></ion-spinner>
         <ion-item *ngIf="streamArray.length <= 0 && isComplete" class="noResultItem">
           <h2 class="noResult">No streams today yet.</h2>
         </ion-item>
         <ion-item *ngFor="let stream of streamArray" class="content-item1">
             <ion-card class="content-card1">
               <ion-item class="cardItem">
-                <ion-avatar class="ionAvatar" item-start>
+                <ion-avatar class="ionAvatar" item-start *ngIf="isUser === stream.username">
+                  <img class="userImg" src="{{userimg}}">
+                </ion-avatar>
+                <ion-avatar class="ionAvatar" item-start *ngIf="stream.user.imageVersion && stream.user.userImage && isUser !== stream.user.username">
                   <img class="userImg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{stream.user.imageVersion}}/{{stream.user.userImage}}">
                 </ion-avatar>
                 <h2 class="username" ion-button clear (click)="viewProfile(stream.username || stream.user.username)">
@@ -65,13 +66,14 @@
       </ion-list>
 
       <ion-list *ngSwitchCase="'top'">
+          <ion-spinner *ngIf="!isComplete"></ion-spinner>
         <ion-item *ngIf="topPostArray.length <= 0 && isComplete" class="noResultItem">
           <h2 class="noResult">No top streams at the moment</h2>
         </ion-item>
         
         <ion-item *ngFor="let top of topPostArray" class="content-item1">
             <ion-card class="content-card1">
-              <ion-item>
+              <ion-item class="cardItem">
                 <ion-avatar class="ionAvatar" item-start>
                     <img class="userImg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{top.user.imageVersion}}/{{top.user.userImage}}">
                 </ion-avatar>

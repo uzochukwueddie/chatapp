@@ -1,9 +1,5 @@
 page-privatechat {
     ion-header{
-        userImg{
-            border-radius: 50%;
-        }
-
         .avatar{
           max-width: 50px;
           max-height: 50px;
@@ -33,16 +29,20 @@ page-privatechat {
 
         .avatarCol{
             margin-left: -5px;
+            max-width: 50px !important;
         }
 
         .titleCol{
             margin-left: -15px;
+            margin-top: 5px;
         }
 
         .userTitle{
             font-size: 17px;
+            font-weight: bold;
             margin-top: 12px;
-            margin-bottom: 0px;
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
         }
 
         avatar{
@@ -53,6 +53,7 @@ page-privatechat {
             font-size: 10px;
             color: white;
             margin-top: auto;
+            margin-bottom: 0px !important;
         }
 
         .back-button.show-back-button {
@@ -111,7 +112,7 @@ page-privatechat {
       }
       
       .message {
-        font-size: 12px;
+        font-size: 16px;
       }
       
       .message-detail {
@@ -225,6 +226,7 @@ page-privatechat {
 
     .imgBtn{
         color: white;
+        padding: 0px !important;
     }
       
       /* loading */
@@ -288,4 +290,64 @@ page-privatechat {
     .scroll-content{
       bottom: 10px !important;
     }
+
+    ion-footer{
+      .item-md{
+        height: 50px;
+      }
+
+      .text-input{
+        font-size: 16px !important;
+      }
+
+      .ion-md-image:before{
+        font-size: 20px !important;
+      }
+
+      .msgBtn {
+        padding: 0px !important;
+      }
+
+      .msgBtn .footer-btn{
+        font-size: 30px !important;
+      }
+
+      .emojiBtn{
+        font-size: 20px !important;
+        padding: 10px !important;
+      }
+
+    }
 }
+
+// @media (min-width: 0px) {
+    
+// }
+
+// @media (min-width: 320px) {
+    
+// }
+
+// @media (min-width: 420px) {
+//   .avatarCol{
+//       margin-left: 0px !important;
+//       border: 1px solid yellow;
+//       width: 50px;
+//   }
+// }
+
+// @media (min-width: 600px) {
+//   .avatarCol{
+//       margin-left: 0px !important;
+//       border: 1px solid yellow;
+//       width: 50px;
+//   }
+// }
+
+// @media (min-width: 720px) {
+//   .avatarCol{
+//       margin-left: 0px !important;
+//       border: 1px solid yellow;
+//       width: 50px;
+//   }
+// }

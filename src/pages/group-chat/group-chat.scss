@@ -5,6 +5,12 @@ page-group-chat {
         }
     }
 
+    .welcome{
+      font-size: 16px;
+      text-align: center;
+      color: #4aa1f3;
+    }
+
     .item-inner{
         border: none !important;
     }
@@ -95,7 +101,7 @@ page-group-chat {
       }
       
       .message {
-        font-size: 14px;
+        font-size: 16px;
       }
       
       .message-detail {
@@ -209,6 +215,7 @@ page-group-chat {
 
     .imgBtn{
         color: white;
+        padding: 0px !important;
     }
       
       /* loading */
@@ -308,12 +315,38 @@ page-group-chat {
 
     emoji-content{
       width: 100% !important;
-      // margin-left: 0px !important;
-      // right: -50px;
     }
 
     .inputToolbar{
       margin-bottom: -44px;
+    }
+
+    ion-footer{
+      .item-md{
+        height: 50px;
+      }
+
+      .text-input{
+        font-size: 16px !important;
+      }
+
+      .ion-md-image:before{
+        font-size: 20px !important;
+      }
+
+      .msgBtn {
+        padding: 0px !important;
+      }
+
+      .msgBtn .footer-btn{
+        font-size: 30px !important;
+      }
+
+      .emojiBtn{
+        font-size: 20px !important;
+        padding: 10px !important;
+      }
+
     }
 
     

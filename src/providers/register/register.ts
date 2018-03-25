@@ -12,11 +12,11 @@ export class RegisterProvider {
   token: any;
   user: any;
 
-  url = 'https://soccerchatapi.herokuapp.com/api/register';
-  loginUrl = 'https://soccerchatapi.herokuapp.com/api/login';
-  auth = 'https://soccerchatapi.herokuapp.com/api/protected';
+  url = 'https://soccerchatapi.herokuapp.com//api/register';
+  loginUrl = 'https://soccerchatapi.herokuapp.com//api/login';
+  auth = 'https://soccerchatapi.herokuapp.com//api/protected';
 
-  socketHost: string = 'https://soccerchatapi.herokuapp.com';
+  socketHost: string = 'https://soccerchatapi.herokuapp.com/';
   socket: any;
   socketObserver: any;
 

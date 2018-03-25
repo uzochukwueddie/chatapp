@@ -13,6 +13,9 @@ import moment from 'moment';
 })
 export class ChatComponent {
 
+  usertyping: boolean;
+  senderName: string;
+
   friends: any;
   user: any;
   onlineUser: any;
@@ -39,9 +42,12 @@ export class ChatComponent {
     private platform: Platform,
     private msg: MessageProvider,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
+
+      this.usertyping = false;
+      this.senderName = '';
     });
   }
 
@@ -67,19 +73,36 @@ export class ChatComponent {
         });
     });
 
-    this.rm.getUser()
-      .subscribe(res => {
-        let params = {
-          room: 'global',
-          user: res
-        }
-        this.socket.emit('online', params);
+    setTimeout(() => {
+      this.rm.getUser()
+        .subscribe(res => {
+          let params = {
+            room: 'global',
+            user: res
+          }
+          this.socket.emit('online', params);
 
-        this.msg.getMessage(res.user._id, res.user.username)
-          .subscribe(res => {
-            this.msgArray = res.arr;
-          });
-      }); 
+          this.msg.getMessage(res.user._id, res.user.username)
+            .subscribe(res => {
+              this.msgArray = res.arr;
+            });
+        });
+        this.isComplete = true 
+    }, 2000)
+
+    this.socket.on('start_typing',(data)=>{
+      if(data.receiver === this.userName){
+        this.senderName = data.sender;
+        this.usertyping = true;
+      }
+    });
+
+    this.socket.on('stop_typing',(data)=>{
+      if(data.receiver === this.userName){
+        this.senderName = data.sender;
+        this.usertyping = false;
+      }
+    });
   }
 
   ngAfterViewInit(){
@@ -89,19 +112,24 @@ export class ChatComponent {
   }
 
   getUserData(){
-    this.rm.getUser()
-      .subscribe(res => {
-        this.friends = res.user.friends;
-        this.user = res.user;
-        this.userName = res.user.username;
-      });
+    setTimeout(() => {
+      this.rm.getUser()
+        .subscribe(res => {
+          this.friends = res.user.friends;
+          this.user = res.user;
+          this.userName = res.user.username;
+        });
+        this.isComplete = true;
+    }, 2000);
   }
 
   PrivateChatPage(friend) {
     this.socket.emit('refresh', {});
     this.navCtrl.push("PrivatechatPage", {"receiver": friend, "sender": this.user, tabIndex: 2})
-    this.msg.markMessage(this.userName)
-      .subscribe(res => {})
+    this.msg.markMessage(friend.name, this.userName)
+      .subscribe(res => {
+        this.socket.emit('refresh', {});
+      })
   }
 
   checkValue(value , arr){

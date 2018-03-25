@@ -11,4 +11,9 @@ page-tabs {
     .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
         border: 0.1px solid #4aa1f3 !important;
     }
+
+    .tab-badge{
+        background: red;
+        color: white;
+    }
 }

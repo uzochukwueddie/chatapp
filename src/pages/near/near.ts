@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LocationProvider } from '../../providers/location/location';
@@ -17,12 +18,16 @@ export class NearPage {
   location: any;
   userData: any;
   nearByArray = [];
+  imagesDisplay: any;
+
+  isComplete = false;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private loc: LocationProvider,
-    private rm: RoomsProvider
+    private rm: RoomsProvider,
+    private sanitization: DomSanitizer,
   ) {
   }
 
@@ -36,11 +41,14 @@ export class NearPage {
   }
 
   ionViewDidEnter(){
-    this.loc.getLocations(this.location)
-      .subscribe(res => {
-        _.remove(res.nearby, {username: this.userData.username})
-        this.nearByArray = res.nearby
-      });
+    setTimeout(() => {
+      this.loc.getLocations(this.location)
+        .subscribe(res => {
+          _.remove(res.nearby, {username: this.userData.username})
+          this.nearByArray = res.nearby
+        });
+        this.isComplete = true;
+    }, 2000)
   }
 
   distance(lat1, lon1, lat2, lon2) {
@@ -55,6 +63,10 @@ export class NearPage {
 
   userProfile(user){
     this.navCtrl.push('UserprofilePage', {"profile": user})
+  }
+
+  userImage(value1, value2){
+    return this.sanitization.bypassSecurityTrustStyle(`http://res.cloudinary.com/soccerkik/image/upload/v${value1}/${value2}`);
   }
 
 }

@@ -31,6 +31,8 @@
 
 
 <ion-content>
+  <p class="welcome">{{welcome}}</p>
+  
   <div class="message-wrapper" *ngFor="let message of msgArray">
 
     <div *ngIf="userData.user.username !== message.name" class="left">
@@ -47,8 +49,6 @@
       </div>
     </div>
 
-
-
     <div *ngIf="userData.user.username === message.name" class="right">
       
       <div class="chat-bubble right slide-right" *ngIf="message.name" (click)="viewProfile(message.name)">
@@ -61,6 +61,9 @@
         <img *ngIf="message.imageId && message.name" class="imgMsg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
       </div>
     </div>
+
+
+    
 
 
 
@@ -105,7 +108,7 @@
 
 <ion-footer>
     <ion-item class="inputToolbar">
-      <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <ion-input [(ngModel)]="message" placeholder="Send a message..."></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="getImage()">
         <ion-icon name="image"></ion-icon>
       </button>
@@ -118,14 +121,14 @@
         contenteditable="true">
       </div>
 
-      <button ion-button clear item-end
+      <button class="emojiBtn" ion-button clear item-end
         (click)="toggleFunction()">
         😄
       </button>
 
-      <label for="msgInput" ion-button clear item-end (click)="SendMessage()">
+      <button class="msgBtn" ion-button clear item-end (click)="SendMessage()">
         <ion-icon class="footer-btn" name="send"></ion-icon>
-      </label>
+      </button>
       
     </ion-item>
 

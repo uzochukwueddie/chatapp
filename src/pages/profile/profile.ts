@@ -48,6 +48,8 @@ export class ProfilePage {
   isProfile = false;
   isNotProfile = false;
 
+  isComplete = false;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -60,11 +62,16 @@ export class ProfilePage {
     public http: HttpClient,
     private platform: Platform
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })
-    this.userprofile = "overview";
+    
+    setTimeout(() => {
+      this.userprofile = "overview";
+      this.isComplete = true;
+    }, 2000)
+
     this.getId();
   }
 
@@ -93,34 +100,41 @@ export class ProfilePage {
 
     this.rm.getRooms()
       .subscribe(res => {
-        this.rooms = res.rooms;
+        this.rooms = res.rooms
       });
 
-    this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue.replace(/ /g, '-')}`)
-      .subscribe((res:any) => {
-        this.requestArray = res.messages
-        let arr = _.uniqBy(res.messages, 'message.sendername');
-        _.forEach(arr, (val) => {
-          if(val.message.isRead === false){
-            this.msgRequest += 1;
-          }
-        });
-      });
 
-    this.socket.on('refreshPage', (data) => {
-      this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/receiver/${this.userValue.replace(/ /g, '-')}`)
-      .subscribe((res:any) => {
-        this.requestArray = res.messages
-        let arr = _.uniqBy(res.messages, 'message.sendername');
-        _.forEach(arr, (val) => {
-          if(val.message.isRead === true){
-            this.msgRequest -= 1
-          }
-        })
-      });
-    });
+    
+
+    // if(this.userValue){
+    //   this.http
+    //     .get(`https://soccerchatapi.herokuapp.com//api/receiver/${this.userValue.replace(/ /g, '-')}`)
+    //       .subscribe((res:any) => {
+    //         this.requestArray = res.messages
+    //         let arr = _.uniqBy(res.messages, 'message.sendername');
+    //         _.forEach(arr, (val) => {
+    //           if(val.message.isRead === false){
+    //             this.msgRequest += 1;
+    //           }
+    //         });
+    //       });
+
+    //   this.socket.on('refreshPage', (data) => {
+    //     this.http
+    //     .get(`https://soccerchatapi.herokuapp.com//api/receiver/${this.userValue.replace(/ /g, '-')}`)
+    //       .subscribe((res:any) => {
+    //         this.requestArray = res.messages
+    //         let arr = _.uniqBy(res.messages, 'message.sendername');
+    //         _.forEach(arr, (val) => {
+    //           if(val.message.isRead === true){
+    //             this.msgRequest -= 1
+    //           }
+    //         })
+    //       });
+    //   });
+    // }
+
+
   }
   
 
