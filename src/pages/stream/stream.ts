@@ -7,6 +7,7 @@ import moment from "moment";
 import { LocationProvider } from '../../providers/location/location';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+// import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -15,6 +16,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
   templateUrl: 'stream.html',
 })
 export class StreamPage {
+
+  userInfo: any;
 
   stream: any;
   user: any;
@@ -49,18 +52,20 @@ export class StreamPage {
     private loc: LocationProvider,
     private alertCtrl: AlertController,
     private profile: ProfileProvider,
-    private photoViewer: PhotoViewer
+    private photoViewer: PhotoViewer,
+    // private storage: Storage,
   ) {
     this.stream = "now";
     this.scrollElement = document.querySelector('div.scroll-content');
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
   }
 
   ionViewDidLoad() {
+
     this.getPost();
 
     this.platform.ready().then(() => {
@@ -96,12 +101,14 @@ export class StreamPage {
 
     this.rm.getUser()
       .subscribe(res => {
-        this.userData = res.user;
-        let params = {
-          room: 'global',
-          user: res.user.username
+        if(res.user){
+          this.userData = res.user;
+          let params = {
+            room: 'global',
+            user: res.user.username
+          }
+          this.socket.emit('online', params);
         }
-        this.socket.emit('online', params);
       });
   }
 

@@ -1,13 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Storage } from '@ionic/storage';
 
 
 @Injectable()
 export class MessageProvider {
 
-  constructor(public http: HttpClient) {
-    
+  username: any;
+
+  constructor(
+    public http: HttpClient,
+    private storage: Storage,
+  ) {
+    this.getDataFromToken();
   }
 
   getMessages(sender, receiver): Observable<any>{
@@ -63,6 +69,7 @@ export class MessageProvider {
           senderId: senderId,
           receiverId: receiverId
         });
+        
   }
 
 
@@ -76,6 +83,17 @@ export class MessageProvider {
   getUserName(username): Observable<any>{
     return this.http
       .get(`https://soccerchatapi.herokuapp.com/api/user/${username.replace(/ /g, '-')}`)
+  }
+
+  getDataFromToken() {
+    this.storage.get("token").then(token => {
+      let payload;
+      if (token) {
+        payload = token.split('.')[1];
+        payload = window.atob(payload);
+        this.username = JSON.parse(payload).data.username;
+      }
+    })
   }
 
 }

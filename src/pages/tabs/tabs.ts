@@ -42,7 +42,7 @@ export class TabsPage {
     private msg: MessageProvider
   ) {
     this.badgeElement = document.querySelector('.badge-md');
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -64,7 +64,13 @@ export class TabsPage {
       if(this.msgNum <= 0){
         this.msgNum = null;
       }
-    });
+
+      this.requestNum--;
+
+      if(this.requestNum <= 0){
+        this.requestNum = null;
+      }
+    })
   }
 
 
@@ -96,12 +102,8 @@ export class TabsPage {
                 _.forEach(this.msgArray, value => {
                   _.forEach(value.msg, val => {
                     if(val.isRead === false && val.receivername === this.userValue){
-                      //let sum = _.sumBy(value.msg, i => (i.isRead === false && i.receivername === this.userValue? 1 : 0));
                       newArr.push(1)
-                      //let arr = newArr.slice(0, -1)
-                      
                       this.msgNum = _.sum(newArr);
-                      
                     }
                   });
                 });

@@ -90,8 +90,10 @@ page-group-chat {
       }
 
       img.imgMsg{
-        width: auto;
-        height: auto;
+        height: auto; 
+        width: auto; 
+        max-width: 80%; 
+        max-height: 250px;
       }
       
       .ion-email {

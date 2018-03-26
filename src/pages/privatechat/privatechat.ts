@@ -70,7 +70,7 @@ export class PrivatechatPage {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
       this.receiverName = this.navParams.get('receiver');
@@ -264,7 +264,7 @@ export class PrivatechatPage {
   addImage(){
 
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: false,

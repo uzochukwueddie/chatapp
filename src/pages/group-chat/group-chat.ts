@@ -91,7 +91,7 @@ constructor(
   
   this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
-  this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+  this.socketHost = 'https://soccerchatapi.herokuapp.com';
   this.platform.ready().then(() => {
     this.socket = io(this.socketHost);
     
@@ -285,13 +285,15 @@ addImage(){
 
 getImage(){
   const options: CameraOptions = {
-    quality: 50,
+    quality: 100,
     destinationType: this.camera.DestinationType.DATA_URL,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
     allowEdit: false,
     correctOrientation: true,
     encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
+    mediaType: this.camera.MediaType.PICTURE,
+    // targetWidth: 100,
+    // targetHeight: 100
   };
 
   this.camera.getPicture(options).then((imgUrl) => {
@@ -319,8 +321,8 @@ getImage(){
 //     correctOrientation: true,
 //     encodingType: this.camera.EncodingType.JPEG,
 //     mediaType: this.camera.MediaType.PICTURE,
-//     targetWidth: 220,
-//     targetHeight: 200
+    // targetWidth: 220,
+    // targetHeight: 200
 //   };
 
 //   this.camera.getPicture(options).then((imgUrl) => {

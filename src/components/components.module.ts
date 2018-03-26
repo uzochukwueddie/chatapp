@@ -1,6 +1,5 @@
 import { IonicModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
-import { SendMessageBoxComponent } from './send-message-box/send-message-box.component';
 import { GroupMessageComponent } from './group-message/group-message.component';
 import { AccountComponent } from './account/account.component';
 import { UserinfoComponent } from './userinfo/userinfo.component';
@@ -13,7 +12,6 @@ import { CountriesComponent } from './countries/countries.component'
 
 @NgModule({
 	declarations: [
-		SendMessageBoxComponent,
 		GroupMessageComponent,
     AccountComponent,
     UserinfoComponent,
@@ -26,7 +24,6 @@ import { CountriesComponent } from './countries/countries.component'
 	],
 	imports: [IonicModule],
 	exports: [
-		SendMessageBoxComponent,
 		GroupMessageComponent,
     AccountComponent,
     UserinfoComponent,

@@ -42,7 +42,7 @@ export class ChatComponent {
     private platform: Platform,
     private msg: MessageProvider,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

@@ -38,7 +38,7 @@ export class MessageModalPage {
       let arr = _.uniqBy(msgArray, 'message.sendername');
       this.msgRequest = arr;
 
-      this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+      this.socketHost = 'https://soccerchatapi.herokuapp.com';
       this.platform.ready().then(() => {
         this.socket = io(this.socketHost);
 

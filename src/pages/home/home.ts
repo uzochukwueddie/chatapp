@@ -36,7 +36,7 @@ export class HomePage {
     private events: Events
   ) {
     this.chatrooms = "clubs";
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

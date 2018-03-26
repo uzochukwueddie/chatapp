@@ -38,7 +38,7 @@ export class RegisterPage {
     private loadingCtrl: LoadingController,
     private platform: Platform,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })
@@ -48,22 +48,25 @@ export class RegisterPage {
     this.showLoader();
 
     this.reg.createUser(this.username, this.email, this.password)
-            .subscribe(res => {
-              this.loading.dismiss();
-              this.storage.set('token', res.token);
-              this.storage.set('username', res.user.username);
-              this.socket.emit('join stream', {"room": "stream"});
-              this.navCtrl.setRoot("TabsPage");
-            }, err => {
-              this.loading.dismiss();
-              let alert = this.alertCtrl.create({
-                title: 'Signup Error',
-                subTitle: `${err.error.message}`,
-                buttons: ['OK'],
-                cssClass: 'alertCss'
-              })
-              return alert.present();
-            });
+      .subscribe(res => {
+        this.loading.dismiss();
+        if(res.user){
+          this.storage.set('token', res.token);
+          this.storage.set('username', res.user.username);
+          this.socket.emit('join stream', {"room": "stream"});
+          this.navCtrl.setRoot("TabsPage");
+        }
+
+        if(res.error){
+          let alert = this.alertCtrl.create({
+            title: 'Signup Error',
+            subTitle: `${res.error}`,
+            buttons: ['OK'],
+            cssClass: 'alertCss'
+          })
+          return alert.present();
+        }
+      });
   }
 
   LoginPage() {

@@ -62,7 +62,7 @@ export class LoginPage {
     .catch(e => console.log(e));
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -105,15 +105,17 @@ LoginUser() {
           this.socket.emit('join stream', {"room": "stream"});
           this.navCtrl.setRoot("TabsPage");
         }
-      }, err => {
-        this.loading.dismiss();
-        let alert = this.alertCtrl.create({
-          title: 'Login Error',
-          subTitle: `${err.error.message}`,
-          buttons: ['OK'],
-          cssClass: 'alertCss'
-        })
-        return alert.present();
+
+        if(res.error) {
+          let alert = this.alertCtrl.create({
+            title: 'Login Error',
+            subTitle: `${res.error}`,
+            buttons: ['OK'],
+            cssClass: 'alertCss'
+          })
+          return alert.present();
+        }
+
       })
 }
 

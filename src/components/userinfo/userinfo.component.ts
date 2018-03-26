@@ -42,7 +42,7 @@ export class UserinfoComponent {
     private sanitization: DomSanitizer,
     private platform: Platform
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -157,7 +157,9 @@ export class UserinfoComponent {
       allowEdit: false,
       correctOrientation: true,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      // targetWidth: ,
+      // targetHeight: 
     };
   
     this.camera.getPicture(options).then((imgUrl) => {

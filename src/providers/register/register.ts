@@ -16,7 +16,7 @@ export class RegisterProvider {
   loginUrl = 'https://soccerchatapi.herokuapp.com/api/login';
   auth = 'https://soccerchatapi.herokuapp.com/api/protected';
 
-  socketHost: string = 'https://soccerchatapi.herokuapp.com/';
+  socketHost: string = 'https://soccerchatapi.herokuapp.com';
   socket: any;
   socketObserver: any;
 
@@ -66,11 +66,17 @@ export class RegisterProvider {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
+    // return this.http
+    //   .post(this.loginUrl, {
+    //     email: email,
+    //     password: password
+    //   }, {headers: headers});
+
     return this.http
-        .post(this.loginUrl, {
-          email: email,
-          password: password
-        }, {headers: headers});
+      .post(this.loginUrl, {
+        email: email,
+        password: password
+      });
   }
 
   loadData() {

@@ -33,7 +33,7 @@ export class ModalPage {
   ) {
     this.dataUser = this.navParams.get('datauser');
     
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

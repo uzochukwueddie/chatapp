@@ -70,7 +70,7 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   initializeApp() {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost)
@@ -84,18 +84,22 @@ export class MyApp implements OnInit, OnDestroy {
 
       this.storage.get('token').then(loggedIn => {
         if(loggedIn != null){
-          this.storage.get("username").then(value => {
-            let newValue = value.replace(/ /g, '-');
+
+          let payload;
+          if (loggedIn) {
+            payload = loggedIn.split('.')[1];
+            payload = window.atob(payload);
+            let newValue = JSON.parse(payload).data.username.replace(/ /g, '-');
             this.http
-            .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
-              .subscribe((res: any) => {
-                let params = {
-                  room: 'global',
-                  user: res
-                }
-                this.socket.emit('online', params);
-              });
-          });
+              .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
+                .subscribe((res: any) => {
+                  let params = {
+                    room: 'global',
+                    user: res
+                  }
+                  this.socket.emit('online', params);
+                });
+          }
           
           
           this.nav.setRoot("TabsPage");

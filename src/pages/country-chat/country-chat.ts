@@ -35,7 +35,7 @@ export class CountryChatPage {
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

@@ -9,12 +9,15 @@ export class RoomsProvider {
   token: any;
   url = 'https://soccerchatapi.herokuapp.com/api/home';
   userId: any;
+  username: any;
 
   constructor(
     private http: HttpClient,
     private storage: Storage,
   ) {
-    this.getId()
+    this.getId();
+
+    // this.getDataFromToken();
   }
 
   getRooms(): Observable<any> {
@@ -26,13 +29,15 @@ export class RoomsProvider {
   }
 
   getUser(): Observable<any>{
+    this.getDataFromToken();
+
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`); 
   }
 
   postData(sender, receiver, senderId?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`, {
           sender: sender,
           receiver: receiver,
           senderId: senderId,
@@ -45,7 +50,7 @@ export class RoomsProvider {
 
   acceptRequest(sender, receiver, senderId?, receiverId?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`, {
           senderName: sender,
           receiverName: receiver,
           senderid: senderId,
@@ -55,7 +60,7 @@ export class RoomsProvider {
 
   cancelRequest(sender, receiver): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.userId}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`, {
           sendername: sender,
           receivername: receiver
         });
@@ -110,6 +115,17 @@ export class RoomsProvider {
   getId() {
     this.storage.get("username").then(value => {
       this.userId = value.replace(/ /g, '-')
+    })
+  }
+
+  getDataFromToken() {
+    this.storage.get("token").then(token => {
+      let payload;
+      if (token) {
+        payload = token.split('.')[1];
+        payload = window.atob(payload);
+        this.username = JSON.parse(payload).data.username;
+      }
     })
   }
 

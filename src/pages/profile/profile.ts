@@ -7,7 +7,7 @@ import { RoomsProvider } from '../../providers/rooms/rooms';
 import { ModalPage } from '../modal/modal';
 // import { MessageModalPage } from '../message-modal/message-modal';
 import { HttpClient } from '@angular/common/http';
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
 import * as io from 'socket.io-client';
 
 
@@ -62,7 +62,7 @@ export class ProfilePage {
     public http: HttpClient,
     private platform: Platform
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })
@@ -70,7 +70,7 @@ export class ProfilePage {
     setTimeout(() => {
       this.userprofile = "overview";
       this.isComplete = true;
-    }, 2000)
+    }, 2000);
 
     this.getId();
   }

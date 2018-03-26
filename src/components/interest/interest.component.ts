@@ -35,7 +35,7 @@ export class InterestComponent {
     private platform: Platform,
     private countries: CountriesProvider,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com/';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
