@@ -271,8 +271,8 @@ export class PrivatechatPage {
       correctOrientation: true,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 1024,
-      targetHeight: 768,
+      targetWidth: 300,
+      targetHeight: 300,
     };
   
     this.camera.getPicture(options).then((imgUrl) => {

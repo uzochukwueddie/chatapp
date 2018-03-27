@@ -108,7 +108,7 @@
 
 <ion-footer>
     <ion-item class="inputToolbar">
-      <ion-input [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <ion-input [(ngModel)]="message" placeholder="Send a message..." id="mesgInput"></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="getImage()">
         <ion-icon name="image"></ion-icon>
       </button>
@@ -126,7 +126,7 @@
         😄
       </button>
 
-      <button class="msgBtn" ion-button clear item-end (click)="SendMessage()">
+      <button class="msgBtn" ion-button clear item-end (click)="SendMessage($event)" #sendButton>
         <ion-icon class="footer-btn" name="send"></ion-icon>
       </button>
       

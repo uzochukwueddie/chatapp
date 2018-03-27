@@ -33,9 +33,9 @@
                 <p text-wrap class="postCity" *ngIf="stream.user.city && stream.user.country"> @ {{ stream.user.city}}, {{ stream.user.country}}</p>
               </ion-item>
 
-              <div style="width: 100%;" *ngIf="stream.post === post">
+              <!-- <div style="width: 100%;" *ngIf="stream.post === post">
                 <img class="postImage" width="100%" height="250" src="{{image}}">
-              </div>
+              </div> -->
               
               <div style="width: 100%;" *ngIf="stream.imageId" >
                 <img class="postImage" width="100%" height="250" (click)="viewImage(stream.imageVersion, stream.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{stream.imageVersion}}/{{stream.imageId}}">

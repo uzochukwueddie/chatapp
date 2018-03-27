@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Renderer } from '@angular/core';
 import { 
   IonicPage, NavController, 
   NavParams, Platform, 
   Events, ModalController,
   Tabs,
   Content,
-  AlertController
+  AlertController,
+  Button
  } from 'ionic-angular';
 import * as io from 'socket.io-client';
 import { MenuController } from 'ionic-angular';
@@ -18,6 +19,7 @@ import { MessageProvider } from '../../providers/message/message';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { CaretEvent } from '@ionic-tools/emoji-picker/src';
 import { EmojiEvent } from '@ionic-tools/emoji-picker';
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 
@@ -29,6 +31,7 @@ import { EmojiEvent } from '@ionic-tools/emoji-picker';
 })
 export class GroupChatPage {
   @ViewChild(Content) content : Content;
+  @ViewChild('sendButton') sendButton: Button;
   
   tabBarElement: any;
   headerElement: any;
@@ -69,6 +72,12 @@ export class GroupChatPage {
   public emojiContent = '';
   private _lastCaretEvent: CaretEvent;
 
+  private keyboardHideSub;
+  private keybaordShowSub;
+  private textareaHeight;
+  private scrollContentElelment: any;
+  private initialTextAreaHeight
+
   
 
 constructor(
@@ -85,7 +94,9 @@ constructor(
   private imagesProvider: ImagesProvider,
   private messageProvider: MessageProvider,
   private alertCtrl: AlertController,
-  private profile: ProfileProvider
+  private profile: ProfileProvider,
+  private keyboard: Keyboard,
+  public renderer: Renderer
 ) {
   this.roomName = this.navParams.get("data");
   
@@ -94,6 +105,10 @@ constructor(
   this.socketHost = 'https://soccerchatapi.herokuapp.com';
   this.platform.ready().then(() => {
     this.socket = io(this.socketHost);
+
+    this.keyboard.show();
+
+    this.getToBottom();
     
     this.userData = this.navParams.get("user");
     this.tabIndex = this.navParams.get("tabIndex");
@@ -132,6 +147,10 @@ constructor(
 }
 
 ionViewDidLoad(){ 
+  if (this.platform.is('android')) {
+    this.addKeyboardListeners()
+  }
+
   this.getToBottom();
 
   this.socket.on('welcomeMsg', (data) => {
@@ -149,8 +168,11 @@ ionViewDidLoad(){
   });
 }
 
-SendMessage() {
+SendMessage(event) {
   this.socket.connect();
+
+  document.getElementById('msgInput').focus();
+
   if(this.message && this.message !== ''){
     let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
     this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
@@ -163,6 +185,8 @@ SendMessage() {
         this.saveRoomMessage(res.room, this.userData.user._id, this.userData.user.username, this.message)
         this.message = "";
         this.getToBottom();
+
+        document.getElementById('msgInput').focus();
       });
   }
 }
@@ -210,6 +234,10 @@ groupMenu() {
 }
 
 goBack() {
+  this.removeKeyboardListeners();
+
+  this.keyboard.close();
+
   if(this.tabIndex === 3){
     this.tab.select(this.tabIndex);
   }else {
@@ -292,8 +320,8 @@ getImage(){
     correctOrientation: true,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
-    targetWidth: 1024,
-    targetHeight: 768,
+    targetWidth: 300,
+    targetHeight: 300,
   };
 
   this.camera.getPicture(options).then((imgUrl) => {
@@ -311,34 +339,26 @@ getImage(){
   });
 }
 
+removeKeyboardListeners() {
+  this.keyboardHideSub.unsubscribe();
+  this.keybaordShowSub.unsubscribe();
+}
 
-// takePicture(){
-//   const options: CameraOptions = {
-//     quality: 85,
-//     destinationType: this.camera.DestinationType.DATA_URL,
-//     sourceType: this.camera.PictureSourceType.CAMERA,
-//     allowEdit: false,
-//     correctOrientation: true,
-//     encodingType: this.camera.EncodingType.JPEG,
-//     mediaType: this.camera.MediaType.PICTURE,
-    // targetWidth: 220,
-    // targetHeight: 200
-//   };
+addKeyboardListeners() {
 
-//   this.camera.getPicture(options).then((imgUrl) => {
-//     this.imageNewPath = 'data:image/jpeg;base64,' + imgUrl;
+  this.keyboardHideSub = this.keyboard.onKeyboardHide().subscribe(() => {
+    let newHeight = this.textareaHeight - this.initialTextAreaHeight + 44;
+    let marginBottom = newHeight + 'px';
+    this.renderer.setElementStyle(this.scrollContentElelment, 'marginBottom', marginBottom);
+  });
 
-//     this.addImage();
-//     let roomName = this.roomName.name || this.roomName;
-//     this.imagesProvider.addImage(this.imageNewPath, roomName, this.userData.user._id, this.userData.user.username)
-//       .subscribe(res => {
+  this.keybaordShowSub = this.keyboard.onKeyboardShow().subscribe((e) => {
 
-//       })
-
-//   }, (err) => {
-    
-//   });
-// }
+    let newHeight = (e['keyboardHeight']) + this.textareaHeight - this.initialTextAreaHeight;
+    let marginBottom = newHeight + 44 + 'px';
+    this.renderer.setElementStyle(this.scrollContentElelment, 'marginBottom', marginBottom);
+  });
+}
 
 
   

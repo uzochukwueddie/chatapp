@@ -29,7 +29,7 @@
 
     <ion-list *ngSwitchCase="'favorites'">
       <ion-spinner *ngIf="!isComplete"></ion-spinner>
-      <ion-item *ngIf="clubLength <= 0 && isComplete" class="noResultItem">
+      <ion-item *ngIf="clubLength <= 0 && isComplete && isEmpty" class="noResultItem">
         <h2 class="noResult">No favorite teams yet.</h2>
       </ion-item>
       <ion-item *ngFor="let club of clubs">

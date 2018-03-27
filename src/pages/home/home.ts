@@ -19,6 +19,7 @@ export class HomePage {
   clubs: any;
   isComplete = false;
   clubLength = 0;
+  isEmpty = false;
 
 
   // private tabBarHeight;
@@ -73,7 +74,10 @@ export class HomePage {
     setTimeout(() => {
       this.rm.getUser()
         .subscribe(res => {
-          this.clubs = res.user.favClub;
+          if(res.user.favClub.length <= 0){
+            this.isEmpty = true;
+          }
+          this.clubs = res.user.favClub.sort()
           this.clubLength = res.user.favClub.length;
         });
         this.isComplete = true

@@ -57,7 +57,10 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker'
     HttpClientModule,
     FormsModule,
     IonicModule.forRoot(MyApp, {
-      tabsPlacement: "bottom"
+      tabsPlacement: "bottom",
+      scrollPadding: false,
+      scrollAssist: true, 
+      autoFocusAssist: false
     }),
     IonicStorageModule.forRoot(),
     // SuperTabsModule.forRoot(),
