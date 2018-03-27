@@ -45,6 +45,7 @@ export class PopoverPage {
   ionViewDidLoad(){
     this.getUserData();
     
+    
   }
 
   ionViewDidEnter(){

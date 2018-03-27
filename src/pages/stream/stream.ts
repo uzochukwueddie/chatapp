@@ -35,6 +35,9 @@ export class StreamPage {
   isUser: string;
 
   isComplete = false;
+  isEmpty = false;
+  isTopEmpty = false;
+  isTop = false;
 
   scrollElement: any;
 
@@ -151,13 +154,21 @@ export class StreamPage {
     setTimeout(() => {
       this.cp.getPosts()
         .subscribe(res => {
+          if(res.posts.length <= 0){
+            this.isEmpty = true;
+          }
+          if(res.top.length <= 0){
+            this.isTopEmpty = true;
+            this.isTop = false;
+          }
           if(res.posts.length > 0) {
             this.user = res.posts;
             this.streamArray = res.posts;
           }
 
           if(res.top.length > 0) {
-            this.topPostArray = res.top
+            this.topPostArray = res.top;
+            this.isTop = true;
           }
         });
         this.isComplete = true

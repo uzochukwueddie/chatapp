@@ -90,7 +90,9 @@ export class StreamModalPage {
       allowEdit: false,
       correctOrientation: true,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 1024,
+      targetHeight: 768,
     };
   
     this.camera.getPicture(options).then((imgUrl) => {

@@ -29,6 +29,21 @@ export class RoomsComponent {
 
       this.getName();
 
+      // this.socket.on('refreshPage', (data) => {
+      //   this.rm.getRooms()
+      //     .subscribe(res => {
+      //       this.rooms = res.rooms;
+      //     });
+      // });
+    });
+    
+  }
+
+  ngOnInit(){
+    this.getRooms();
+
+    this.platform.ready().then(() => {
+
       this.socket.on('refreshPage', (data) => {
         this.rm.getRooms()
           .subscribe(res => {
@@ -36,11 +51,6 @@ export class RoomsComponent {
           });
       });
     });
-    
-  }
-
-  ngOnInit(){
-    this.getRooms();
   }
 
   getRooms(){
@@ -61,6 +71,7 @@ export class RoomsComponent {
   }
 
   addToFavorite(room) {
+    this.socket.emit('refresh', {});
     this.rm.addFavorite(room._id, room.name, this.userData)
       .subscribe(res => {
         let toast = this.toastCtrl.create({
@@ -73,12 +84,12 @@ export class RoomsComponent {
         this.socket.emit('refresh', {});
       });
 
-      this.socket.on('refreshPage', (data) => {
-        this.rm.getRooms()
-          .subscribe(res => {
-            this.rooms = res.rooms;
-          });
-      })
+      // this.socket.on('refreshPage', (data) => {
+      //   this.rm.getRooms()
+      //     .subscribe(res => {
+      //       this.rooms = res.rooms;
+      //     });
+      // })
   }
 
   getName() {

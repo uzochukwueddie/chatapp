@@ -285,15 +285,15 @@ addImage(){
 
 getImage(){
   const options: CameraOptions = {
-    quality: 100,
+    quality: 50,
     destinationType: this.camera.DestinationType.DATA_URL,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
     allowEdit: false,
     correctOrientation: true,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE,
-    // targetWidth: 100,
-    // targetHeight: 100
+    targetWidth: 1024,
+    targetHeight: 768,
   };
 
   this.camera.getPicture(options).then((imgUrl) => {

@@ -69,7 +69,6 @@ export class MessageProvider {
           senderId: senderId,
           receiverId: receiverId
         });
-        
   }
 
 

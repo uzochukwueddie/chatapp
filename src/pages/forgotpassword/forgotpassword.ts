@@ -51,4 +51,8 @@ export class ForgotpasswordPage {
     
   }
 
+  LoginPage(){
+    this.navCtrl.push("LoginPage");
+  }
+
 }

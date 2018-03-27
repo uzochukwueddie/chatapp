@@ -33,7 +33,6 @@ export class ImagesProvider {
           senderId: senderId,
           sender: sender
         });
-        
   }
 
   postImage(name, room?, senderId?, sender?): Observable<any> {

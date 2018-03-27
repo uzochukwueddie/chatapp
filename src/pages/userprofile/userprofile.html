@@ -1,6 +1,5 @@
-<ion-content>
-    <ion-header no-border>
-      <ion-navbar transparent>
+<ion-header no-border>
+    <ion-navbar transparent>
         <ion-row>
             <ion-title class="titleBtn">
                 {{userData.username}}
@@ -8,12 +7,14 @@
         
             <ion-col class="menuCol">
                 <button class="menuBtn" ion-button icon-only clear (click)="presentPopover($event, userData.username)">
-                  <ion-icon name="more" class="menuIcon"></ion-icon>
+                    <ion-icon name="more" class="menuIcon"></ion-icon>
                 </button>
             </ion-col>
         </ion-row>
-      </ion-navbar>
-    </ion-header>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
 
     
     <div class="header-image" [style.background-image]="headerImage"></div>

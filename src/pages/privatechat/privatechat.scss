@@ -104,6 +104,13 @@ page-privatechat {
       img.profile-pic.right {
         right: 10px;
       }
+
+      img.imgMsg{
+        height: auto; 
+        width: auto; 
+        max-width: 100%; 
+        max-height: 100px;
+      }
       
       .ion-email {
         float: right;
