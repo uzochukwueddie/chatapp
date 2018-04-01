@@ -33,7 +33,7 @@ export class PopoverPage {
     public platform: Platform,
     private rm: RoomsProvider,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);

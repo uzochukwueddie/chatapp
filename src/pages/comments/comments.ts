@@ -35,7 +35,7 @@ export class CommentsPage {
     private alertCtrl: AlertController
   ) {
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

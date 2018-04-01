@@ -37,7 +37,7 @@ export class LoginPage {
   isLoggedIn: boolean = false;
   users: any;
 
-  auth = 'https://soccerchatapi.herokuapp.com/api/protected';
+  auth = 'http://localhost:3000/api/protected';
 
   constructor(
     public navCtrl: NavController, 
@@ -62,7 +62,7 @@ export class LoginPage {
     .catch(e => console.log(e));
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });

@@ -1,5 +1,6 @@
+import { MessageProvider } from './../providers/message/message';
 import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
-import { Nav, Platform, AlertController } from 'ionic-angular';
+import { Nav, Platform, AlertController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -47,7 +48,9 @@ export class MyApp implements OnInit, OnDestroy {
     private alertCtrl: AlertController,
     private rm: RoomsProvider,
     private profile: ProfileProvider,
-    private http: HttpClient
+    private http: HttpClient,
+    private menuCtrl: MenuController,
+    private msg: MessageProvider
   ) {
     
     this.initializeApp();
@@ -70,7 +73,7 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   initializeApp() {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost)
@@ -92,7 +95,7 @@ export class MyApp implements OnInit, OnDestroy {
             payload = window.atob(payload);
             let newValue = JSON.parse(payload).data.username.replace(/ /g, '-');
             this.http
-              .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
+              .get(`http://localhost:3000/api/user/${newValue}`)
                 .subscribe((res: any) => {
                   let params = {
                     room: 'global',
@@ -137,6 +140,7 @@ export class MyApp implements OnInit, OnDestroy {
         label: 'View Profile',
         value: `${user.name}`,
         handler: (data) => {
+          this.menuCtrl.close('rightSide');
           alert.dismiss();
           this.profile.getProfile(user.name)
             .subscribe(res => {
@@ -159,7 +163,17 @@ export class MyApp implements OnInit, OnDestroy {
                 receiver: user.name
               });
             })
-          
+        }
+      });
+
+      alert.addInput({
+        type: "radio",
+        label: 'Send Message',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.menuCtrl.close('rightSide');
+          alert.dismiss();
+          this.sendMessage(user.name);
         }
       });
 
@@ -173,8 +187,8 @@ export class MyApp implements OnInit, OnDestroy {
         label: 'View Profile',
         value: `${user.name}`,
         handler: (data) => {
+          this.menuCtrl.close('rightSide');
           alert.dismiss();
-          // this.menuCtrl.close('rightSide');
           this.profile.getProfile(user.name)
             .subscribe(res => {
               this.nav.push('UserprofilePage', {'profile': res.profile});
@@ -182,7 +196,23 @@ export class MyApp implements OnInit, OnDestroy {
         }
       });
 
-      alert.present();
+      alert.addInput({
+        type: "radio",
+        label: 'Send Message',
+        value: `${user.name}`,
+        handler: (data) => {
+          alert.dismiss();
+          this.menuCtrl.close('rightSide');
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              // let receiver = {"name": user.name, "friendId": res.profile}
+              // this.nav.push("PrivatechatPage", {"receiver": receiver, "sender": this.userData, tabIndex: 1});
+              this.sendMessage(user.name);
+            });
+        }
+      });
+
+      alert.present()
     }
   }
 
@@ -248,6 +278,55 @@ export class MyApp implements OnInit, OnDestroy {
     
   }
 
+  sendMessage(name){
+    this.profile.getProfile(name)
+      .subscribe(res => {
+        this.rm.postNewData(this.username, this.userData._id, name, res.profile._id)
+          .subscribe(res => {});
+
+          // let receiver = {"name": user.name, "friendId": res.profile}
+          // this.nav.push("PrivatechatPage", {"receiver": receiver, "sender": this.userData, tabIndex: 1})
+
+          let alert = this.alertCtrl.create({
+            title: 'Send Message',
+            inputs: [
+              {
+                name: 'message',
+                placeholder: 'Message'
+              }
+            ],
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel'
+              },
+              {
+                text: 'Send Message',
+                cssClass: 'alertCss',
+                handler: data => {
+                  this.socket.emit('privateMessage', name, this.username, {
+                    text: data.message,
+                    room1: name,
+                    room2: this.username,
+                    sender: this.username,
+                    receiver: name
+                  });
+              
+                  this.socket.emit('refresh', {});
+              
+                  this.msg.saveMessage(this.userData._id, res.profile._id, this.username, name, data.message)
+                    .subscribe(res => {
+                      this.socket.emit('refresh', {})
+                    });
+                }
+              }
+              
+            ],
+          });
+          alert.present()
+      });
+  }
+
   checkIfFriends(arr1, name?){
     let value = false;
 
@@ -284,5 +363,6 @@ export class MyApp implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.socket.disconnect();
+    this.events.unsubscribe("");
   }
 }

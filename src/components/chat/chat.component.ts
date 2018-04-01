@@ -17,6 +17,7 @@ export class ChatComponent {
   senderName: string;
 
   friends: any;
+  friendsArr = [];
   user: any;
   onlineUser: any;
   inArray = [];
@@ -42,7 +43,7 @@ export class ChatComponent {
     private platform: Platform,
     private msg: MessageProvider,
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -58,7 +59,7 @@ export class ChatComponent {
           room: 'global',
           user: res
         }
-        this.socket.emit('online', params)
+        this.socket.emit('online', params);
       }); 
     this.getUserData();
 
@@ -115,9 +116,14 @@ export class ChatComponent {
     setTimeout(() => {
       this.rm.getUser()
         .subscribe(res => {
-          this.friends = res.user.friends;
+          this.friendsArr = res.user.friends;
           this.user = res.user;
           this.userName = res.user.username;
+          _.forEach(res.user.notFriends, val => {
+            this.friendsArr.push(val)
+          });
+
+          this.friends = _.uniqBy(this.friendsArr, 'name');
         });
         this.isComplete = true;
     }, 2000);

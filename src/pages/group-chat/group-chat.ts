@@ -10,7 +10,7 @@ import {
   Button
  } from 'ionic-angular';
 import * as io from 'socket.io-client';
-import { MenuController } from 'ionic-angular';
+import { MenuController, ToastController, ViewController } from 'ionic-angular';
 import { ModalPage } from '../modal/modal';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -19,7 +19,7 @@ import { MessageProvider } from '../../providers/message/message';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { CaretEvent } from '@ionic-tools/emoji-picker/src';
 import { EmojiEvent } from '@ionic-tools/emoji-picker';
-import { Keyboard } from '@ionic-native/keyboard';
+// import { Keyboard } from '@ionic-native/keyboard';
 
 
 
@@ -72,12 +72,6 @@ export class GroupChatPage {
   public emojiContent = '';
   private _lastCaretEvent: CaretEvent;
 
-  private keyboardHideSub;
-  private keybaordShowSub;
-  private textareaHeight;
-  private scrollContentElelment: any;
-  private initialTextAreaHeight
-
   
 
 constructor(
@@ -94,21 +88,23 @@ constructor(
   private imagesProvider: ImagesProvider,
   private messageProvider: MessageProvider,
   private alertCtrl: AlertController,
+  private toastCtrl: ToastController,
   private profile: ProfileProvider,
-  private keyboard: Keyboard,
-  public renderer: Renderer
+  // private keyboard: Keyboard,
+  public renderer: Renderer,
+  private viewCtrl: ViewController
 ) {
   this.roomName = this.navParams.get("data");
   
   this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
-  this.socketHost = 'https://soccerchatapi.herokuapp.com';
+  this.socketHost = 'http://localhost:3000';
   this.platform.ready().then(() => {
     this.socket = io(this.socketHost);
 
-    this.keyboard.show();
-
     this.getToBottom();
+
+    console.log(this.viewCtrl.index)
     
     this.userData = this.navParams.get("user");
     this.tabIndex = this.navParams.get("tabIndex");
@@ -146,10 +142,7 @@ constructor(
   });
 }
 
-ionViewDidLoad(){ 
-  if (this.platform.is('android')) {
-    this.addKeyboardListeners()
-  }
+ionViewDidLoad(){
 
   this.getToBottom();
 
@@ -171,11 +164,9 @@ ionViewDidLoad(){
 SendMessage(event) {
   this.socket.connect();
 
-  document.getElementById('msgInput').focus();
-
   if(this.message && this.message !== ''){
     let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-    this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
+    this.http.get(`http://localhost:3000/api/room/${roomname}`)
       .subscribe((res: any) => {
         this.socket.emit('createMessage', {
           text: this.message,
@@ -185,8 +176,6 @@ SendMessage(event) {
         this.saveRoomMessage(res.room, this.userData.user._id, this.userData.user.username, this.message)
         this.message = "";
         this.getToBottom();
-
-        document.getElementById('msgInput').focus();
       });
   }
 }
@@ -194,7 +183,7 @@ SendMessage(event) {
 
 handleSelection(event: EmojiEvent) {
   let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
+  this.http.get(`http://localhost:3000/api/room/${roomname}`)
     .subscribe((res: any) => {
       this.emojiContent = this.emojiContent.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.emojiContent.slice(this._lastCaretEvent.caretOffset);
       this.eventMock = JSON.stringify(event);
@@ -234,9 +223,14 @@ groupMenu() {
 }
 
 goBack() {
-  this.removeKeyboardListeners();
+  let room = this.roomName.name || this.roomName
+  let toast = this.toastCtrl.create({
+    message: `You have left ${room} room`,
+    duration: 3000,
+    position: 'bottom'
+  });
 
-  this.keyboard.close();
+  toast.present();
 
   if(this.tabIndex === 3){
     this.tab.select(this.tabIndex);
@@ -271,7 +265,7 @@ viewProfile(user){
     },
   });
 
-  alert.present()
+  alert.present();
 }
 
 
@@ -280,6 +274,9 @@ ionViewWillEnter() {
 }
 
 ionViewDidEnter() {
+  if(this.tabBarElement){
+    this.tabBarElement.style.display = 'none';
+  }
   this.getToBottom();
   this.socket.on('newFriend', (data) => {
     this.requestNum += 1;
@@ -292,13 +289,21 @@ ionViewDidEnter() {
  
 ionViewWillLeave() {
   this.tabBarElement.style.display = 'flex';
-
-  this.socket.disconnect();
 }
+
+ionViewDidLeave(){
+ 
+}
+
+ionViewWillUnload(){
+ this.socket.disconnect();
+}
+
+
 
 addImage(){
   let roomname = this.roomName.name.replace(/ /g, '-') || this.roomName.replace(/ /g, '-');
-  this.http.get(`https://soccerchatapi.herokuapp.com/api/room/${roomname}`)
+  this.http.get(`http://localhost:3000/api/room/${roomname}`)
     .subscribe((res: any) => {
       this.socket.emit('add-image', { 
         image: this.imageNewPath,
@@ -306,8 +311,9 @@ addImage(){
         sender: this.userData.user.username
       });
       this.image 	= '';
+      this.getToBottom();
     });
-    this.getToBottom();
+    
 }
 
 
@@ -338,28 +344,6 @@ getImage(){
     
   });
 }
-
-removeKeyboardListeners() {
-  this.keyboardHideSub.unsubscribe();
-  this.keybaordShowSub.unsubscribe();
-}
-
-addKeyboardListeners() {
-
-  this.keyboardHideSub = this.keyboard.onKeyboardHide().subscribe(() => {
-    let newHeight = this.textareaHeight - this.initialTextAreaHeight + 44;
-    let marginBottom = newHeight + 'px';
-    this.renderer.setElementStyle(this.scrollContentElelment, 'marginBottom', marginBottom);
-  });
-
-  this.keybaordShowSub = this.keyboard.onKeyboardShow().subscribe((e) => {
-
-    let newHeight = (e['keyboardHeight']) + this.textareaHeight - this.initialTextAreaHeight;
-    let marginBottom = newHeight + 44 + 'px';
-    this.renderer.setElementStyle(this.scrollContentElelment, 'marginBottom', marginBottom);
-  });
-}
-
 
   
 

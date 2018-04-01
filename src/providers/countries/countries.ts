@@ -10,12 +10,12 @@ export class CountriesProvider {
   }
 
   getCountries(): Observable<any> {
-    return this.http.get(`https://soccerchatapi.herokuapp.com/api/countries`);
+    return this.http.get(`http://localhost:3000/api/countries`);
   }
 
   addFavorite(name, user, id?): Observable<any> {
     return this.http
-        .post('https://soccerchatapi.herokuapp.com/api/countries', {
+        .post('http://localhost:3000/api/countries', {
           id: id,
           country: name,
           user: user

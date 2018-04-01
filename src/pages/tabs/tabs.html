@@ -20,7 +20,7 @@
       </div>
 </ion-content> -->
  
-<ion-tabs>
+<ion-tabs #myTabs>
     <ion-tab [root]="tab1Root" tabIcon="globe" tabTitle="Streams" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="home" tabTitle="Rooms" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab3Root" tabIcon="chatboxes" [tabBadge] = "msgNum > 0 ? msgNum : null" tabTitle="Chat" (ionSelect)="clickTab()"></ion-tab>

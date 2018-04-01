@@ -250,4 +250,45 @@ page-country-chat {
     .goLeft{
         float: left;
     }
+
+    emoji-picker{
+      width: 100% !important;
+      right: 6px;
+    }
+
+    emoji-content{
+      width: 100% !important;
+    }
+
+    .inputToolbar{
+      margin-bottom: -44px;
+    }
+
+    ion-footer{
+      .item-md{
+        height: 50px;
+      }
+
+      .text-input{
+        font-size: 16px !important;
+      }
+
+      .ion-md-image:before{
+        font-size: 20px !important;
+      }
+
+      .msgBtn {
+        padding: 0px !important;
+      }
+
+      .msgBtn .footer-btn{
+        font-size: 30px !important;
+      }
+
+      .emojiBtn{
+        font-size: 20px !important;
+        padding: 10px !important;
+      }
+
+    }
 }

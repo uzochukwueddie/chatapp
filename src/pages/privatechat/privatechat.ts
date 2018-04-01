@@ -68,9 +68,8 @@ export class PrivatechatPage {
     private viewCtrl: ViewController,
   ) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    
 
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
       this.receiverName = this.navParams.get('receiver');
@@ -204,7 +203,7 @@ export class PrivatechatPage {
   goBack() {
     this.msg.markMessage(this.receiverName.name, this.senderName.username)
       .subscribe(res => {})
-    
+
     this.socket.emit('refresh', {});
     this.viewCtrl.dismiss();
   }

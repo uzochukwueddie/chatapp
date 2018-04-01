@@ -34,9 +34,9 @@ import { MessageModalPage } from '../pages/message-modal/message-modal';
 import { LocationProvider } from '../providers/location/location';
 import { PopoverPage } from '../pages/popover/popover';
 import { CountriesProvider } from '../providers/countries/countries';
-import { ResetProvider } from '../providers/reset/reset'
+import { ResetProvider } from '../providers/reset/reset';
 
-import { EmojiPickerModule } from '@ionic-tools/emoji-picker'
+import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 
 
 
@@ -63,7 +63,6 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker'
       autoFocusAssist: false
     }),
     IonicStorageModule.forRoot(),
-    // SuperTabsModule.forRoot(),
     IonicImageViewerModule,
     EmojiPickerModule.forRoot()
     

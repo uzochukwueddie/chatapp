@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class RoomsProvider {
   token: any;
-  url = 'https://soccerchatapi.herokuapp.com/api/home';
+  url = 'http://localhost:3000/api/home';
   userId: any;
   username: any;
 
@@ -15,9 +15,7 @@ export class RoomsProvider {
     private http: HttpClient,
     private storage: Storage,
   ) {
-    this.getId();
-
-    // this.getDataFromToken();
+   
   }
 
   getRooms(): Observable<any> {
@@ -32,25 +30,35 @@ export class RoomsProvider {
     this.getDataFromToken();
 
     return this.http
-      .get(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`); 
+      .get(`http://localhost:3000/api/user/${this.username}`); 
   }
 
-  postData(sender, receiver, senderId?): Observable<any> {
+  postData(sender?, receiver?, senderId?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`, {
+        .post(`http://localhost:3000/api/user/${this.username}`, {
           sender: sender,
           receiver: receiver,
-          senderId: senderId,
+          senderId: senderId
+        });
+  }
+
+  postNewData(sendername?, senderId?, receivername?, receiverId?): Observable<any> {
+    return this.http
+        .post(`http://localhost:3000/api/user/${this.username}`, {
+          receiver_name: receivername,
+          receiver_Id: receiverId,
+          sender_name: sendername,
+          sender_Id: senderId
         });
   }
 
   returnUser(user): Observable<any>{
-    return this.http.get(`https://soccerchatapi.herokuapp.com/api/user/${user.replace(/ /g, '-')}`);
+    return this.http.get(`http://localhost:3000/api/user/${user.replace(/ /g, '-')}`);
   }
 
   acceptRequest(sender, receiver, senderId?, receiverId?): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`, {
+        .post(`http://localhost:3000/api/user/${this.username}`, {
           senderName: sender,
           receiverName: receiver,
           senderid: senderId,
@@ -60,7 +68,7 @@ export class RoomsProvider {
 
   cancelRequest(sender, receiver): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}`, {
+        .post(`http://localhost:3000/api/user/${this.username}`, {
           sendername: sender,
           receivername: receiver
         });
@@ -68,7 +76,7 @@ export class RoomsProvider {
 
   addFavorite(id, room, user): Observable<any> {
     return this.http
-        .post('https://soccerchatapi.herokuapp.com/api/home', {
+        .post('http://localhost:3000/api/home', {
           id: id,
           roomName: room,
           user: user
@@ -77,14 +85,14 @@ export class RoomsProvider {
 
   searchRoom(room): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/search-room`, {
+        .post(`http://localhost:3000/api/search-room`, {
           room: room
         })
   }
 
   addRoom(name, country): Observable<any> {
     return this.http
-        .post(`https://soccerchatapi.herokuapp.com/api/add-room`, {
+        .post(`http://localhost:3000/api/add-room`, {
           room: name,
           country: country
         });
@@ -92,7 +100,7 @@ export class RoomsProvider {
 
   blockUser(user1, user2): Observable<any> {
     return this.http
-      .post(`https://soccerchatapi.herokuapp.com/api/block-user`, {
+      .post(`http://localhost:3000/api/block-user`, {
         user1: user1,
         user2: user2
       });
@@ -100,7 +108,7 @@ export class RoomsProvider {
 
   unblockUser(user1, user2): Observable<any> {
     return this.http
-      .post(`https://soccerchatapi.herokuapp.com/api/unblock-user`, {
+      .post(`http://localhost:3000/api/unblock-user`, {
         user1: user1,
         user2: user2
       });
@@ -109,12 +117,6 @@ export class RoomsProvider {
   loadData() {
     this.storage.get("token").then(value => {
       this.token = value;
-    })
-  }
-
-  getId() {
-    this.storage.get("username").then(value => {
-      this.userId = value.replace(/ /g, '-')
     })
   }
 

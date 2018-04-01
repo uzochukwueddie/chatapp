@@ -23,7 +23,7 @@ export class RoomsComponent {
     private platform: Platform,
     private events: Events
   ) {
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 

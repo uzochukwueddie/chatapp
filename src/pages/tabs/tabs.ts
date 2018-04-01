@@ -42,7 +42,7 @@ export class TabsPage {
     private msg: MessageProvider
   ) {
     this.badgeElement = document.querySelector('.badge-md');
-    this.socketHost = 'https://soccerchatapi.herokuapp.com';
+    this.socketHost = 'http://localhost:3000';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });

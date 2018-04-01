@@ -57,15 +57,33 @@
 
 <ion-footer>
     <ion-item class="inputToolbar">
-      <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..."></ion-input>
-      <!-- <button class="imgBtn" ion-button clear item-end (click)="getImage()">
+      <ion-input id="mesgInput" [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <button class="imgBtn" ion-button clear item-end>
         <ion-icon name="image"></ion-icon>
       </button>
-      <button class="imgBtn" ion-button clear item-end (click)="takePicture()">
-        <ion-icon name="camera"></ion-icon>
-      </button> -->
-      <label for="msgInput" ion-button clear item-end (click)="SendRoomMessage()">
+
+      <div 
+        class="emoji-content-editable"
+        (emojiPickerCaretEmitter)="handleCurrentCaret($event)"
+        (input)="content = $event.target.textContent"
+        [textContent]="content"
+        contenteditable="true">
+      </div>
+
+      <button class="emojiBtn" ion-button clear item-end
+        (click)="toggleFunction()">
+        😄
+      </button>
+      <button class="msgBtn" ion-button clear item-end (click)="SendRoomMessage()">
         <ion-icon class="footer-btn" name="send"></ion-icon>
-      </label>
+      </button>
     </ion-item>
+
+    <div>
+        <button ion-button clear item-end
+        class="emoji-toggle-button imgBtn"
+        [(emojiPickerIf)]="toggled"
+        [emojiPickerDirection]="direction"
+        (emojiPickerSelect)="handleSelection($event)"></button>
+    </div>
 </ion-footer>

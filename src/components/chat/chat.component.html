@@ -2,18 +2,7 @@
 
 <ion-spinner *ngIf="!isComplete"></ion-spinner>
 
-<!-- <ion-list>
-    <ion-item class="noResultItem" *ngIf="msgArray.length <= 0 && isComplete">
-        <h2 class="noResult" text-wrap>
-            No active chat. You can send friend request to users from chat rooms.
-        </h2>
-    </ion-item>
-</ion-list> -->
-
-
-
 <div *ngFor="let friend of friends">
-    
     <div *ngFor="let msg of msgArray">
         <div *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
             <ion-item *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)" 
@@ -72,8 +61,10 @@
             </ion-item>
         </div>
     </div>
-    
 </div>
+
+
+
 
 
 
