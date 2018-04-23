@@ -26,6 +26,8 @@ export class CommentsPage {
   socketHost: any;
   socket: any;
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -35,7 +37,9 @@ export class CommentsPage {
     private alertCtrl: AlertController
   ) {
 
-    this.socketHost = 'http://localhost:3000';
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -89,6 +93,18 @@ export class CommentsPage {
 
   GetPostTime = (time: number) => {
     return moment(time).fromNow()
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
 
 }

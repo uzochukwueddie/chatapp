@@ -10,9 +10,10 @@ page-privatechat {
           -webkit-border-radius: 50%;
           -moz-border-radius: 50%;
           background-size: 100%;
-          margin-top: 8px;
+          margin-top: 6px !important;
           background: #4aa1f3 no-repeat !important;
           overflow: hidden;
+          margin-left: -10px !important;
         }
         .avatar img{
             width: auto;
@@ -32,9 +33,16 @@ page-privatechat {
             max-width: 50px !important;
         }
 
-        .titleCol{
-            margin-left: -15px;
-            margin-top: 5px;
+        .title-md{
+          padding: 0px !important;
+          margin: 0px !important;
+          margin-left: -20px !important;
+        }
+
+        .toolbar-title-md{
+            width: auto !important;
+            text-align: left !important;
+            float: left !important;
         }
 
         .userTitle{
@@ -45,12 +53,8 @@ page-privatechat {
             padding-bottom: 0px !important;
         }
 
-        avatar{
-            margin-top: 8px;
-        }
-
         .online{
-            font-size: 10px;
+            font-size: 12px !important;
             color: white;
             margin-top: auto;
             margin-bottom: 0px !important;
@@ -60,8 +64,8 @@ page-privatechat {
             display: none !important;
         }
 
-        backBtn {
-          margin-left: 3px
+        .backBtn{
+          margin-left: -5px;
         }
     }
 
@@ -307,6 +311,12 @@ page-privatechat {
         font-size: 16px !important;
       }
 
+      .input{
+          height: $tab_button_height - ($content-padding*3);
+          line-height: $tab_button_height - ($content-padding*3);
+          padding:0px 12px;
+      }
+
       .ion-md-image:before{
         font-size: 20px !important;
       }
@@ -317,44 +327,31 @@ page-privatechat {
 
       .msgBtn .footer-btn{
         font-size: 30px !important;
+        margin-right: 15px;
       }
 
       .emojiBtn{
         font-size: 20px !important;
-        padding: 10px !important;
       }
 
     }
+
+    
+  .footer{
+      background:color($colors,color1);
+      padding:0px!important;
+      .grid{
+          padding:$content-padding/2;
+          .col{
+              padding:$content-padding/2;
+              .button{
+                  height:34px;
+              }
+          }
+      }
+  }
+
+
 }
 
-// @media (min-width: 0px) {
-    
-// }
 
-// @media (min-width: 320px) {
-    
-// }
-
-// @media (min-width: 420px) {
-//   .avatarCol{
-//       margin-left: 0px !important;
-//       border: 1px solid yellow;
-//       width: 50px;
-//   }
-// }
-
-// @media (min-width: 600px) {
-//   .avatarCol{
-//       margin-left: 0px !important;
-//       border: 1px solid yellow;
-//       width: 50px;
-//   }
-// }
-
-// @media (min-width: 720px) {
-//   .avatarCol{
-//       margin-left: 0px !important;
-//       border: 1px solid yellow;
-//       width: 50px;
-//   }
-// }

@@ -1,5 +1,5 @@
 <ion-header no-border>
-    <ion-toolbar no-border transparent>
+    <ion-toolbar transparent>
         <ion-segment [(ngModel)]="userprofile" >
           <ion-segment-button value="overview">
             Overview
@@ -13,18 +13,12 @@
           <ion-segment-button value="account">
             Account
           </ion-segment-button>
+          <ion-segment-button id="notification-button" value="btnBadge">
+            <ion-icon class="iconItem" name="notifications"></ion-icon>  
+            <ion-badge id="notifications-badge" *ngIf="requestNum > 0" color="danger">{{requestNum}}</ion-badge>            
+          </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
-
-    <ion-row>
-      <ion-col col-3>
-        <button id="notification-button" ion-button clear (click)="openModal()">
-            <ion-icon name="notifications">
-              <ion-badge id="notifications-badge" *ngIf="requestNum > 0" color="danger">{{requestNum}}</ion-badge>
-            </ion-icon>              
-        </button>
-      </ion-col>
-    </ion-row>
 
   </ion-header>
 
@@ -35,16 +29,48 @@
       <userinfo></userinfo>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'profile'">
+    <ion-list *ngSwitchCase="'profile'" padding-horizontal>
       <updateprofile></updateprofile>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'interest'">
+    <ion-list *ngSwitchCase="'interest'" padding-horizontal>
       <interest></interest>
     </ion-list>
 
     <ion-list *ngSwitchCase="'account'">
       <account user btnArray></account>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'btnBadge'" padding-horizontal>
+        <div  *ngIf="friends.length > 0">
+          <ion-list class="all_list" >
+            <ion-item *ngFor="let friend of friends">
+              <ion-avatar item-start>
+                  <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.senderId.imageVersion}}/{{friend.senderId.userImage}}">
+              </ion-avatar>
+              <ion-grid>
+                <ion-row>
+                  <ion-col col>
+                    <h5 ion-text class="username" color="primary">{{friend.username}}</h5>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <p ion-text>
+                <button ion-button class="accept" (click)="acceptRequest(friend)" color="blue-color">
+                  Accept
+                </button>
+                <button ion-button class="accept" (click)="cancelRequest(friend)" color="danger">
+                  Cancel
+                </button>
+              </p>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <ion-item *ngIf="friends.length <= 0" class="noResultItem">
+          <h2 class="noResult">No friend request.</h2>
+        </ion-item>
+
     </ion-list>
 
   </div>

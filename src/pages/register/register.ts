@@ -20,6 +20,8 @@ import * as io from 'socket.io-client';
 })
 export class RegisterPage {
 
+  tabBarElement: any;
+
   username: any;
   email: any;
   password: any;
@@ -38,7 +40,9 @@ export class RegisterPage {
     private loadingCtrl: LoadingController,
     private platform: Platform,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })
@@ -79,6 +83,18 @@ export class RegisterPage {
     });
  
     this.loading.present();
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
   
 

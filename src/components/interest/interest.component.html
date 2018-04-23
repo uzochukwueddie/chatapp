@@ -1,44 +1,51 @@
 <form (ngSubmit)="interestSubmit()">
-    <ion-item>
+    <div class="appForm">
       <ion-label color="primary" stacked>Favorite Clubs (Select Multiple)</ion-label>
-      <ion-select [(ngModel)]="clubs" multiple="true" [ngModelOptions]="{standalone: true}">
-        <ion-option *ngFor="let room of rooms" [value]="room.name">{{room.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Favorite Players</ion-label>
-      <ion-input type="text" [(ngModel)]="players" name="players" value=""></ion-input>
-    </ion-item>
-    <ion-item *ngFor="let player of userPlayers" class="playerItem">
-      <span class="playerSpan">
-          <p>
-            {{player}} 
-            <button ion-button color="danger" class="deleteBtn" 
-            item-end clear (click)="deletePlayer(player)">
-              Delete
-            </button>
-          </p>
-      </span>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Favorite National Teams</ion-label>
-      <ion-select [(ngModel)]="teams" multiple="true" [ngModelOptions]="{standalone: true}">
-        <ion-option *ngFor="let team of teamsArray" [value]="team.name">{{team.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item *ngFor="let team of userTeams" class="playerItem">
+      <ion-item>
+        <ion-select [(ngModel)]="clubs" multiple="true" [ngModelOptions]="{standalone: true}">
+          <ion-option color="primary" *ngFor="let room of rooms" [value]="room.name">{{room.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-label color="primary" stacked class="labelStacked">Favorite Players</ion-label>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="players" name="players" value=""></ion-input>
+      </ion-item>
+      <ion-item *ngFor="let player of userPlayers" class="playerItem">
         <span class="playerSpan">
-          <p>
-            {{team}} 
-            <button ion-button color="danger" class="deleteBtn" 
-            item-end clear (click)="deleteTeam(team)">
-              Delete
-            </button>
-          </p>
-      </span>
-    </ion-item>
-    
-    <ion-item>
-        <button ion-button block color="bluecolor">Save Interests</button>
-    </ion-item>
+            <p>
+                {{player}} 
+            </p>
+            <ion-buttons end>
+                <button ion-button color="danger" class="deleteBtn" 
+                item-end clear (click)="deletePlayer(player)">
+                  Delete
+                </button>
+            </ion-buttons>
+        </span>
+      </ion-item>
+
+      <ion-label color="primary" stacked class="labelStacked">Favorite National Teams</ion-label>
+      <ion-item>
+        <ion-select [(ngModel)]="teams" multiple="true" [ngModelOptions]="{standalone: true}" class="selectItem">
+          <ion-option *ngFor="let team of teamsArray" [value]="team.name">{{team.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngFor="let team of userTeams" class="playerItem">
+          <span class="playerSpan">
+            <p>
+              {{team}} 
+            </p>
+
+            <ion-buttons end>
+              <button ion-button color="danger" class="deleteBtn" item-end clear (click)="deleteTeam(team)">
+                Delete
+              </button>
+            </ion-buttons>
+        </span>
+      </ion-item>
+      
+      
+      <button class="saveBtn" ion-button block color="bluecolor">Save Interests</button>
+    </div>
 </form>

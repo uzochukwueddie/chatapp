@@ -1,39 +1,33 @@
-<ion-header>
+<ion-header class="pro_header">
   <ion-navbar>
     <ion-title>Your Friends List</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content >
-  <div *ngFor="let friend of friends">
-      <div>
-          <ion-item (click)="PrivateChatPage(friend)">
+<ion-content>
+    <br>
+  <div padding-horizontal>
+      <ion-list padding-horizontal>
+          <ion-item *ngFor="let friend of friends" (click)="PrivateChatPage(friend)">
+            <ion-avatar item-left>
+                <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.friendId.imageVersion}}/{{friend.friendId.userImage}}">
+                </ion-avatar>
+            <ion-grid>
+                <ion-row>
+                    <ion-col col>
+                        <h5 ion-text color="primary">{{friend.name}}</h5>
+                    </ion-col>
+                    <ion-col col-auto>
+                        <span margin-left ion-text color="dark" *ngIf="!checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)">
+                            Blocked
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
       
-              <ion-row class="myrow">
-                  <ion-col col-2 class="imgCol">
-                      <ion-avatar item-start>
-                        <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.friendId.imageVersion}}/{{friend.friendId.userImage}}">
-                      </ion-avatar>
-                  </ion-col>
-                  <ion-col class="rowCol" col-5>
-                      <h2 class="username">
-                          {{friend.name}}
-                      </h2>
-      
-                  </ion-col>
-      
-                  <ion-col class="rowCol2" *ngIf="!checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)">
-                      <ion-col item-end>
-                          <h4 class="blocked">Blocked</h4>
-                      </ion-col>
-                  </ion-col>
-                  
-              </ion-row>
-              
           </ion-item>
-      </div>
+      </ion-list>
     
 </div>
     

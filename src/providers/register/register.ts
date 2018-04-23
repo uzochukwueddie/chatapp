@@ -1,3 +1,4 @@
+import { Platform } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -12,18 +13,22 @@ export class RegisterProvider {
   token: any;
   user: any;
 
-  url = 'http://localhost:3000/api/register';
-  loginUrl = 'http://localhost:3000/api/login';
-  auth = 'http://localhost:3000/api/protected';
+  url = 'https://soccerchatapi.herokuapp.com/api/register';
+  loginUrl = 'https://soccerchatapi.herokuapp.com/api/login';
+  auth = 'https://soccerchatapi.herokuapp.com/api/protected';
 
-  socketHost: string = 'http://localhost:3000';
+  socketHost: string = 'https://soccerchatapi.herokuapp.com';
   socket: any;
   socketObserver: any;
 
   constructor(
     private http: HttpClient,
     private storage: Storage,
+    private platform: Platform
   ) { 
+    this.platform.ready().then(() => {
+      this.loadData();
+    })
   }
 
   checkAuthentication(){

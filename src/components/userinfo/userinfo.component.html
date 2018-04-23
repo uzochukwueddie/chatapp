@@ -1,12 +1,20 @@
-<div class="header-image" [style.background-image]="headerImage"></div>
 <div class="main-content" text-wrap text-center>
-    <div class="circularBtn" (click)="addImage()" ion-button clear>
+    <!-- <div class="circularBtn" (click)="addImage()" ion-button clear>
         <img src="{{userImg}}">
         <img *ngIf="headerImage" [style.background-image]="headerImage">
-    </div>
+    </div> -->
 
-    <h2 *ngIf="username">{{username}}</h2>
-    <p *ngIf="city || country">{{city}} &bull; {{country}}</p>
+    <div class="profile_info">
+            <div class="profile_img" [style.background-image]="headerImage">
+                <ion-icon name="ios-camera" color="light" (click)="addImage()" ></ion-icon>
+            </div>
+            <h4 ion-text color="dark" *ngIf="fullname">{{fullname}}</h4>
+        </div>
+
+    <h2 *ngIf="username" class="username">
+        @{{username}}
+        <p *ngIf="city || country">{{city}} &bull; {{country}}</p>
+    </h2>
     <p class="profile-description" *ngIf="mantra">{{mantra}}</p>
     <hr>
     <ion-list no-lines>

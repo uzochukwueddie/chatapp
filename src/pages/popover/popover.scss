@@ -28,6 +28,8 @@ page-popover {
     .item-inner{
         border: none !important;
         overflow-y: hidden;
+        padding: 10px !important;
+        color: color($colors, graycolor);
     }
 
     .popoverContent .scroll-content{

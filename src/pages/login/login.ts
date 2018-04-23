@@ -37,7 +37,7 @@ export class LoginPage {
   isLoggedIn: boolean = false;
   users: any;
 
-  auth = 'http://localhost:3000/api/protected';
+  auth = 'https://soccerchatapi.herokuapp.com/api/protected';
 
   constructor(
     public navCtrl: NavController, 
@@ -52,7 +52,6 @@ export class LoginPage {
   ) {
     fb.getLoginStatus()
     .then(res => {
-      console.log(res.status);
       if(res.status === "connect") {
         this.isLoggedIn = true;
       } else {
@@ -62,7 +61,7 @@ export class LoginPage {
     .catch(e => console.log(e));
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -113,7 +112,7 @@ LoginUser() {
             buttons: ['OK'],
             cssClass: 'alertCss'
           })
-          return alert.present();
+          return alert.present()
         }
 
       })
@@ -142,8 +141,6 @@ ionViewWillEnter() {
 }
 
 ionViewWillLeave() {
-  //this.tabBarElement.style.display = 'flex';
-
   if(this.tabBarElement){
     this.tabBarElement.style.display = 'flex'; 
   } 

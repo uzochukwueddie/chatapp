@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile';
 import * as _ from 'lodash';
 
@@ -19,13 +19,20 @@ export class UserFriendsPage {
   blocked = '';
   unblock = '';
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private profile: ProfileProvider,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private platform:Platform
   ) {
     this.username = this.navParams.get('name');
+
+    this.platform.ready().then(() => {
+      this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    })
   }
 
   ionViewDidLoad() {
@@ -34,6 +41,18 @@ export class UserFriendsPage {
         this.friends = res.profile.friends;
         this.user = res.profile;
       })
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
 
   PrivateChatPage(friend){

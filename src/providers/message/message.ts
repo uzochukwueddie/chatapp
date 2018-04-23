@@ -1,3 +1,4 @@
+import { Platform } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -12,23 +13,27 @@ export class MessageProvider {
   constructor(
     public http: HttpClient,
     private storage: Storage,
+    private platform: Platform
   ) {
-    this.getDataFromToken();
+    this.platform.ready().then(() => {
+      this.getDataFromToken();
+    })
+    
   }
 
   getMessages(sender, receiver): Observable<any>{
     return this.http
-      .get(`http://localhost:3000/api/user/message/${sender.replace(/ /g, '-')}/${receiver.replace(/ /g, '-')}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/user/message/${sender.replace(/ /g, '-')}/${receiver.replace(/ /g, '-')}`);
   }
 
   getMessage(id, sendername): Observable<any>{
     return this.http
-      .get(`http://localhost:3000/api/message/${id}/${sendername.replace(/ /g, '-')}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/message/${id}/${sendername.replace(/ /g, '-')}`);
   }
 
   saveMessage(sender, receiver, sendername, receivername, message?): Observable<any> {
     return this.http 
-      .post(`http://localhost:3000/api/user/message/${sender.replace(/ /g, '-')}/${receiver.replace(/ /g, '-')}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/user/message/${sender.replace(/ /g, '-')}/${receiver.replace(/ /g, '-')}`, {
         sender: sender,
         receiver: receiver,
         sendername: sendername,
@@ -39,7 +44,7 @@ export class MessageProvider {
 
   markMessage(sender, receiver): Observable<any> {
     return this.http 
-      .post(`http://localhost:3000/api/chatmessages/${receiver.replace(/ /g, '-')}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/chatmessages/${receiver.replace(/ /g, '-')}`, {
         sender: sender,
         receiver: receiver
       });
@@ -47,12 +52,12 @@ export class MessageProvider {
 
   getRommMessages(room): Observable<any>{
     return this.http
-      .get(`http://localhost:3000/api/roomname/${room.replace(/ /g, '-')}`);
+      .get(`https://soccerchatapi.herokuapp.com/api/roomname/${room.replace(/ /g, '-')}`);
   }
 
   roomMessage(room, senderId, name, msg?): Observable<any> {
     return this.http
-      .post(`http://localhost:3000/api/roomname/${room.replace(/ /g, '-')}`, {
+      .post(`https://soccerchatapi.herokuapp.com/api/roomname/${room.replace(/ /g, '-')}`, {
         room: room,
         senderId: senderId,
         name: name,
@@ -62,7 +67,7 @@ export class MessageProvider {
 
   addImage(name, sendername?, receivername?, senderId?, receiverId?): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/v1/private/upload`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/v1/private/upload`, {
           file: name,
           sendername: sendername,
           receivername: receivername,
@@ -74,14 +79,14 @@ export class MessageProvider {
 
   markAsRead(id): Observable<any> {
     return this.http
-        .post(`http://localhost:3000/api/chatmessage/${id}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/chatmessage/${id}`, {
           messageId: id
         });
   }
 
   getUserName(username): Observable<any>{
     return this.http
-      .get(`http://localhost:3000/api/user/${username.replace(/ /g, '-')}`)
+      .get(`https://soccerchatapi.herokuapp.com/api/user/${username.replace(/ /g, '-')}`)
   }
 
   getDataFromToken() {

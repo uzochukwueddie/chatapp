@@ -5,8 +5,8 @@
         </ion-toolbar>
     </ion-header>
     
-    <ion-content>
-        <ion-list>
+    <ion-content padding>
+        <ion-list padding-horizontal>
             <ion-item *ngFor="let user of countryRoomUsers">
                 <ion-avatar item-left>
                     <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.userdata.imageVersion}}/{{user.userdata.userImage}}">
@@ -38,8 +38,8 @@
         </ion-toolbar>
     </ion-header>
 
-    <ion-content>
-        <ion-list>
+    <ion-content padding>
+        <ion-list padding-horizontal>
             <ion-item *ngFor="let user of roomUsers">
                 <ion-avatar item-left>
                     <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{user.userdata.imageVersion}}/{{user.userdata.userImage}}">
@@ -66,4 +66,4 @@
 
 
 
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<ion-nav [root]="rootPage" [class.animateApp]="animateVarible==true" #content swipeBackEnabled="false"></ion-nav>

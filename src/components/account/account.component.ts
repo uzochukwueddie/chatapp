@@ -43,7 +43,7 @@ export class AccountComponent {
 
   logout() {
     this.storage.remove('token');
-    this.navCtrl.setRoot("LoginPage");
+    this.navCtrl.setRoot("LandPage");
   }
 
 }

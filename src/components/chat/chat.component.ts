@@ -43,7 +43,7 @@ export class ChatComponent {
     private platform: Platform,
     private msg: MessageProvider,
   ) {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
 
@@ -59,7 +59,7 @@ export class ChatComponent {
           room: 'global',
           user: res
         }
-        this.socket.emit('online', params);
+        this.socket.emit('online', params)
       }); 
     this.getUserData();
 

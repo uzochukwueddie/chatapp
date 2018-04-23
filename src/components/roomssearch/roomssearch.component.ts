@@ -29,7 +29,7 @@ export class RoomssearchComponent {
     private events: Events
   ) {
 
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -59,12 +59,22 @@ export class RoomssearchComponent {
           this.noResults = false;
           this.noSearchResults = res.rooms
           this.searchResults = res.rooms;
-        } else if(res.rooms.length === 0){
+        }
+
+        if(res.rooms1.length > 0){
+          this.results = true;
+          this.noResults = false;
+          this.noSearchResults = res.rooms1
+          this.searchResults = res.rooms1
+        }
+
+        if(res.rooms1.length === 0 && res.rooms.length === 0){
           this.results = false;
           this.noResults = true;
-          this.noSearchResults = res.rooms;
+          this.noSearchResults = [];
           this.searchResults = [{'name': 'No result found. Click to add.'}]
         }
+
       })
   }
 

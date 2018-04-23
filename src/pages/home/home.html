@@ -1,45 +1,75 @@
-<ion-header no-border>
+<!-- <ion-header no-border>
+  <ion-toolbar transparent>
+    <ion-segment [(ngModel)]="chatrooms">
+      <ion-segment-button value="clubs">
+        Clubs
+      </ion-segment-button>
+      <ion-segment-button value="countries">
+        Countries
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favorites
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header> -->
 
+<ion-header>
+  <ion-toolbar class="tabs_bar">
+    <ion-segment [(ngModel)]="chatrooms">
+      <ion-segment-button value="clubs">
+        Clubs
+      </ion-segment-button>
+      <ion-segment-button value="countries">
+        Countries
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        Favorites
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+    
 </ion-header>
 
 
-<ion-content>
-  <ion-segment [(ngModel)]="chatrooms">
-    <ion-segment-button value="clubs">
-      Clubs
-    </ion-segment-button>
-    <ion-segment-button value="countries">
-      Countries
-    </ion-segment-button>
-    <ion-segment-button value="favorites">
-      Favorites
-    </ion-segment-button>
-  </ion-segment>
+<ion-content [ngSwitch]="chatrooms">
+    <div class="appForm">
+        <roomssearch-page></roomssearch-page>
+      </div>
 
-  <roomssearch-page></roomssearch-page>
-
-  <div [ngSwitch]="chatrooms">
-    <ion-list *ngSwitchCase="'clubs'">
+    <div padding-horizontal *ngSwitchCase="'clubs'">
       <rooms-page></rooms-page>
-    </ion-list>
+    </div>
 
-    <ion-list *ngSwitchCase="'countries'">
+    <div padding-horizontal *ngSwitchCase="'countries'">
       <countries></countries>
-    </ion-list>
+    </div>
 
-    <ion-list *ngSwitchCase="'favorites'">
+    <div padding-horizontal *ngSwitchCase="'favorites'">
       <ion-spinner *ngIf="!isComplete"></ion-spinner>
       <ion-item *ngIf="clubLength <= 0 && isComplete && isEmpty" class="noResultItem">
         <h2 class="noResult">No favorite teams yet.</h2>
       </ion-item>
-      <ion-item *ngFor="let club of clubs">
-          <button ion-item  (click)="GroupChatPage(club)" no-lines detail-none class="btn1">
-              <ion-avatar item-start>
-                <img src="http://placehold.it/50x50">
-              </ion-avatar>
-              <h2 class="roomName" text-wrap>{{club}}</h2>
-          </button>
-        </ion-item>
-    </ion-list>
-  </div>
+
+
+      <div padding-horizontal>
+          <ion-list class="all_list" >
+              <ion-item *ngFor="let club of clubs">
+                  <ion-avatar item-left>
+                      <img src="http://placehold.it/50x50">
+                  </ion-avatar>
+                  <ion-grid (click)="GroupChatPage(club)">
+                      <ion-row>
+                        <ion-col col>
+                            <h5 ion-text color="primary">{{club}}</h5>
+                        </ion-col>
+                      </ion-row>
+                  </ion-grid>
+              </ion-item>
+          </ion-list>
+      </div>
+    </div>
+
 </ion-content>
+
+

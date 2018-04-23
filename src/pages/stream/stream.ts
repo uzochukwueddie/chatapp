@@ -7,7 +7,7 @@ import moment from "moment";
 import { LocationProvider } from '../../providers/location/location';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
-// import { Storage } from '@ionic/storage';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 
 @IonicPage()
@@ -56,12 +56,12 @@ export class StreamPage {
     private alertCtrl: AlertController,
     private profile: ProfileProvider,
     private photoViewer: PhotoViewer,
-    // private storage: Storage,
+    private admobFree: AdMobFree
   ) {
     this.stream = "now";
     this.scrollElement = document.querySelector('div.scroll-content');
 
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     });
@@ -72,6 +72,9 @@ export class StreamPage {
     this.getPost();
 
     this.platform.ready().then(() => {
+      
+      this.showBanner();
+
       this.socket.on('refreshPage', (data) => {
         this.getPost();
       })
@@ -113,7 +116,25 @@ export class StreamPage {
           this.socket.emit('online', params);
         }
       });
+
+    
   }
+
+  showBanner() {
+ 
+    let bannerConfig: AdMobFreeBannerConfig = {
+        isTesting: true, // Remove in production
+        autoShow: true,
+        id: 'ca-app-pub-5016812855157623/6844029312'
+    };
+
+    this.admobFree.banner.config(bannerConfig);
+
+    this.admobFree.banner.prepare().then(() => {
+        // success
+    }).catch(e => console.log(e));
+
+}
 
   showModal() {
     this.rm.getUser()
@@ -190,6 +211,10 @@ export class StreamPage {
           });
       },
     })
+
+    alert.addButton({
+      text: 'cancel'
+    });
 
     alert.present()
   }

@@ -1,3 +1,4 @@
+import { Platform } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -13,20 +14,24 @@ export class CommentProvider {
   constructor(
     public http: HttpClient,
     private storage: Storage,
+    private platform: Platform
   ) {
+    this.platform.ready().then(() => {
+      this.getDataFromToken();
+    });
     
   }
 
   getPosts(): Observable<any> {
     this.getDataFromToken();
     return this.http
-      .get(`http://localhost:3000/api/user/${this.username}/posts`) //add username parameter to the function
+      .get(`https://soccerchatapi.herokuapp.com/api/user/${this.username}/posts`) //add username parameter to the function
   }
 
   addPost(id?, username?, post?, image?): Observable<any> {
     this.getDataFromToken();
     return this.http
-        .post(`http://localhost:3000/api/user/${username.replace(/ /g, '-')}/posts`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${username.replace(/ /g, '-')}/posts`, {
           id: id,
           username: username,
           post: post,
@@ -37,13 +42,13 @@ export class CommentProvider {
   getComments(postId): Observable<any> {
     this.getDataFromToken();
     return this.http
-        .get(`http://localhost:3000/api/user/${this.username}/comments/${postId}`);
+        .get(`https://soccerchatapi.herokuapp.com/api/user/${this.username}/comments/${postId}`);
   }
 
   postComment(postid, id, senderid, sendername, comment): Observable<any> {
     this.getDataFromToken();
     return this.http
-        .post(`http://localhost:3000/api/user/${this.username}/comments/${postid}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}/comments/${postid}`, {
           postid: postid,
           userid:id,
           senderId: senderid,
@@ -55,7 +60,7 @@ export class CommentProvider {
   addLike(postid): Observable<any> {
     this.getDataFromToken();
     return this.http
-        .post(`http://localhost:3000/api/user/${this.username}/comments/${postid}`, {
+        .post(`https://soccerchatapi.herokuapp.com/api/user/${this.username}/comments/${postid}`, {
           postId: postid
         });
   }

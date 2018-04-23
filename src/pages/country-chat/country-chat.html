@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="pro_header">
   <ion-navbar>
       <ion-buttons left>
         <button ion-button icon-only (click)="goBack()">
@@ -6,18 +6,15 @@
         </button>
       </ion-buttons>
 
-      <ion-row>
-        <ion-title class="titleBtn">
+      <ion-title class="titleBtn">
           {{roomName.name}}
-        </ion-title>
+      </ion-title>
   
-        <ion-col class="menuCol">
-          <button class="menuBtn" ion-button item-end clear (click)="groupMenu()" end>
-            <ion-icon name="menu" class="menuIcon"></ion-icon>
-          </button>
-          
-        </ion-col>
-      </ion-row>
+      <ion-buttons end>
+        <button ion-button clear (click)="groupMenu()">
+          <ion-icon name="menu" class="menuIcon"></ion-icon>
+        </button>
+      </ion-buttons>
     
   </ion-navbar>
 

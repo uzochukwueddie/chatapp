@@ -1,4 +1,27 @@
 page-stream {
+    ion-toolbar{
+        .segment {
+            .segment-button {   
+                height: $control-height - 10px;
+                line-height: $control-height - 10px;
+                border: none;
+                color: color($colors,light);
+                border-radius: 0px!important;
+                max-width:100%;
+                background: none!important;
+            }
+            .segment-activated{
+                background:none!important;
+                border-bottom: 4px solid color($colors,color2);
+            }
+        }
+        &.tabs_bar{
+            min-height:$control-height - 10px!important;
+            .toolbar-background{
+                background: color($colors,color1)!important;
+            }
+        }
+    }
     .content{
         background: #4aa1f3;
     }
@@ -11,10 +34,10 @@ page-stream {
 
     .content-card1 {
         padding: 5px;
-        width: 100%;
         margin: 0px auto !important;
         text-align: center;
         border-radius: 2%;
+        margin: 10px 10px 5px 10px !important;
     }
 
     .cardItem{
@@ -35,20 +58,24 @@ page-stream {
         font-weight: bold;
         color: #4aa1f3;
         padding: 0px !important;
+        text-align: left !important;
+        margin-top: 5px;
+        padding-top: 5px !important;
     }
 
     .content-card1 .postTime {
-        font-size: 12px;
+        font-size: 14px !important;
     }
 
     .content-card1 .postCity {
-        font-size: 12px;
+        font-size: 14px !important;
     }
 
     .content-card1 .post {
-        font-size: 14px;
+        font-size: 1.5rem !important;
         text-align: left;
         margin-left: -7px;
+        margin-top: 5px;
     }
 
     .item-inner {
@@ -60,11 +87,16 @@ page-stream {
     }
 
     .noResultItem{
-        width: 100%;
+        background: #fff;
+        position:absolute;
+        color:#fff;
+        top:40%;
+        left:50%;
+        padding:15px;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
         height: 100px;
-        margin: auto;
-        position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
     }
 
     .noResult{
@@ -83,6 +115,7 @@ page-stream {
         margin: 0px;
         margin-left: 10px !important
     }
+    
 
 
 }

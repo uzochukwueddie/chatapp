@@ -7,7 +7,7 @@ import { RoomsProvider } from '../../providers/rooms/rooms';
 import { ModalPage } from '../modal/modal';
 // import { MessageModalPage } from '../message-modal/message-modal';
 import { HttpClient } from '@angular/common/http';
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 import * as io from 'socket.io-client';
 
 
@@ -18,6 +18,8 @@ import * as io from 'socket.io-client';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+
+
   userprofile: any;
   userValue: any;
   user: any;
@@ -50,19 +52,22 @@ export class ProfilePage {
 
   isComplete = false;
 
+  friends: any = [];
+  friendRequest: any;
+  dataUser: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private profile: ProfileProvider,
-    // private toastCtrl: ToastController,
-    // private alertCtrl: AlertController,
     private storage: Storage,
     private rm: RoomsProvider,
     private modalCtrl: ModalController,
     public http: HttpClient,
-    private platform: Platform
+    private platform: Platform,
   ) {
-    this.socketHost = 'http://localhost:3000';
+
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
     })
@@ -84,9 +89,9 @@ export class ProfilePage {
   }
 
   ionViewDidEnter(){
+
     this.isProfile = true;
     this.isNotProfile = true;
-
 
     this.profile.getProfile(this.userValue)
       .subscribe(res => {
@@ -103,38 +108,17 @@ export class ProfilePage {
         this.rooms = res.rooms
       });
 
+    
+    this.rm.returnUser(this.userValue)
+      .subscribe(res => {
+        this.friendRequest = res;
+
+        _.forEach(this.friendRequest.user.request, (val) => {
+          this.friends.push(val);
+        });
+      });
 
     
-
-    // if(this.userValue){
-    //   this.http
-    //     .get(`http://localhost:3000/api/receiver/${this.userValue.replace(/ /g, '-')}`)
-    //       .subscribe((res:any) => {
-    //         this.requestArray = res.messages
-    //         let arr = _.uniqBy(res.messages, 'message.sendername');
-    //         _.forEach(arr, (val) => {
-    //           if(val.message.isRead === false){
-    //             this.msgRequest += 1;
-    //           }
-    //         });
-    //       });
-
-    //   this.socket.on('refreshPage', (data) => {
-    //     this.http
-    //     .get(`http://localhost:3000/api/receiver/${this.userValue.replace(/ /g, '-')}`)
-    //       .subscribe((res:any) => {
-    //         this.requestArray = res.messages
-    //         let arr = _.uniqBy(res.messages, 'message.sendername');
-    //         _.forEach(arr, (val) => {
-    //           if(val.message.isRead === true){
-    //             this.msgRequest -= 1
-    //           }
-    //         })
-    //       });
-    //   });
-    // }
-
-
   }
   
 
@@ -167,6 +151,34 @@ export class ProfilePage {
         this.userValue = res.user.username;
         this.requestNum = res.user.request.length;
       });
+  }
+
+  acceptRequest(friend) {
+    this.profile.getProfile(friend.username)
+      .subscribe(res => {
+        this.rm.acceptRequest(friend.username, this.datauser.user.username, res.profile._id, this.datauser.user._id, 'accept')
+          .subscribe(res => {
+            let index = this.friends.indexOf(friend);
+
+            if(index > -1){
+              this.friends.splice(index, 1);
+            }
+            this.socket.emit('refresh', {});
+          });
+      });
+    
+  }
+
+  cancelRequest(friend) {
+    this.rm.cancelRequest(friend.username, this.datauser.user.username)
+      .subscribe(res => {
+        let index = this.friends.indexOf(friend);
+
+        if(index > -1){
+          this.friends.splice(index, 1);
+        }
+        this.socket.emit('refresh', {});
+      })
   }
 
 

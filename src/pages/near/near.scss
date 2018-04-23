@@ -1,160 +1,299 @@
 page-near {
-    .rowCol{
-        max-width: 140px !important;
-        margin: 0px 10px 10px 10px;
-        text-align: center;
-    }
-    .image-container {
-        min-height: 120px;
-        height: 140px;
-        background-size: cover;
-        padding: 0px !important;
-        margin: 0px !important;
-    }
-
-    .item-inner{
-        border: none !important;
-        width: 100%;
-        
-    }
-
-    .label-md .smallUsername{
-        font-size: 15px !important;
-        color: #4aa1f3;
-        font-weight: bold;
-    }
-
-    .label-md p{
-        font-size: 17px !important;
-    }
-
-    @media (min-width: 0px) {
-        .images {
-            column-count: 2;
-        }
-    }
-
-    @media (min-width: 320px) {
-        .images {
-            column-count: 2;
-        }
-        .rowCol{
-            max-width: 130px !important;
-        }
-        .image-container {
-            min-height: 120px;
-            height: 130px;
-        }
-    }
- 
-    @media (min-width: 420px) {
-        .images {
-            column-count: 3;
-        }
-
-        .rowCol{
-            max-width: 140px !important;
-        }
-
-        .image-container {
-            min-height: 120px;
-            height: 140px;
-        }
-    }
-
-    @media (min-width: 600px) {
-        .images {
-            column-count: 3;
-        }
-
-        .rowCol{
-            max-width: 160px !important;
-        }
-
-        .image-container {
-            min-height: 120px;
-            height: 160px;
-        }
-    }
- 
-    @media (min-width: 720px) {
-        .images {
-            column-count: 4;
-        }
-    }
- 
-    // .one-image {
-    //     margin: 2px;
+    // .rowCol{
+    //     max-width: 140px !important;
+    //     margin: 0px 10px 10px 10px;
+    //     text-align: center;
+    // }
+    // .image-container {
+    //     min-height: 120px;
+    //     height: 140px;
+    //     background-size: cover;
+    //     padding: 0px !important;
+    //     margin: 0px !important;
     // }
 
-    // .pins {
-    //     column-count: 2;
-    // }
-
-    // .pin {
-    //     display: block;
-    //     // border: none !important
-    // }
-
-    // .card {
-    //     margin-top: 10px;
-    // }
-
-    // .card-md {
-    //     margin-top: 0;
-    //     width: auto !important;
-    // }
-
-    // ion-avatar {
-    //     margin: 0 !important;
-    // }
-
-    // .userImage{
+    // .item-inner{
+    //     border: none !important;
     //     width: 100%;
-    //     height: 120px;
+        
     // }
 
-    // // .item ion-avatar img {
-    // //     width: 9vw ;
-    // //     height: 9vw;
-    // // }
-
-    // .post-description {
-    //     padding: 8px;
-    //     border-bottom: 1px solid #eee;
+    // .label-md .smallUsername{
+    //     font-size: 15px !important;
+    //     color: #4aa1f3;
+    //     font-weight: bold;
     // }
 
-    // // Media queries
-    // @media (min-width: 480px) {
-    //     .pins {
-    //         column-count: 3
-    //     }
-    //     .item ion-avatar img {
-    //         width:  7vw !important;
-    //         height: 7vw !important;
+    // .label-md p{
+    //     font-size: 17px !important;
+    // }
+
+    // @media (min-width: 0px) {
+    //     .images {
+    //         column-count: 2;
     //     }
     // }
 
-    // @media (min-width: 640px) {
-    //     .pins {
+    // @media (min-width: 320px) {
+    //     .images {
+    //         column-count: 2;
+    //     }
+    //     .rowCol{
+    //         max-width: 130px !important;
+    //     }
+    //     .image-container {
+    //         min-height: 120px;
+    //         height: 130px;
+    //     }
+    // }
+ 
+    // @media (min-width: 420px) {
+    //     .images {
+    //         column-count: 3;
+    //     }
+
+    //     .rowCol{
+    //         max-width: 140px !important;
+    //     }
+
+    //     .image-container {
+    //         min-height: 120px;
+    //         height: 140px;
+    //     }
+    // }
+
+    // @media (min-width: 600px) {
+    //     .images {
+    //         column-count: 3;
+    //     }
+
+    //     .rowCol{
+    //         max-width: 160px !important;
+    //     }
+
+    //     .image-container {
+    //         min-height: 120px;
+    //         height: 160px;
+    //     }
+    // }
+ 
+    // @media (min-width: 720px) {
+    //     .images {
     //         column-count: 4;
     //     }
-    //     .card {
-    //         margin-top: 10px;
-    //     }
-    //     .card-md {
-    //         margin-top: 0;
-    //         // border: 1px solid red;
-    //         width: 120px !important;
-    //     }
-    //     .userImage{
-    //         width: 120px;
-    //         height: 120px;
-    //     }
-    //     pinBtn{
-            
-    //         width: auto;
-    //         height: auto;
-    //     }
     // }
+ 
+    
+
+    .all_list{
+        @extend .appList;
+    }
+    ion-toolbar{
+        .segment {
+            .segment-button {   
+                height: $control-height - 10px;
+                line-height: $control-height - 10px;
+                border: none;
+                color: color($colors,light);
+                border-radius: 0px!important;
+                max-width:100%;
+                background: none!important;
+            }
+            .segment-activated{
+                background:none!important;
+                border-bottom: 4px solid color($colors,color2);
+            }
+        }
+        &.tabs_bar{
+            min-height:$control-height - 10px!important;
+            .toolbar-background{
+                background: color($colors,color1)!important;
+            }
+        }
+    }
+    .appList{
+        .item{
+            background:none;
+            padding:$content-padding 0px;
+            border-bottom:1px solid color($colors,light)!important;
+            &:last-of-type{
+                border-bottom:none!important;
+            }
+            margin-bottom:0px!important;
+            ion-avatar{
+                margin:$content-padding/2;
+                img{
+                    width: 44px; 
+                    height: 44px;
+                }
+            }
+            .grid{
+                padding:0px;
+                .col{
+                    padding:0px;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            h5{
+                font-weight:400;
+                @include whiteNoWrap(20px);
+                margin:0px!important;
+            }
+            p{
+                font-size:1.3rem!important;
+                @include whiteNoWrap(20px);
+            }
+           
+            span{
+                font-size:1.5rem; 
+                @include whiteNoWrap(20px);
+                max-width:100px;
+            }
+        }
+    }
+    .active_list{
+        @extend .appList;
+        .item{
+            .label{
+                position: relative;
+                padding-right: ($content-padding*2) + 10px;
+                &:after{
+                    content:'';
+                    @include position(0px,$content-padding,0px,auto);
+                    margin:auto 0px;
+                    background:color($colors,color2);
+                    width:10px;
+                    height:10px;
+                    border-radius:50%;
+                }
+            }
+        }
+    }
+    .grid{
+        .col{
+            overflow:hidden;
+        }
+    }
+    
+    .group{
+        %inContainer{
+            border-bottom:1px solid color($colors,color4);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-bottom:$content-padding/2;
+        }
+        %itemContainer{
+            width:100%;
+            height:100%;
+            border-radius:50%;
+            margin:$content-padding $content-padding/2;
+            display:inline-block;
+        }
+        .container{
+            background:color($colors,light);
+            text-align: center;
+            padding:$content-padding;
+            position: relative;
+        }
+        .menu_list{
+            display:inline-block;
+            width:calc(100% - (#{$content-padding}*2));
+            background-color:color($colors,color4);
+            padding:0px $content-padding;
+            @include position(34px,$content-padding,auto,auto);
+            -webkit-transition: all 1.5s;
+            transition: all 1.5s; 
+            opacity:0;
+            .item{
+                padding:0px;
+                height:40px;
+                margin-bottom:0px;
+                background:none;
+                .label{
+                    text-align: center;
+                    font-size:$mainFont - .2;
+                    color: color($colors,dark);
+                }
+            }
+            &.appear{
+                opacity:1;
+            }
+        }
+        .created_group{
+            .container{
+                .imgs{
+                    @extend %inContainer;
+                }
+                .imgBg{
+                    position: relative;
+                    @extend %itemContainer;
+                    &.online{
+                        &:after{
+                            content:'';
+                            @include position(auto,7px,0px,auto);
+                            background: color($colors,color2);
+                            width:100%;
+                            height:100%;
+                            border-radius:50%;
+                        }
+                    }
+                }
+                p{
+                    margin:0px;
+                    @include whiteNoWrap(20px);
+                    font-weight:400;
+                    &:first-of-type{
+                        margin-top:$content-padding;
+                    }
+                }
+                .button{
+                    @include position(0px,0px,auto,auto);
+                    min-width:34px;
+                    width:34px;
+                    height:34px;
+                    opacity: 1!important;
+                }
+            }
+        }
+        .not_created{
+            .icon_btns{
+                @extend %inContainer;
+                .button{
+                    @extend %itemContainer;
+                    background:color($colors,color4);
+                    .icon{
+                        color:color($colors,color2);
+                        padding:0px;
+                    }
+                }
+            }
+            p{
+                @include whiteNormal(40px,2);
+                height:40px;
+                color: color($colors,color2);
+                margin:$content-padding 0px 0px;
+            }
+        }
+    }
+    .footer{
+        &.footer_btn{
+            width:$control-height + 10;
+            left:auto;
+            right:$content-padding*2;
+            bottom: $content-padding*3 + $control-height!important;
+            background:none;
+            padding:0px;
+            .button{
+                height:$control-height + 10;
+                width: $control-height + 10;
+                border-radius:50%;
+                display: flex;
+                align-items: center;
+                justify-content:center;
+                border-radius:50%;
+            }
+        }
+    }
 }

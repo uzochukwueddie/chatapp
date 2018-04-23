@@ -12,6 +12,12 @@ page-stream-modal {
             float: right;
             margin-right: 10px;
         }
+
+        .title-md{
+            margin: 0 auto !important;
+            text-align: center !important;
+            padding-left: 10px !important;
+        }
     }
 
     ion-content{
@@ -26,6 +32,11 @@ page-stream-modal {
         .addPost {
             background: #4aa1f3;
             color: white;
+            margin-top: 10px;
+        }
+
+        .imgBtn {
+            font-size: 1.4rem !important;
         }
 
         .message {

@@ -1,4 +1,4 @@
-<ion-content padding class="transparent-header">
+<!-- <ion-content padding class="transparent-header">
     <ion-header>
       <ion-navbar>
       </ion-navbar>
@@ -22,12 +22,40 @@
     <button ion-button block clear class="forgot-btn" (click)="forgotPassword()">
       Forgot password?
     </button>
-</ion-content>
+</ion-content> -->
 
-<!-- <ion-footer>
-  <ion-toolbar class="footer">
-    <div (click)="RegisterPage()">
-      <span>Don't have an account? <strong>Sign up here</strong>.</span>
-    </div>
-  </ion-toolbar>
-</ion-footer> -->
+
+
+<ion-content class="sign" padding>
+  <ion-header no-border>
+    <ion-navbar>
+    </ion-navbar>
+  </ion-header>
+
+  <div class="logo">
+    <img src="assets/imgs/logo.png">
+    <p>Connect your Friends & Be ON</p>
+  </div>
+  
+</ion-content>
+<ion-footer text-center>
+  <div class="appForm" margin-bottom>
+    <ion-list>
+      <ion-item>
+        <ion-icon name="ios-mail-outline" item-left></ion-icon>
+        <ion-input type="email" [(ngModel)]="email" placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="ios-lock-outline" item-left></ion-icon>
+        <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+  <p class="forgot" (click)="forgotPassword()">Forgot Password</p>
+  <button ion-button block color="color2" margin-vertical (click)="LoginUser()">Sign In</button>
+</ion-footer>
+
+
+
+
+

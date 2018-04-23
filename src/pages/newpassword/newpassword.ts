@@ -14,17 +14,33 @@ export class NewpasswordPage {
   password: string;
   email: string;
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private reset: ResetProvider,
     private alertCtrl: AlertController,
   ) {
-    this.email = this.navParams.get("email")
+    this.email = this.navParams.get("email");
+
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
   }
 
   ionViewDidLoad() {
     
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
 
   resetPassword(){

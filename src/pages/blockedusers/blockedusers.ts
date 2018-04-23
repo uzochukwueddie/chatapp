@@ -13,12 +13,16 @@ export class BlockedusersPage {
   blockedUsers = [];
   noUser = false;
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
   ) {
     this.user = this.navParams.get('user');
     this.blockedUsers = this.user.blockedUsers;
+
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
     if(this.user.blockedUsers.length <= 0){
       this.noUser = true;
@@ -27,6 +31,18 @@ export class BlockedusersPage {
 
   ionViewDidLoad() {
     
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
 
 }

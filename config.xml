@@ -99,4 +99,5 @@
     </plugin>
     <engine name="android" spec="7.0.0" />
     <engine name="browser" spec="5.0.3" />
+    <plugin name="cordova-plugin-admob-free" spec="^0.15.0" />
 </widget>

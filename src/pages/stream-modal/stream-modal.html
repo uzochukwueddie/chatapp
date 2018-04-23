@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="pro_header">
   <ion-navbar>
     <ion-title>Add Post</ion-title>
     <ion-buttons left>
@@ -15,7 +15,6 @@
       <ion-row>
         <ion-col col-12>
           <ion-item class="addImg">
-            
             <ion-textarea [(ngModel)]="message" class="message" placeholder="Write Mesaage..."></ion-textarea>
           </ion-item>
           
@@ -24,13 +23,15 @@
           <button class="imgBtn" ion-button item-start (click)="addImageToPost()">
             Add Image
           </button>
-          <button class="addPost" ion-button block ion-button (click)="AddMessage()">
+          <button class="addPost" ion-button block (click)="AddMessage()">
             Post Message
           </button>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <img src="{{image}}">
+    <ion-item style="width:100%; margin-top: 10px;" *ngIf="image">
+        <img style="margin: 0 auto !important; text-align: center !important" width="150px" height="150px" src="{{image}}">
+    </ion-item>
 
 </ion-content>

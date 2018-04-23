@@ -12,14 +12,14 @@ export class ResetProvider {
 
   getResetCode(email): Observable<any>{
     return this.http
-      .post('http://localhost:3000/api/getcode/user', {
+      .post('https://soccerchatapi.herokuapp.com/api/getcode/user', {
         email: email
       });
   }
 
   resetPassword(email, token, password): Observable<any>{
     return this.http
-      .post('http://localhost:3000/api/resetpassword/user', {
+      .post('https://soccerchatapi.herokuapp.com/api/resetpassword/user', {
         token: token,
         password: password, 
         email: email

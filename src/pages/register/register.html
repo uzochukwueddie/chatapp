@@ -1,27 +1,4 @@
-<!-- <ion-content padding>
-    <ion-card style="margin: 0px; border: none !important; width: 100%;" padding>
-      <img src="http://placehold.it/10x10"  style="width:50%; margin: auto; padding:20px;"/>
-    </ion-card>
-  
-    <ion-list padding>
-      <ion-item>
-        <ion-input type="text" [(ngModel)]="username" placeholder="Username"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="email" [(ngModel)]="email" placeholder="Email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
-      </ion-item>
-
-      <button ion-button block color="bluecolor" (click)="RegisterUser()">Register</button>
-      <button ion-button clear block color="bluecolor" (click)="LoginPage()">Already have an account?</button>
-    </ion-list>
-  
-</ion-content> -->
-
-
-<ion-content padding class="transparent-header">
+<!-- <ion-content padding class="transparent-header">
     <ion-header>
       <ion-navbar>
       </ion-navbar>
@@ -45,12 +22,36 @@
     <button ion-button block clear color="light" class="login-button" (click)="LoginPage()">
       <ion-icon name="log-in"></ion-icon> Login here
     </button>
-  </ion-content>
+</ion-content> -->
 
-  <!-- <ion-footer>
-    <ion-toolbar class="footer">
-      <div (click)="LoginPage()">
-        <span>Already have an account? <strong>Login here</strong>.</span>
-      </div>
-    </ion-toolbar>
-</ion-footer> -->
+
+
+<ion-content class="sign" padding>
+  <ion-header no-border>
+    <ion-navbar>
+    </ion-navbar>
+  </ion-header>
+  <div class="logo">
+    <img src="assets/imgs/logo.png">
+    <p>Connect your Friends & Be ON</p>
+  </div>
+</ion-content>
+<ion-footer>
+  <div class="appForm"  margin-bottom>
+    <ion-list>
+      <ion-item>
+        <ion-icon name="ios-mail-outline" item-left></ion-icon>
+        <ion-input type="text" [(ngModel)]="username" name="username" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="ios-lock-outline" item-left></ion-icon>
+        <ion-input type="email" [(ngModel)]="email" name="email" placeholder="Email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="md-key" item-left></ion-icon>
+        <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Password"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+  <button ion-button block color="color2" margin-vertical (click)="RegisterUser()">Sign Up</button>
+</ion-footer>

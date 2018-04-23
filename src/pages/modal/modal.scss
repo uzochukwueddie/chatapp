@@ -1,5 +1,18 @@
 page-modal {
     .accept{
-        left: -2px !important
+        // left: -2px !important
+        font-size: 1.3rem;
+    }
+
+    .username{
+        margin-left: -7px !important;
+    }
+
+    ion-header{
+        .title-md{
+            margin: 0 auto !important;
+            text-align: center !important;
+            padding-left: 10px !important;
+        }
     }
 }

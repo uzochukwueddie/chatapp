@@ -90,3 +90,18 @@ page-userprofile {
         color: #888;
     }
 }
+
+.alert-title {
+    color: color($colors, blue-color);
+}
+
+.alert-sub-title {
+    color: color($colors, graycolor);
+    margin-top: 15px !important;
+    font-size: 1.7rem !important;
+    text-align: left;
+}
+
+.alert-radio-label{
+    color: #65737e !important;
+}

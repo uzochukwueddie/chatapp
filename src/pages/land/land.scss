@@ -1,0 +1,35 @@
+page-land {
+    .scroll-content {
+        overflow: hidden !important;
+    }
+
+    
+}
+
+.sign{
+    background-color:color($colors,color1);
+    text-align: center;    
+    .scroll-content{
+        margin-top:0px!important;
+        .note{
+            color: color($colors,light);
+            @include whiteNormal(30px,2);
+            margin: $content-padding 0px;
+        }
+    }
+}
+.logo{
+    margin-top:$toolbar-ios-height;
+    img{
+        width:180px;
+    }
+    p{  
+        margin:0px;
+        color:color($colors,color4);
+        @include whiteNormal(15px,1);
+    }
+}
+.footer{
+    padding:0px $content-padding $content-padding;
+}
+

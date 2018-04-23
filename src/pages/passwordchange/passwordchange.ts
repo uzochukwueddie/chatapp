@@ -16,6 +16,8 @@ export class PasswordchangePage {
   cpassword: string;
   username: string;
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -23,10 +25,23 @@ export class PasswordchangePage {
     private rm: RoomsProvider,
     private alertCtrl: AlertController
   ) {
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
   }
 
   ionViewDidLoad() {
     this.getUserData();
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
 
   onChangePassword(){

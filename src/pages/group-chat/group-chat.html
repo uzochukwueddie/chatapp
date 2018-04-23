@@ -1,29 +1,20 @@
-<ion-header no-border>
+<ion-header no-border class="pro_header">
   <ion-navbar>
-    <ion-buttons left>
+    <ion-buttons left class="backBtn">
       <button ion-button icon-only (click)="goBack()">
           <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
 
-    <ion-row>
-      <ion-title class="titleBtn">
-        {{roomName.name || roomName}}
-      </ion-title>
+    <ion-title class="titleBtn">
+      {{roomName.name || roomName}}
+    </ion-title>
 
-      <ion-col class="menuCol">
-        <button class="menuBtn" ion-button item-end clear (click)="groupMenu()" end>
-          <ion-icon name="menu" class="menuIcon"></ion-icon>
-        </button>
-        
-        <button id="notification-button" ion-button item-end clear (click)="openModal()" >
-          <ion-icon name="notifications">
-            <ion-badge id="notifications-badge" *ngIf="requestNum > 0" color="danger">{{requestNum}}</ion-badge>
-          </ion-icon>              
-        </button>
-        
-      </ion-col>
-    </ion-row>
+    <ion-buttons end>
+      <button ion-button clear (click)="groupMenu()">
+        <ion-icon name="menu" class="menuIcon"></ion-icon>
+      </button>
+    </ion-buttons>
     
   </ion-navbar>
   

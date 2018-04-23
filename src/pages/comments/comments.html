@@ -1,5 +1,4 @@
-
-<ion-header>
+<!-- <ion-header class="pro_header">
   <ion-navbar>
       <ion-buttons left>
         <button ion-button icon-only (click)="goBack()">
@@ -7,7 +6,7 @@
         </button>
       </ion-buttons>
     
-      <ion-row>
+      <ion-row class="titleCol">
         <ion-col>
             <ion-title>Comments</ion-title>
         </ion-col>
@@ -19,6 +18,25 @@
       </ion-row>
   </ion-navbar>
 
+</ion-header> -->
+
+<ion-header class="pro_header">
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Comments</ion-title>
+
+
+    <ion-buttons end>
+      <button class="viewPost" clear (click)="viewPost()">
+        View Post
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
@@ -26,15 +44,19 @@
     <ion-grid>
       <ion-row>
         <ion-col col-12>
-          <ion-textarea [(ngModel)]="comment" class="message" placeholder="Write Comment"></ion-textarea>
-          <button class="addComment" ion-button block ion-button (click)="sendComment()">
-            Add Comment
-        </button>
+          <ion-item class="addImg">
+            <ion-textarea [(ngModel)]="comment" class="message" placeholder="Write Comment"></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <button class="addComment" ion-button block (click)="sendComment()">
+              Add Comment
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <ion-grid padding-horizontal>
       <ion-row>
         <ion-list>
           <ion-item *ngFor="let com of commentsArray" class="postItem">

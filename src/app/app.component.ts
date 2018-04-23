@@ -22,6 +22,8 @@ export class MyApp implements OnInit, OnDestroy {
 
   rootPage: string = "TabsPage";
 
+  public animateVarible:boolean = false;
+
   roomUsers = [];
   roomData = [];
   username: any;
@@ -73,7 +75,7 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   initializeApp() {
-    this.socketHost = 'http://localhost:3000';
+    this.socketHost = 'https://soccerchatapi.herokuapp.com';
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost)
@@ -95,7 +97,7 @@ export class MyApp implements OnInit, OnDestroy {
             payload = window.atob(payload);
             let newValue = JSON.parse(payload).data.username.replace(/ /g, '-');
             this.http
-              .get(`http://localhost:3000/api/user/${newValue}`)
+              .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
                 .subscribe((res: any) => {
                   let params = {
                     room: 'global',
@@ -104,11 +106,9 @@ export class MyApp implements OnInit, OnDestroy {
                   this.socket.emit('online', params);
                 });
           }
-          
-          
           this.nav.setRoot("TabsPage");
         } else {
-          this.nav.setRoot("LoginPage");
+          this.nav.setRoot("LandPage");
         }
       });
 
@@ -124,7 +124,7 @@ export class MyApp implements OnInit, OnDestroy {
       
       this.socket.emit('joinRequest', params, () => {
           
-      })
+      });
       
     });
   }
@@ -154,7 +154,100 @@ export class MyApp implements OnInit, OnDestroy {
         label: 'Send Request',
         value: `${user.name}`,
         handler: (data) => {
-          this.rm.postData(this.username, user.name, this.userId)
+          this.rm.postData(this.username, user.name, this.userId, 'request')
+            .subscribe(res => {
+              data.label = 'Friend Request Sent';
+              this.socket.emit('refresh', {});
+              this.socket.emit('request', {
+                sender: this.username,
+                receiver: user.name
+              });
+            })
+        }
+      });
+
+      alert.addInput({
+        type: "radio",
+        label: 'Send Message',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.menuCtrl.close('rightSide');
+          alert.dismiss();
+          this.sendMessage(user.name);
+        }
+      });
+
+      alert.addButton({
+        text: 'cancel'
+      });
+
+      alert.present();
+
+    } else {
+      let alert = this.alertCtrl.create();
+      alert.setTitle(`${user.name}`)
+      alert.addInput({
+        type: "radio",
+        label: 'View Profile',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.menuCtrl.close('rightSide');
+          alert.dismiss();
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              this.nav.push('UserprofilePage', {'profile': res.profile});
+            });
+        }
+      });
+
+      alert.addInput({
+        type: "radio",
+        label: 'Send Message',
+        value: `${user.name}`,
+        handler: (data) => {
+          alert.dismiss();
+          this.menuCtrl.close('rightSide');
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              this.sendMessage(user.name);
+            });
+        }
+      });
+
+      alert.addButton({
+        text: 'cancel'
+      });
+
+      alert.present()
+    }
+  }
+
+  displayAlert(user) {
+    this.checkUser = this.checkIfFriends2(this.userData.friends, user.name);
+
+    if(this.checkUser === false){
+      let alert = this.alertCtrl.create();
+      alert.setTitle(`${user.name}`)
+      alert.addInput({
+        type: "radio",
+        label: 'View Profile',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.menuCtrl.close('rightSide');
+          alert.dismiss();
+          this.profile.getProfile(user.name)
+            .subscribe(res => {
+              this.nav.push('UserprofilePage', {'profile': res.profile});
+            });
+        }
+      });
+
+      alert.addInput({
+        type: "radio",
+        label: 'Send Request',
+        value: `${user.name}`,
+        handler: (data) => {
+          this.rm.postData(this.username, user.name, this.userId, 'request')
             .subscribe(res => {
               data.label = 'Friend Request Sent';
               this.socket.emit('refresh', {});
@@ -205,8 +298,6 @@ export class MyApp implements OnInit, OnDestroy {
           this.menuCtrl.close('rightSide');
           this.profile.getProfile(user.name)
             .subscribe(res => {
-              // let receiver = {"name": user.name, "friendId": res.profile}
-              // this.nav.push("PrivatechatPage", {"receiver": receiver, "sender": this.userData, tabIndex: 1});
               this.sendMessage(user.name);
             });
         }
@@ -216,76 +307,11 @@ export class MyApp implements OnInit, OnDestroy {
     }
   }
 
-  displayAlert(user) {
-    this.checkUser = this.checkIfFriends2(this.userData.friends, user.name);
-
-    if(this.checkUser === false){
-      let alert = this.alertCtrl.create();
-      alert.setTitle(`${user.name}`)
-      alert.addInput({
-        type: "radio",
-        label: 'View Profile',
-        value: `${user.name}`,
-        handler: (data) => {
-          alert.dismiss();
-          // this.menuCtrl.close('rightSide');
-          this.profile.getProfile(user.name)
-            .subscribe(res => {
-              this.nav.push('UserprofilePage', {'profile': res.profile});
-            });
-        }
-      });
-
-      alert.addInput({
-        type: "radio",
-        label: 'Send Request',
-        value: `${user.name}`,
-        handler: (data) => {
-          this.rm.postData(this.username, user.name)
-              .subscribe(res => {
-                data.label = 'Friend Request Sent';
-                this.socket.emit('refresh', {});
-                this.socket.emit('request', {
-                  sender: this.username,
-                  receiver: user.name
-                });
-              })
-        }
-      });
-
-      alert.present();
-
-    } else {
-      let alert = this.alertCtrl.create();
-      alert.setTitle(`${user.name}`)
-      alert.addInput({
-        type: "radio",
-        label: 'View Profile',
-        value: `${user.name}`,
-        handler: (data) => {
-          alert.dismiss();
-          // this.menuCtrl.close('rightSide');
-          this.profile.getProfile(user.name)
-            .subscribe(res => {
-              this.nav.push('UserprofilePage', {'profile': res.profile});
-            });
-        }
-      });
-
-      alert.present();
-    }
-
-    
-  }
-
   sendMessage(name){
     this.profile.getProfile(name)
       .subscribe(res => {
-        this.rm.postNewData(this.username, this.userData._id, name, res.profile._id)
+        this.rm.postNewData(this.username, this.userData._id, name, res.profile._id, 'request')
           .subscribe(res => {});
-
-          // let receiver = {"name": user.name, "friendId": res.profile}
-          // this.nav.push("PrivatechatPage", {"receiver": receiver, "sender": this.userData, tabIndex: 1})
 
           let alert = this.alertCtrl.create({
             title: 'Send Message',
@@ -357,7 +383,7 @@ export class MyApp implements OnInit, OnDestroy {
 
   logout() {
     this.storage.remove('token');
-    this.nav.setRoot("LoginPage");
+    this.nav.setRoot("LandPage");
     this.socket.disconnect();
   }
 

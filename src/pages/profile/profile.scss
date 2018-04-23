@@ -4,12 +4,21 @@ page-profile {
         background-color:#4aa1f3;
     }
 
-    ion-content{
-        
+    .username{
+        color: #4aa1f3;
+    }
+
+    .username p{
+        color: color($colors, graycolor);
+        padding: 0px;
+        margin: 0px;
+    }
+
+    p{
+        color: color($colors, graycolor);
     }
 
     .header-image {
-        // background-image: url('http://placehold.it/10x10');
         height: 30vh;
         background-size: cover;
         background-position: center center;
@@ -68,31 +77,208 @@ page-profile {
         color: #888;
     }
 
-    .genderRow{
+    genderRow{
         margin-top: -20px;
     }
 
     #notification-button {            
         position: relative;
-        width: 55px;
+        width: 50px !important;
         top:0px;
-        right: 1px;
+        right: 0px;
         overflow: visible!important;
         color: white;
-        padding-right: 50px;
-        float: right;
+        max-width: 4.5rem;
+        margin-right: 5px !important;
     }
 
     #notifications-badge {
         background-color: red;
         position: absolute;
         top: 0px;
-        right: -5px;
-        float: left !important;
-        padding-right: 20px;
-        padding-left: 10px;
-        margin-right: 18px;
-        width: 50% !important;
+        margin-right: 5px !important;
+    }
+
+    .accept{
+        font-size: 1.3rem;
+    }
+
+    .username{
+        margin-left: -7px !important;
+    }
+
+    .noResultItem{
+        background: #fff;
+        position:absolute;
+        color:#fff;
+        top:40%;
+        left:50%;
+        padding:15px;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        height: 100px;
+    }
+
+    .noResult{
+        color: #4aa1f3 !important;
+        text-align: center;
+    }
+
+    .playerItem.item-md{
+        height: 20px !important;
+        max-height: 20px !important;
+        border-bottom:1px solid color($colors,primary);
+    }
+
+    .playerSpan.deleteBtn{
+        height: 20px !important;
+        max-height: 20px !important;
+    }
+
+    .text-input-md{
+        border-bottom:1px solid color($colors,primary);
+    }
+
+     #mantra{
+        border-bottom:1px solid color($colors,primary);
+        padding-bottom: 1px !important;
+    }
+
+    .button-inner{
+        border-bottom:1px solid color($colors,primary);
+    }
+
+    .label-md[stacked]{
+        font-size: 1.7rem !important;
+        margin-top: 10px !important;
+        margin-left: 6px;
+    }
+
+    .mantra{
+        display: flex !important;
+    }
+
+    #charLeft{
+        font-size: 1.7rem !important
+    }
+
+    .genderRow{
+        margin-bottom: 5px;
+    }
+
+    .button-inner{
+        border: none !important;
+    }
+
+    .appForm .playerItem{
+        min-height: 20px !important;
+    }
+
+    .playerSpan{
+        margin: 0px !important;
+        margin-top: -5px !important;
+        padding: 0px !important;
+        max-height: 20px !important
+    }
+
+    .deleteBtn{
+        font-size: 1.2rem;
+        margin-top: -5px !important;
+        min-height: 20px !important;
+        height: 20px !important;
+    }
+
+    .select-text{
+        color: color($colors, graycolor) !important;
+    }
+
+    .input-md{
+        color: color($colors, graycolor) !important;
+    }
+
+    .saveBtn{
+        height: 50px !important;
+        font-size: 1.5rem !important;
+        margin-top: 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+    button{
+        height: 40px !important;
+    }
+
+    ion-list{
+        margin-top: 10px !important;
+        color: color($colors, graycolor) !important;
+        margin-left: 10px !important;
+    }
+
+    ion-list-header{
+        // margin-left: 10px !important;
+
+        p.username {
+            font-size: 1.3em !important;
+            margin-left: 5px !important;
+            color: color($colors, blue-color) !important;
+        }
+        .label {
+            color: #7f7f7f !important;
+        }
+    
+        .listheader{
+            color: #4aa1f3 !important
+        }
+
+        p{
+            margin-left: 5px !important;
+            color: color($colors, graycolor) !important;
+        }
+    }
+
+    
+
+    .profile_info{
+        text-align: center;
+        padding:$content-padding 0px;
+        .profile_img{
+            @extend .imgBg;
+            height: 110px;
+            width: 110px;
+            border-radius: 50%;
+            position:relative;
+            margin:0px auto;
+            .icon{
+                background-color: color($colors,color2);
+                @include position(auto,0px ,0px ,auto );
+                @include borderRadius(36px);
+                font-size:2.2rem;
+            }
+        }
+        h4{
+            margin:$content-padding 0px;
+            font-weight:500;
+        }
+    }
+    .appForm{
+        .item{
+            &.item-block{
+                .input-md{
+                    padding:0px $content-padding;
+                    background:color($colors,light);
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+                .select{
+                    padding:0px $content-padding;
+                    background:color($colors,light);
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+
+            }
+            
+        }
     }
 }
 

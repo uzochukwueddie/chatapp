@@ -1,32 +1,19 @@
-<!-- <ion-header class="tabHeader">
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Soccerkik</ion-title>
-    </ion-navbar>  
-</ion-header> -->
 
-
-
-<!-- <ion-content>
-    <div>
-        <super-tabs tabsPlacement="top">
-            <super-tab [root]="tab1Root" title="Rooms"></super-tab>
-            <super-tab [root]="tab2Root" title="Active"></super-tab>
-            <super-tab [root]="tab3Root" title="Chat"></super-tab>
-            <super-tab [root]="tab4Root" title="Favorite"></super-tab>
-        </super-tabs>
-      </div>
-</ion-content> -->
  
-<ion-tabs #myTabs>
+<ion-tabs>
     <ion-tab [root]="tab1Root" tabIcon="globe" tabTitle="Streams" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="home" tabTitle="Rooms" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab3Root" tabIcon="chatboxes" [tabBadge] = "msgNum > 0 ? msgNum : null" tabTitle="Chat" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab4Root" tabIcon="people" tabTitle="Nearby" (ionSelect)="clickTab()"></ion-tab>
     <ion-tab [root]="tab5Root" tabIcon="person" [tabBadge] = "requestNum > 0 ? requestNum : null" tabTitle="Profile" (ionSelect)="clickTab()"></ion-tab>
-    
 </ion-tabs>
+
+<!-- <ion-tabs #myTabs>
+    <ion-tab [root]="tab1Root" tabTitle="Streams" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Rooms" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab3Root" [tabBadge] = "msgNum > 0 ? msgNum : null" tabTitle="Chat" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab4Root" tabTitle="Nearby" (ionSelect)="clickTab()"></ion-tab>
+    <ion-tab [root]="tab5Root" [tabBadge] = "requestNum > 0 ? requestNum : null" tabTitle="Profile" (ionSelect)="clickTab()"></ion-tab>
+</ion-tabs> -->
 
 

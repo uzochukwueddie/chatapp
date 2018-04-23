@@ -29,6 +29,8 @@ export class UserprofilePage {
   userImage: any;
   imgVersion = 0;
 
+  tabBarElement: any;
+
   constructor(
     // public navCtrl: NavController, 
     public navParams: NavParams,
@@ -38,6 +40,8 @@ export class UserprofilePage {
     public popoverCtrl: PopoverController,
     private sanitization: DomSanitizer,
   ) {
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+
     this.userData = this.navParams.get('profile');
   }
 
@@ -63,6 +67,14 @@ export class UserprofilePage {
         let url = `http://res.cloudinary.com/soccerkik/image/upload/v${this.imgVersion}/${this.userImage}`;
         this.headerImage = this.sanitization.bypassSecurityTrustStyle(`url(${url})`);
       });
+  }
+
+  ionViewWillEnter() {
+    this.tabBarElement.style.display = 'none';    
+  }
+
+  ionViewWillLeave() {
+    this.tabBarElement.style.display = 'flex';
   }
 
   showClubs(){
@@ -138,6 +150,7 @@ export class UserprofilePage {
   getUserData(){
     this.rm.getUser()
       .subscribe(res => {
+        //this.user = res.user;
         this.userValue = res.user.username;
       });
   }

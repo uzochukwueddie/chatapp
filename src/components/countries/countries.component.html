@@ -1,4 +1,4 @@
-<ion-item *ngFor="let country of countriesArray" class="roomItem">
+<!-- <ion-item *ngFor="let country of countriesArray" class="roomItem">
     <button (click)="CountryChatPage(country)" ion-item no-lines detail-none class="btn1">
         <ion-avatar item-start>
             <img src="http://placehold.it/50x50">
@@ -14,7 +14,33 @@
     <button class="favBtn" ion-button clear item-end (click)="addToFavorite(country)">
         <ion-icon name="add"></ion-icon>&nbsp;Add
     </button>
-</ion-item>
+</ion-item> -->
+
+<div padding-horizontal>
+    <ion-list class="all_list" >
+        <ion-item *ngFor="let country of countriesArray" >
+            <ion-avatar item-left>
+                <img src="http://placehold.it/50x50">
+            </ion-avatar>
+            <ion-grid (click)="CountryChatPage(country)">
+                <ion-row>
+                <ion-col col>
+                    <h5 ion-text color="primary">{{country.name}}</h5>
+                </ion-col>
+                <ion-col col-auto>
+                    <span margin-left ion-text color="dark">
+                        <ion-icon name="person"></ion-icon>
+                        {{country.fans.length}}
+                    </span>
+                </ion-col>
+                </ion-row>
+            </ion-grid>
+            <p ion-text color="dark" style="margin-top:5px;" (click)="addToFavorite(country)">
+                <ion-icon name="add"></ion-icon>&nbsp;Add
+            </p>
+        </ion-item>
+    </ion-list>
+</div>
       
       
       

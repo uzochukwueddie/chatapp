@@ -1,111 +1,216 @@
 page-chat {
-    .online_span {
-        background-color: #00ff00;
-        width: 15px !important;
-        height: 15px !important;
-        border-radius: 50%;
-        float: right;
-        color: white;
+    .all_list{
+        @extend .appList;
+    }
+    
+    .appList{
+        .item{
+            background:none;
+            padding:$content-padding 0px;
+            border-bottom:1px solid color($colors,light)!important;
+            &:last-of-type{
+                border-bottom:none!important;
+            }
+            margin-bottom:0px!important;
+            ion-avatar{
+                margin:$content-padding/2;
+                img{
+                    width: 44px; 
+                    height: 44px;
+                }
+            }
+            .grid{
+                padding:0px;
+                .col{
+                    padding:0px;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            h5{
+                font-weight:400;
+                @include whiteNoWrap(20px);
+                margin:0px!important;
+            }
+            p{
+                font-size:1.1rem!important;
+                @include whiteNoWrap(20px);
+            }
+           
+            span{
+                font-size:1.5rem; 
+                @include whiteNoWrap(20px);
+                max-width:100px;
+            }
+        }
+    }
+    .active_list{
+        @extend .appList;
+        .item{
+            .label{
+                position: relative;
+                padding-right: ($content-padding*2) + 10px;
+                &:after{
+                    content:'';
+                    @include position(0px,$content-padding,0px,auto);
+                    margin:auto 0px;
+                    background:color($colors,color2);
+                    width:10px;
+                    height:10px;
+                    border-radius:50%;
+                }
+            }
+        }
+    }
+    .grid{
+        .col{
+            overflow:hidden;
+        }
+    }
+    
+    .group{
+        %inContainer{
+            border-bottom:1px solid color($colors,color4);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-bottom:$content-padding/2;
+        }
+        %itemContainer{
+            width:54px;
+            height:54px;
+            border-radius:50%;
+            margin:$content-padding $content-padding/2;
+            display:inline-block;
+        }
+        .container{
+            background:color($colors,light);
+            text-align: center;
+            padding:$content-padding;
+            position: relative;
+        }
+        .menu_list{
+            display:inline-block;
+            width:calc(100% - (#{$content-padding}*2));
+            background-color:color($colors,color4);
+            padding:0px $content-padding;
+            @include position(34px,$content-padding,auto,auto);
+            -webkit-transition: all 1.5s;
+            transition: all 1.5s; 
+            opacity:0;
+            .item{
+                padding:0px;
+                height:40px;
+                margin-bottom:0px;
+                background:none;
+                .label{
+                    text-align: center;
+                    font-size:$mainFont - .2;
+                    color: color($colors,dark);
+                }
+            }
+            &.appear{
+                opacity:1;
+            }
+        }
+        .created_group{
+            .container{
+                .imgs{
+                    @extend %inContainer;
+                }
+                .imgBg{
+                    position: relative;
+                    @extend %itemContainer;
+                    &.online{
+                        &:after{
+                            content:'';
+                            @include position(auto,7px,0px,auto);
+                            background: color($colors,color2);
+                            width:10px;
+                            height:10px;
+                            border-radius:50%;
+                        }
+                    }
+                }
+                p{
+                    margin:0px;
+                    @include whiteNoWrap(20px);
+                    font-weight:400;
+                    &:first-of-type{
+                        margin-top:$content-padding;
+                    }
+                }
+                .button{
+                    @include position(0px,0px,auto,auto);
+                    min-width:34px;
+                    width:34px;
+                    height:34px;
+                    opacity: 1!important;
+                }
+            }
+        }
+        .not_created{
+            .icon_btns{
+                @extend %inContainer;
+                .button{
+                    @extend %itemContainer;
+                    background:color($colors,color4);
+                    .icon{
+                        color:color($colors,color2);
+                        padding:0px;
+                    }
+                }
+            }
+            p{
+                @include whiteNormal(40px,2);
+                height:40px;
+                color: color($colors,color2);
+                margin:$content-padding 0px 0px;
+            }
+        }
+    }
+    .footer{
+        &.footer_btn{
+            width:$control-height + 10;
+            left:auto;
+            right:$content-padding*2;
+            bottom: $content-padding*3 + $control-height!important;
+            background:none;
+            padding:0px;
+            .button{
+                height:$control-height + 10;
+                width: $control-height + 10;
+                border-radius:50%;
+                display: flex;
+                align-items: center;
+                justify-content:center;
+                border-radius:50%;
+            }
+        }
     }
 
     .doneClass{
         color: #4aa1f3;
     }
 
-    .menuBtn {
-        color: white;
+    .unread{
+        padding: 0px;
+        margin-top: 5px;
         float: right;
-        padding: 0px;
     }
 
-    .menuIcon {
-        color: white;
-        padding: 0px;
-    }
-
-    ion-content {
-        .nameCol{
-            padding: 0px;
-            margin: 0px;
-        }
-
-        .username{
-            width: auto !important;
-            color: #4aa1f3;
-        }
-
-        .dateNote{
-            float: right;
-            padding: 0px;
-            margin: 0px;
-            right: 0px;
-            left: 0px;
-        }
-
-        .msgCol{
-            padding: 0px;
-            margin-top: 4px;
-            float: left;
-            width: auto !important;
-        }
-
-        .unreadCol{
-            padding: 0px;
-            margin: 0px;
-            right: 0px;
-            left: 0px;
-            float: right !important;
-            height: auto;
-            top: -19px;
-        }
-
-        .unread{
-            padding: 0px;
-            margin-top: 5px;
-            float: right;
-        }
-
-        .msg {
-            background: #4aa1f3;
-            border-radius: 0.8em; //12px
-            -moz-border-radius: 0.8em; //12px
-            -webkit-border-radius: 0.8em; //12px
-            color: #ffffff;
-            display: inline-block;
-            font-weight: bold;
-            line-height: 1.8em; //25px
-            margin-right: 5px;
-            text-align: center;
-            width: 1.8em; //25px
-            font-size: 10px;
-        }
-        
-
-        .rowCol{
-            width: auto !important;
-            margin-top: 3px;
-            margin-bottom: 0px !important;
-            height: 60px;
-        }
-
-        .rowCol2{
-            width: auto !important;
-            padding: 0px;
-            margin: 0px;
-            margin-bottom: 0px !important;
-        }
-
-        .myrow{
-            padding-bottom: 0px;
-            height: 60px;
-        }
-
-        .imgCol{
-            max-width: 50px;
-        }
-
-        span.typing{
-            color: #4aa1f3 !important;
-        }
+    .msg {
+        background: #4aa1f3;
+        border-radius: 0.8em; //12px
+        -moz-border-radius: 0.8em; //12px
+        -webkit-border-radius: 0.8em; //12px
+        color: #ffffff;
+        display: inline-block;
+        font-weight: bold;
+        line-height: 1.8em; //25px
+        margin-right: 5px;
+        text-align: center;
+        width: 1.8em; //25px
+        font-size: 10px;
     }
 }

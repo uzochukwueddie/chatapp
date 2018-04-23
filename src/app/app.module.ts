@@ -20,6 +20,7 @@ import { ModalPage } from '../pages/modal/modal';
 import { CommentProvider } from '../providers/comment/comment';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Facebook } from '@ionic-native/facebook';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 import { File } from '@ionic-native/file';
 import { FileChooser } from '@ionic-native/file-chooser';
@@ -57,10 +58,7 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
     HttpClientModule,
     FormsModule,
     IonicModule.forRoot(MyApp, {
-      tabsPlacement: "bottom",
-      scrollPadding: false,
-      scrollAssist: true, 
-      autoFocusAssist: false
+      tabsPlacement: "top"
     }),
     IonicStorageModule.forRoot(),
     IonicImageViewerModule,
@@ -84,6 +82,7 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
     RoomsProvider,
     GroupProvider,
     CommentProvider,
+    AdMobFree,
     Keyboard,
     Facebook,
     FileTransfer,

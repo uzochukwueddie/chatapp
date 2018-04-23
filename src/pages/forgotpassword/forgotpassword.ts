@@ -14,6 +14,8 @@ export class ForgotpasswordPage {
 
   email: string;
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -21,10 +23,23 @@ export class ForgotpasswordPage {
     private alertCtrl: AlertController,
     private storage: Storage,
   ) {
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
   }
 
   ionViewDidLoad() {
     
+  }
+
+  ionViewWillEnter() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'none'; 
+    }   
+  }
+  
+  ionViewWillLeave() {
+    if(this.tabBarElement){
+      this.tabBarElement.style.display = 'flex'; 
+    } 
   }
 
   getCode(){

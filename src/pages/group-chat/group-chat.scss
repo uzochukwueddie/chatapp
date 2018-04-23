@@ -3,6 +3,11 @@ page-group-chat {
         .toolbar-background {
             background-color: color($colors, blue-color);
         }
+
+        .title-md{
+            padding: 0px !important;
+            margin: 0px !important;
+        }
     }
 
     .welcome{
@@ -332,6 +337,12 @@ page-group-chat {
         font-size: 16px !important;
       }
 
+      .input{
+          height: $tab_button_height - ($content-padding*3);
+          line-height: $tab_button_height - ($content-padding*3);
+          padding:0px 12px;
+      }
+
       .ion-md-image:before{
         font-size: 20px !important;
       }
@@ -342,13 +353,28 @@ page-group-chat {
 
       .msgBtn .footer-btn{
         font-size: 30px !important;
+        margin-right: 15px;
       }
 
       .emojiBtn{
         font-size: 20px !important;
-        padding: 10px !important;
       }
 
+    }
+
+    
+    .footer{
+        background:color($colors,color1);
+        padding:0px!important;
+        .grid{
+            padding:$content-padding/2;
+            .col{
+                padding:$content-padding/2;
+                .button{
+                    height:34px;
+                }
+            }
+        }
     }
 
     

@@ -1,23 +1,21 @@
-<ion-header>
+<ion-header class="pro_header">
     <ion-navbar>
-        <ion-row>
-            <ion-title class="titleBtn">
-                Active Chat List
-            </ion-title>
-        
-            <ion-col class="menuCol">
-                <button class="menuBtn" ion-button item-end clear (click)="friendListPage(userName)" end>
-                    <ion-icon name="menu" class="menuIcon"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-navbar>  
+        <ion-title>
+            Active Chat List
+        </ion-title>
+
+        <ion-buttons end>
+            <button ion-button clear (click)="friendListPage(userName)">
+                <ion-icon name="menu" margin-right></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    <div padding-horizontal>
         <chat-page></chat-page>
-    </ion-list>
+    </div>
 </ion-content>
 
 
