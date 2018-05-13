@@ -1,23 +1,19 @@
 page-profile {
-    ion-header{
+    ion-header {
         height: auto !important;
-        background-color:#4aa1f3;
+        background-color: #4aa1f3;
     }
-
-    .username{
+    .username {
         color: #4aa1f3;
     }
-
-    .username p{
+    .username p {
         color: color($colors, graycolor);
         padding: 0px;
         margin: 0px;
     }
-
-    p{
+    p {
         color: color($colors, graycolor);
     }
-
     .header-image {
         height: 30vh;
         background-size: cover;
@@ -25,11 +21,9 @@ page-profile {
         position: relative;
         z-index: -1;
     }
-
     .header {
         height: 15vh;
     }
-
     .main-content {
         margin-top: -20px;
         margin-left: 10px;
@@ -42,8 +36,7 @@ page-profile {
         // background: #F5F5F5;
         position: relative !important;
     }
-
-    div.circularBtn{
+    div.circularBtn {
         max-width: 200px;
         max-height: 200px;
         width: 100px;
@@ -59,7 +52,7 @@ page-profile {
         background: #4aa1f3 no-repeat !important;
         overflow: hidden;
     }
-    div.circularBtn img{
+    div.circularBtn img {
         width: auto;
         height: auto;
         min-width: 100%;
@@ -71,220 +64,186 @@ page-profile {
         background-repeat: no-repeat;
         position: absolute;
     }
-
     .profile-description {
         font-size: 15px;
         color: #888;
     }
-
-    genderRow{
+    genderRow {
         margin-top: -20px;
     }
-
-    #notification-button {            
+    #notification-button {
         position: relative;
         width: 50px !important;
-        top:0px;
+        top: 0px;
         right: 0px;
         overflow: visible!important;
         color: white;
         max-width: 4.5rem;
         margin-right: 5px !important;
     }
-
     #notifications-badge {
         background-color: red;
         position: absolute;
         top: 0px;
         margin-right: 5px !important;
     }
-
-    .accept{
+    .accept {
         font-size: 1.3rem;
     }
-
-    .username{
+    .username {
         margin-left: -7px !important;
     }
-
-    .noResultItem{
+    .noResultItem {
         background: #fff;
-        position:absolute;
-        color:#fff;
-        top:40%;
-        left:50%;
-        padding:15px;
+        position: absolute;
+        color: #fff;
+        top: 40%;
+        left: 50%;
+        padding: 15px;
         -ms-transform: translateX(-50%) translateY(-50%);
-        -webkit-transform: translate(-50%,-50%);
-        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
         height: 100px;
     }
-
-    .noResult{
+    .noResult {
         color: #4aa1f3 !important;
         text-align: center;
     }
-
-    .playerItem.item-md{
+    .playerItem.item-md {
         height: 20px !important;
         max-height: 20px !important;
-        border-bottom:1px solid color($colors,primary);
+        border-bottom: 1px solid color($colors, primary);
     }
-
-    .playerSpan.deleteBtn{
+    .playerSpan.deleteBtn {
         height: 20px !important;
         max-height: 20px !important;
     }
-
-    .text-input-md{
-        border-bottom:1px solid color($colors,primary);
+    .text-input-md {
+        border-bottom: 1px solid color($colors, primary);
     }
-
-     #mantra{
-        border-bottom:1px solid color($colors,primary);
+    #mantra {
+        border-bottom: 1px solid color($colors, primary);
         padding-bottom: 1px !important;
     }
-
-    .button-inner{
-        border-bottom:1px solid color($colors,primary);
+    .button-inner {
+        border-bottom: 1px solid color($colors, primary);
     }
-
-    .label-md[stacked]{
+    .label-md[stacked] {
         font-size: 1.7rem !important;
         margin-top: 10px !important;
         margin-left: 6px;
     }
-
-    .mantra{
+    .mantra {
         display: flex !important;
     }
-
-    #charLeft{
+    #charLeft {
         font-size: 1.7rem !important
     }
-
-    .genderRow{
+    .genderRow {
         margin-bottom: 5px;
     }
-
-    .button-inner{
+    .button-inner {
         border: none !important;
     }
-
-    .appForm .playerItem{
+    .appForm .playerItem {
         min-height: 20px !important;
     }
-
-    .playerSpan{
+    .playerSpan {
         margin: 0px !important;
         margin-top: -5px !important;
         padding: 0px !important;
         max-height: 20px !important
     }
-
-    .deleteBtn{
+    .deleteBtn {
         font-size: 1.2rem;
         margin-top: -5px !important;
         min-height: 20px !important;
         height: 20px !important;
     }
-
-    .select-text{
+    .select-text {
         color: color($colors, graycolor) !important;
     }
-
-    .input-md{
+    .input-md {
         color: color($colors, graycolor) !important;
     }
-
-    .saveBtn{
+    .saveBtn {
         height: 50px !important;
         font-size: 1.5rem !important;
         margin-top: 20px !important;
         margin-bottom: 10px !important;
     }
-
-    button{
+    button {
         height: 40px !important;
     }
-
-    ion-list{
+    ion-list {
         margin-top: 10px !important;
         color: color($colors, graycolor) !important;
         margin-left: 10px !important;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
     }
-
-    ion-list-header{
+    ion-list-header {
         // margin-left: 10px !important;
-
         p.username {
             font-size: 1.3em !important;
             margin-left: 5px !important;
-            color: color($colors, blue-color) !important;
+            color: #004d96 !important;
+            // color: color($colors, blue-color) !important;
         }
         .label {
             color: #7f7f7f !important;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
         }
-    
-        .listheader{
+        .listheader {
             color: #4aa1f3 !important
         }
-
-        p{
+        p {
             margin-left: 5px !important;
             color: color($colors, graycolor) !important;
         }
     }
-
-    
-
-    .profile_info{
+    .profile_info {
         text-align: center;
-        padding:$content-padding 0px;
-        .profile_img{
+        padding: $content-padding 0px;
+        .profile_img {
             @extend .imgBg;
             height: 110px;
             width: 110px;
             border-radius: 50%;
-            position:relative;
-            margin:0px auto;
-            .icon{
-                background-color: color($colors,color2);
-                @include position(auto,0px ,0px ,auto );
+            position: relative;
+            margin: 0px auto;
+            .icon {
+                background-color: color($colors, color2);
+                @include position(auto, 0px, 0px, auto);
                 @include borderRadius(36px);
-                font-size:2.2rem;
+                font-size: 2.2rem;
             }
         }
-        h4{
-            margin:$content-padding 0px;
-            font-weight:500;
+        h4 {
+            margin: $content-padding 0px;
+            font-weight: 500;
         }
     }
-    .appForm{
-        .item{
-            &.item-block{
-                .input-md{
-                    padding:0px $content-padding;
-                    background:color($colors,light);
+    .appForm {
+        .item {
+            &.item-block {
+                .input-md {
+                    padding: 0px $content-padding;
+                    background: color($colors, light);
                     padding: 0px !important;
                     margin: 0px !important;
                 }
-                .select{
-                    padding:0px $content-padding;
-                    background:color($colors,light);
+                .select {
+                    padding: 0px $content-padding;
+                    background: color($colors, light);
                     padding: 0px !important;
                     margin: 0px !important;
                 }
-
             }
-            
         }
     }
 }
 
 .alertCss {
-    
-
     .alert-message {
         color: color($colors, primary);
         margin-top: 15px !important;

@@ -42,9 +42,11 @@ export class NearPage {
 
   ionViewDidEnter(){
     setTimeout(() => {
-      this.loc.getLocations(this.location)
+      // this.loc.getLocations(this.location)
+      this.loc.getLocations('Tallinn')
         .subscribe(res => {
-          _.remove(res.nearby, {username: this.userData.username})
+          //_.remove(res.nearby, {username: this.userData.username})
+          _.remove()
           this.nearByArray = res.nearby
         });
         this.isComplete = true;

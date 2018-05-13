@@ -59,7 +59,6 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
     this.events.subscribe('list', (data) => {
       if(data.length > 0){
         this.roomUsers = data;

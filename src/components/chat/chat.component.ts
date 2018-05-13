@@ -59,7 +59,7 @@ export class ChatComponent {
           room: 'global',
           user: res
         }
-        this.socket.emit('online', params)
+        this.socket.emit('online', params);
       }); 
     this.getUserData();
 
