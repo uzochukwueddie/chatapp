@@ -2,7 +2,8 @@ import { Platform } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage';
+// import { Storage } from '@ionic/storage';
 
 
 @Injectable()
@@ -12,8 +13,9 @@ export class MessageProvider {
 
   constructor(
     public http: HttpClient,
-    private storage: Storage,
-    private platform: Platform
+    private nativeStorage: NativeStorage,
+    private platform: Platform,
+    // private storage: Storage,
   ) {
     this.platform.ready().then(() => {
       this.getDataFromToken();
@@ -90,14 +92,26 @@ export class MessageProvider {
   }
 
   getDataFromToken() {
-    this.storage.get("token").then(token => {
-      let payload;
-      if (token) {
-        payload = token.split('.')[1];
-        payload = window.atob(payload);
-        this.username = JSON.parse(payload).data.username;
-      }
+    this.platform.ready().then(() => {
+      this.nativeStorage.getItem('token')
+      .then(token => {
+          let payload;
+          if (token) {
+            payload = token.split('.')[1];
+            payload = window.atob(payload);
+            this.username = JSON.parse(payload).data.username;
+          }
+      });
     })
+
+    // this.storage.get("token").then(token => {
+    //   let payload;
+    //   if (token) {
+    //     payload = token.split('.')[1];
+    //     payload = window.atob(payload);
+    //     this.username = JSON.parse(payload).data.username;
+    //   }
+    // })
   }
 
 }

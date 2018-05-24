@@ -36,7 +36,7 @@
                     {{ stream.username || stream.user.username }}
                 </h2>
                 <p class="postTime">{{GetPostTime(stream.created)}}</p>
-                <p text-wrap class="postCity" *ngIf="stream.user.city && stream.user.country"> @ {{ stream.user.city}}, {{ stream.user.country}}</p>
+                <p text-wrap class="postCity" *ngIf="stream.user.city && stream.user.country"> @{{ stream.user.city}}, {{ stream.user.country}}</p>
               </ion-item>
 
               <!-- <div style="width: 100%;" *ngIf="stream.post === post">

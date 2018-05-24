@@ -34,6 +34,10 @@ export class LocationProvider {
     return this.http.get(`https://soccerchatapi.herokuapp.com/api/location/near/${city.replace(/ /g, '-')}`);
   }
 
+  getUsersLocations(): Observable<any> {
+    return this.http.get(`https://soccerchatapi.herokuapp.com/api/location/near`);
+  }
+
   distance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;    // Math.PI / 180
     var c = Math.cos;

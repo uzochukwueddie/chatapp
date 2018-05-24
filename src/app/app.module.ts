@@ -1,4 +1,3 @@
-import { Keyboard } from '@ionic-native/keyboard';
 import { ViewModalPage } from './../pages/view-modal/view-modal';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -8,6 +7,7 @@ import { IonicStorageModule } from '@ionic/storage';
 // import { SuperTabsModule } from 'ionic2-super-tabs';
 import { FormsModule }   from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component'
 
@@ -19,7 +19,6 @@ import { GroupProvider } from '../providers/group/group';
 import { ModalPage } from '../pages/modal/modal';
 import { CommentProvider } from '../providers/comment/comment';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
-import { Facebook } from '@ionic-native/facebook';
 import { AdMobFree } from '@ionic-native/admob-free';
 
 import { File } from '@ionic-native/file';
@@ -83,8 +82,6 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
     GroupProvider,
     CommentProvider,
     AdMobFree,
-    Keyboard,
-    Facebook,
     FileTransfer,
     File,
     FileChooser,
@@ -97,7 +94,8 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
     Geolocation,
     LocationProvider,
     CountriesProvider,
-    ResetProvider 
+    ResetProvider,
+    NativeStorage
   ]
 })
 export class AppModule {}

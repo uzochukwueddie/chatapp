@@ -9,10 +9,10 @@ import {
   Platform
  } from 'ionic-angular';
 import { RegisterProvider } from '../../providers/register/register';
-import { Storage } from '@ionic/storage';
 import * as io from 'socket.io-client';
-
-import { Facebook } from '@ionic-native/facebook';
+import { NativeStorage } from '@ionic-native/native-storage';
+// import { Storage } from '@ionic/storage';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 
 
@@ -45,61 +45,39 @@ export class LoginPage {
     private reg: RegisterProvider,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
-    private storage: Storage,
     private events: Events,
     private platform: Platform,
-    private fb: Facebook
+    private nativeStorage: NativeStorage,
+    // private storage: Storage,
+    private admobFree: AdMobFree
   ) {
-    fb.getLoginStatus()
-    .then(res => {
-      if(res.status === "connect") {
-        this.isLoggedIn = true;
-      } else {
-        this.isLoggedIn = false;
-      }
-    })
-    .catch(e => console.log(e));
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
+
+      this.hideBanner();
     });
   }
 
-facebookLogin() {
-  this.fb.login(['public_profile', 'user_friends', 'email'])
-    .then(res => {
-      if(res.status === "connected") {
-        this.isLoggedIn = true;
-        this.getUserDetail(res.authResponse.userID);
-      } else {
-        this.isLoggedIn = false;
-      }
-    })
-    .catch(e => console.log('Error logging into Facebook', e));
-}
+  hideBanner() {
+    this.admobFree.banner.hide();
+  }
 
-getUserDetail(userid) {
-  this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
-    .then(res => {
-      console.log(res);
-      this.users = res;
-    })
-    .catch(e => {
-      console.log(e);
-    });
-}
-
-LoginUser() {
+async LoginUser() {
   this.showLoader();
 
-  this.reg.loginUser(this.email, this.password)
-      .subscribe(res => {
+    this.reg.loginUser(this.email, this.password)
+      .subscribe(async res => {
         this.loading.dismiss();
         if(res.user){
-          this.storage.set('token', res.token);
-          this.storage.set('username', res.user.username);
+          await this.nativeStorage.setItem('token', res.token);
+          await this.nativeStorage.setItem('username', res.user.username);
+
+          // this.storage.set('token', res.token);
+          // this.storage.set('username', res.user.username);
+
           this.events.publish('user-name', res.user);
           this.socket.emit('join stream', {"room": "stream"});
           this.navCtrl.setRoot("TabsPage");
@@ -112,7 +90,7 @@ LoginUser() {
             buttons: ['OK'],
             cssClass: 'alertCss'
           })
-          return alert.present()
+          return alert.present();
         }
 
       })

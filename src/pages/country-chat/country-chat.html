@@ -53,11 +53,11 @@
 
 
 <ion-footer>
-    <ion-item class="inputToolbar">
-      <ion-input id="mesgInput" [(ngModel)]="message" placeholder="Send a message..."></ion-input>
-      <button class="imgBtn" ion-button clear item-end>
+    <ion-item class="inputToolbar" style="margin-top: 0px !important">
+      <ion-input id="mesgInput" (ionFocus)='onInputFocus()' [(ngModel)]="message" placeholder="Send a message..."></ion-input>
+      <!-- <button class="imgBtn" ion-button clear item-end>
         <ion-icon name="image"></ion-icon>
-      </button>
+      </button> -->
 
       <div 
         class="emoji-content-editable"

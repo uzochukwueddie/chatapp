@@ -1,9 +1,21 @@
 page-login {
     .header{
+        border: none !important;
         .toolbar{
           .toolbar-background{
-              background-color:transparent;
+              background:transparent !important;
           }
+        }
+        .toolbar-md {
+            border: none !important;
+        }
+
+        img{
+            width: auto !important;
+            height: 50px !important;
+            text-align:center;
+            margin-left: -45px;
+            margin-top: 10px;
         }
       }
       .forgot{
@@ -21,7 +33,14 @@ page-login {
         @include placeholder {
            color: color($colors, graycolor) !important;
         }
-        
+    }
+
+    .login-button {
+        text-transform: none;
+        border-radius: 3px !important;
+        background: white;
+        color: #4aa1f3 !important;
+        margin-top: 15px !important;
     }
 
     .text-input::-moz-placeholder {
@@ -33,6 +52,6 @@ page-login {
     }
     
     .text-input::-webkit-input-placeholder {
-        color: color($colors, graycolor) !important;
+        color: color($colors, graycolor) !important
     }
 }

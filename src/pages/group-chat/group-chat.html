@@ -35,7 +35,7 @@
         </div>
         <div *ngIf="message.message" class="message" [innerHTML]="message.message" autolinker></div>
         
-        <img *ngIf="message.imageId && message.name" class="imgMsg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        <img *ngIf="message.imageId && message.name" class="imgMsg" (click)="viewImage(message.imageVersion, message.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
 
       </div>
     </div>
@@ -49,13 +49,9 @@
         </div>
         <div *ngIf="message.message" class="message" [innerHTML]="message.message" autolinker></div>
         
-        <img *ngIf="message.imageId && message.name" class="imgMsg" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        <img *ngIf="message.imageId && message.name" class="imgMsg" (click)="viewImage(message.imageVersion, message.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
       </div>
     </div>
-
-
-    
-
 
 
     <div *ngIf="userData.user.username !== message.from" class="left">
@@ -67,7 +63,7 @@
         <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
 
 
-        <img *ngIf="message.image && message.from" class="imgMsg" [src]="message.image" imageViewer >
+        <img *ngIf="message.image && message.from" class="imgMsg" (click)="viewImage(message.imageVersion, message.imageId)" [src]="message.image" imageViewer >
 
       </div>
     </div>
@@ -80,7 +76,7 @@
         </div>
         <div *ngIf="message.text && message.from" class="message" [innerHTML]="message.text" autolinker></div>
 
-        <img *ngIf="message.image && message.from" class="imgMsg" [src]="message.image" imageViewer >
+        <img *ngIf="message.image && message.from" class="imgMsg" (click)="viewImage(message.imageVersion, message.imageId)" [src]="message.image" imageViewer >
 
       </div>
     </div>
@@ -98,8 +94,8 @@
 
 
 <ion-footer>
-    <ion-item class="inputToolbar">
-      <ion-input [(ngModel)]="message" placeholder="Send a message..." id="mesgInput"></ion-input>
+    <ion-item class="inputToolbar" style="margin-top: 0px !important">
+      <ion-input (ionFocus)='onInputFocus()' [(ngModel)]="message" placeholder="Send a message..." id="mesgInput"></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="getImage()">
         <ion-icon name="image"></ion-icon>
       </button>

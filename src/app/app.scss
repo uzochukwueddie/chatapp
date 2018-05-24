@@ -162,7 +162,7 @@ button {
 
 // header style
 .header {
-   background: $toolBar_Back_Ground;
+//    background: $toolBar_Back_Ground;
    .toolbar {
        padding: $nav_Bar_Padding;
        .title {
@@ -211,7 +211,8 @@ button {
        }
        .toolbar-background {
            border: none!important;
-           background-color: $toolBar_Back_Ground;
+           // background-color: $toolBar_Back_Ground;
+           background: linear-gradient(90deg, #004d96, #3d89d1);
        }
    }
    &.pro_header {
@@ -506,7 +507,7 @@ button {
                width: 50%;
                padding: 0px $content-padding;
                height: $control-height;
-               color: color($colors, light);
+               color: #004d96;
                margin: 0px;
                .button-inner {
                    justify-content: center;
@@ -515,7 +516,8 @@ button {
                    background-color: color($colors, color3);
                }
                &:last-of-type {
-                   background-color: color($colors, color2);
+                   color: white !important;
+                   background-color: #004d96
                }
            }
        }

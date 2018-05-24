@@ -8,6 +8,8 @@ import { RoomsProvider } from '../../providers/rooms/rooms';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { CaretEvent } from '@ionic-tools/emoji-picker/src';
 import { EmojiEvent } from '@ionic-tools/emoji-picker';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 
 
@@ -66,6 +68,8 @@ export class PrivatechatPage {
     private rm: RoomsProvider,
     private profile: ProfileProvider,
     private viewCtrl: ViewController,
+    private photoViewer: PhotoViewer,
+    private admobFree: AdMobFree,
   ) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
@@ -105,9 +109,22 @@ export class PrivatechatPage {
         }
       });
 
+      this.hideBanner();
 
     });
 
+  }
+
+  hideBanner() {
+    this.admobFree.banner.hide();
+  }
+
+  showBanner(){
+    this.admobFree.banner.show();
+  }
+
+  onInputFocus(){
+    this.goToBottom();
   }
 
   ionViewDidLoad() {
@@ -178,6 +195,8 @@ export class PrivatechatPage {
 
   ionViewWillLeave() {
     this.tabBarElement.style.display = 'flex';
+
+    this.showBanner();
   }
 
   PrivateMessage() {
@@ -224,7 +243,9 @@ export class PrivatechatPage {
     this.socket.emit('refresh', {});
 
     this.msg.saveMessage(this.senderId._id, this.receiverId, this.senderName.username, this.receiverName.name, this.message)
-      .subscribe(res => {})
+      .subscribe(res => {});
+
+    this.toggled = !this.toggled;
     this.message = "";
     this.emojiContent = "";
     
@@ -296,12 +317,17 @@ export class PrivatechatPage {
       });
   }
 
+  viewImage(value1, value2){
+    const url = `http://res.cloudinary.com/soccerkik/image/upload/v${value1}/${value2}`
+    this.photoViewer.show(url)
+  }
+
   goToBottom() {
     setTimeout(() => {
       if (this.content._scroll) {
         this.content.scrollToBottom();
       }
-    }, 1)
+    }, 1000);
 
   }
   

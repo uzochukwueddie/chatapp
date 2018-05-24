@@ -20,6 +20,8 @@ import { ProfileProvider } from '../../providers/profile/profile';
 import { CaretEvent } from '@ionic-tools/emoji-picker/src';
 import { EmojiEvent } from '@ionic-tools/emoji-picker';
 // import { Keyboard } from '@ionic-native/keyboard';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 
 
@@ -90,10 +92,13 @@ constructor(
   private toastCtrl: ToastController,
   private profile: ProfileProvider,
   public renderer: Renderer,
+  private photoViewer: PhotoViewer,
+  private admobFree: AdMobFree
 ) {
   this.roomName = this.navParams.get("data");
   
   this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+  
 
   this.socketHost = 'https://soccerchatapi.herokuapp.com';
   this.platform.ready().then(() => {
@@ -134,11 +139,24 @@ constructor(
       
     });
 
+    this.hideBanner();
+
   });
 }
 
-ionViewDidLoad(){
+hideBanner() {
+  this.admobFree.banner.hide();
+}
 
+showBanner(){
+  this.admobFree.banner.show();
+}
+
+onInputFocus(){
+  this.getToBottom();
+}
+
+ionViewDidLoad(){
   this.getToBottom();
 
   this.socket.on('welcomeMsg', (data) => {
@@ -192,6 +210,8 @@ handleSelection(event: EmojiEvent) {
       this.saveRoomMessage(res.room, this.userData.user._id, this.userData.user.username, this.message)
       this.message = "";
     });
+    this.toggled = !this.toggled;
+
     this.emojiContent = '';
 }
 
@@ -203,8 +223,6 @@ handleCurrentCaret(event: CaretEvent) {
 toggleFunction(){
   this.toggled = !this.toggled;
 }
-
-
 
 saveRoomMessage(room, senderId, name, msg){
   this.messageProvider.roomMessage(room, senderId, name, msg)
@@ -284,6 +302,8 @@ ionViewDidEnter() {
  
 ionViewWillLeave() {
   this.tabBarElement.style.display = 'flex';
+
+  this.showBanner();
 }
 
 ionViewWillUnload(){
@@ -336,6 +356,11 @@ getImage(){
   });
 }
 
+viewImage(value1, value2){
+  const url = `http://res.cloudinary.com/soccerkik/image/upload/v${value1}/${value2}`
+  this.photoViewer.show(url)
+}
+
   
 
 getToBottom() {
@@ -343,15 +368,7 @@ getToBottom() {
       if (this.content._scroll) {
           this.content.scrollToBottom();
       }
-  }, 1)
-
-//   this.mutationObserver = new MutationObserver((mutations) => {
-//     this.content.scrollToBottom();
-// });
-
-// this.mutationObserver.observe(this.chatList.nativeElement, {
-//     childList: true
-// });
+  }, 1000);
 }
 
 

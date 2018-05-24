@@ -2,7 +2,7 @@ import { Platform } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 @Injectable()
@@ -13,7 +13,7 @@ export class CommentProvider {
 
   constructor(
     public http: HttpClient,
-    private storage: Storage,
+    private nativeStorage: NativeStorage,
     private platform: Platform
   ) {
     this.platform.ready().then(() => {
@@ -66,14 +66,17 @@ export class CommentProvider {
   }
 
   getDataFromToken() {
-    this.storage.get("token").then(token => {
-      let payload;
-      if (token) {
-        payload = token.split('.')[1];
-        payload = window.atob(payload);
-        this.username = JSON.parse(payload).data.username;
-      }
-    })
+    this.platform.ready().then(() => {
+      this.nativeStorage.getItem('token')
+      .then(token => {
+          let payload;
+          if (token) {
+            payload = token.split('.')[1];
+            payload = window.atob(payload);
+            this.username = JSON.parse(payload).data.username;
+          }
+      });
+    });
   }
 
 }

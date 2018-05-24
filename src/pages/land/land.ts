@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 
 
@@ -12,8 +13,16 @@ export class LandPage {
 
   tabBarElement: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private admobFree: AdMobFree
+  ) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+
+    this.hideBanner();
+  }
+
+  hideBanner() {
+    this.admobFree.banner.hide();
   }
 
   ionViewWillEnter() {

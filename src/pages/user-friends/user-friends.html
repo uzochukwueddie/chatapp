@@ -9,24 +9,26 @@
     <br>
   <div padding-horizontal>
       <ion-list padding-horizontal>
-          <ion-item *ngFor="let friend of friends" (click)="PrivateChatPage(friend)">
-            <ion-avatar item-left>
-                <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.friendId.imageVersion}}/{{friend.friendId.userImage}}">
-                </ion-avatar>
-            <ion-grid>
-                <ion-row>
-                    <ion-col col>
-                        <h5 ion-text color="primary">{{friend.name}}</h5>
-                    </ion-col>
-                    <ion-col col-auto>
-                        <span margin-left ion-text color="dark" *ngIf="!checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)">
-                            Blocked
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-      
-          </ion-item>
+            <ion-item *ngFor="let friend of friends">
+                    <ion-avatar item-left>
+                        <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.friendId.imageVersion}}/{{friend.friendId.userImage}}">
+                    </ion-avatar>
+
+                    <button (click)="PrivateChatPage(friend)" style="background: white;">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col col>
+                                    <h5 ion-text color="primary" style="float: left !important">{{friend.name}}</h5>
+                                </ion-col>
+                                <ion-col col-auto>
+                                    <span margin-left ion-text color="dark" *ngIf="!checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)">
+                                        Blocked
+                                    </span>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </button>
+            </ion-item>
       </ion-list>
     
 </div>

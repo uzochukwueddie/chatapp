@@ -24,10 +24,11 @@
             </ion-buttons>
         </span>
       </ion-item>
+      <br>
 
       <ion-label color="primary" stacked class="labelStacked">Favorite National Teams</ion-label>
-      <ion-item>
-        <ion-select [(ngModel)]="teams" multiple="true" [ngModelOptions]="{standalone: true}" class="selectItem">
+      <ion-item class="playerItem">
+        <ion-select [(ngModel)]="teams" multiple="true" [ngModelOptions]="{standalone: true}" placeholder="{{select}}" class="selectItem">
           <ion-option *ngFor="let team of teamsArray" [value]="team.name">{{team.name}}</ion-option>
         </ion-select>
       </ion-item>

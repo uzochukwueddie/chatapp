@@ -74,7 +74,7 @@ export class UserprofilePage {
   }
 
   ionViewWillLeave() {
-    this.tabBarElement.style.display = 'flex';
+    // this.tabBarElement.style.display = 'flex';
   }
 
   showClubs(){

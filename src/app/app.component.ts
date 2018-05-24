@@ -3,15 +3,14 @@ import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { Nav, Platform, AlertController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Storage } from '@ionic/storage';
 import { Events } from 'ionic-angular';
 import * as _ from 'lodash';
 import { RoomsProvider } from '../providers/rooms/rooms';
 import * as io from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
 import { ProfileProvider } from '../providers/profile/profile';
-
-
+import { NativeStorage } from '@ionic-native/native-storage';
+// import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -20,7 +19,7 @@ import { ProfileProvider } from '../providers/profile/profile';
 export class MyApp implements OnInit, OnDestroy {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: string = "TabsPage";
+  rootPage: string;
 
   public animateVarible:boolean = false;
 
@@ -45,16 +44,16 @@ export class MyApp implements OnInit, OnDestroy {
     public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    private storage: Storage,
     private events: Events,
     private alertCtrl: AlertController,
     private rm: RoomsProvider,
     private profile: ProfileProvider,
     private http: HttpClient,
     private menuCtrl: MenuController,
-    private msg: MessageProvider
+    private msg: MessageProvider,
+    private nativeStorage: NativeStorage,
+    // private storage: Storage,
   ) {
-    
     this.initializeApp();
   }
 
@@ -78,7 +77,7 @@ export class MyApp implements OnInit, OnDestroy {
     
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost)
-      this.socket.connect()
+      this.socket.connect();
 
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -86,30 +85,56 @@ export class MyApp implements OnInit, OnDestroy {
       this.statusBar.overlaysWebView(true);
       this.statusBar.backgroundColorByHexString('#4aa1f3');
       this.splashScreen.hide();
-
-      this.storage.get('token').then(loggedIn => {
-        if(loggedIn != null){
-
-          let payload;
-          if (loggedIn) {
-            payload = loggedIn.split('.')[1];
-            payload = window.atob(payload);
-            let newValue = JSON.parse(payload).data.username.replace(/ /g, '-');
-            this.http
-              .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
-                .subscribe((res: any) => {
-                  let params = {
-                    room: 'global',
-                    user: res
-                  }
-                  this.socket.emit('online', params);
-                });
-          }
-          this.nav.setRoot("TabsPage");
-        } else {
+      
+      this.nativeStorage.getItem('token')
+      .then(
+        data => {
+            if(data){
+              let payload = data.split('.')[1];
+              payload = window.atob(payload);
+              let newValue = JSON.parse(payload).data.username.replace(/ /g, '-');
+              this.http
+                .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
+                  .subscribe((res: any) => {
+                    let params = {
+                      room: 'global',
+                      user: res
+                    }
+                    this.socket.emit('online', params);
+                  });
+              this.nav.setRoot("TabsPage");
+            }
+        },
+        error => {
           this.nav.setRoot("LandPage");
-        }
-      });
+        });
+
+      // this.storage.get('token').then(loggedIn => {
+      //   if(loggedIn !== null){
+      //     let payload;
+      //     if (loggedIn) {
+      //       payload = loggedIn.split('.')[1];
+      //       payload = window.atob(payload);
+      //       let newValue = JSON.parse(payload).data.username.replace(/ /g, '-');
+      //       this.http
+      //         .get(`https://soccerchatapi.herokuapp.com/api/user/${newValue}`)
+      //           .subscribe((res: any) => {
+      //             let params = {
+      //               room: 'global',
+      //               user: res
+      //             }
+      //             this.socket.emit('online', params);
+      //           });
+      //           this.nav.setRoot("TabsPage");
+      //     }
+          
+          
+      //   } else if(loggedIn === null) {
+      //     setTimeout(() => {
+      //       this.nav.setRoot("LandPage");
+      //     }, 10)
+      //   }
+      // });
 
       this.events.subscribe('userName', (data) => {
         this.userId = data.user._id;
@@ -381,7 +406,7 @@ export class MyApp implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.storage.remove('token');
+    // this.nativeStorage.remove('token');
     this.nav.setRoot("LandPage");
     this.socket.disconnect();
   }

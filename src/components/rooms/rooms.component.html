@@ -2,21 +2,24 @@
     <ion-list class="all_list" >
         <ion-item *ngFor="let room of rooms" >
             <ion-avatar item-left>
-                <img src="http://placehold.it/50x50">
+                <img src="http://res.cloudinary.com/ratingapp/image/upload/v1526830779/{{room.image}}">
             </ion-avatar>
-            <ion-grid (click)="GroupChatPage(room)">
-                <ion-row>
-                    <ion-col col>
-                        <h5 ion-text color="primary">{{room.name}}</h5>
-                    </ion-col>
-                    <ion-col col-auto>
-                        <span margin-left ion-text color="dark">
-                            <ion-icon name="person"></ion-icon>
-                            {{room.fans.length}}
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+            <button (click)="GroupChatPage(room)" style="background: white">
+                <ion-grid >
+                    <ion-row>
+                        <ion-col col >
+                            <h5 ion-text color="primary">{{room.name}}</h5>
+                        </ion-col>
+                        <ion-col col-auto>
+                            <span margin-left ion-text color="dark">
+                                <ion-icon name="person"></ion-icon>
+                                {{room.fans.length}}
+                            </span>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </button>
+            
             <p ion-text color="dark" style="margin-top:5px;" (click)="addToFavorite(room)">
                 <ion-icon name="add"></ion-icon>&nbsp;Add
             </p>

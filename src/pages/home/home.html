@@ -7,9 +7,6 @@
       <ion-segment-button value="countries">
         Countries
       </ion-segment-button>
-      <ion-segment-button value="favorites">
-        Favorites
-      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
     
@@ -36,11 +33,11 @@
       </ion-item>
 
 
-      <div padding-horizontal>
+      <!-- <div padding-horizontal>
           <ion-list class="all_list" >
               <ion-item *ngFor="let club of clubs">
                   <ion-avatar item-left>
-                      <img src="http://placehold.it/50x50">
+                      <img src="http://res.cloudinary.com/ratingapp/image/upload/v1526830779/{{club.image}}">
                   </ion-avatar>
                   <ion-grid (click)="GroupChatPage(club)">
                       <ion-row>
@@ -51,7 +48,7 @@
                   </ion-grid>
               </ion-item>
           </ion-list>
-      </div>
+      </div> -->
     </div>
 
 </ion-content>

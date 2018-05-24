@@ -1,29 +1,27 @@
-<ion-content class="sign" padding>
-  <ion-header no-border>
-    <ion-navbar>
-    </ion-navbar>
-  </ion-header>
-  <div class="logo">
-    <img src="assets/imgs/logo.png">
-    <p>Connect your Friends & Be ON</p>
+<ion-content class="sign" >
+  <div padding class="appForm" margin-bottom style="position: fixed !important;top:0%;bottom: 0%;left:0;margin-bottom: 10% !important">
+        <ion-header no-border>
+            <ion-navbar>
+                <img src="assets/imgs/newtitle.png" style="display:inline-block" />
+            </ion-navbar>
+        </ion-header>
+
+        <ion-list style="margin-top: 33% !important;">
+          <ion-item>
+              <ion-icon name="ios-mail-outline" item-left></ion-icon>
+              <ion-input type="text" [(ngModel)]="username" name="username" placeholder="Username" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-icon name="ios-lock-outline" item-left></ion-icon>
+              <ion-input type="email" [(ngModel)]="email" name="email" placeholder="Email" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-icon name="md-key" item-left></ion-icon>
+              <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Password" clearInput></ion-input>
+          </ion-item>
+          <button ion-button block color="color2" class="login-button" margin-vertical (click)="RegisterUser()">Sign Up</button>
+      </ion-list>
+
   </div>
 </ion-content>
-<ion-footer>
-  <div class="appForm"  margin-bottom>
-    <ion-list>
-      <ion-item>
-        <ion-icon name="ios-mail-outline" item-left></ion-icon>
-        <ion-input type="text" [(ngModel)]="username" name="username" placeholder="Username"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="ios-lock-outline" item-left></ion-icon>
-        <ion-input type="email" [(ngModel)]="email" name="email" placeholder="Email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="md-key" item-left></ion-icon>
-        <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Password"></ion-input>
-      </ion-item>
-    </ion-list>
-  </div>
-  <button ion-button block color="color2" margin-vertical (click)="RegisterUser()">Sign Up</button>
-</ion-footer>
+

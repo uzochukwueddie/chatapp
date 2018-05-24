@@ -1,31 +1,31 @@
 <ion-content class="sign" padding>
-  <ion-header no-border>
-    <ion-navbar>
-    </ion-navbar>
-  </ion-header>
+  <div ion-fixed padding class="appForm" margin-bottom style="position: absolute !important;top:0%;bottom: 0%;left:0;margin-bottom: 1% !important; height: auto !important">
+    <ion-header no-border>
+        <ion-navbar>
+            <img src="assets/imgs/newtitle.png" style="display:inline-block" />
+        </ion-navbar>
+    </ion-header>
+      <ion-list style="margin-top: 43% !important;">
+          <ion-item style="position: relative !important;">
+              <ion-icon name="ios-mail-outline" item-left></ion-icon>
+              <ion-input class="inpt-field" style=" font-size: 18px !important" type="email" [(ngModel)]="email" placeholder="Email" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-icon name="ios-lock-outline" item-left></ion-icon>
+              <ion-input type="password" [(ngModel)]="password" placeholder="Password" clearInput></ion-input>
+          </ion-item>
 
-  <div class="logo">
-    <img src="assets/imgs/logo.png">
-    <p>Connect your Friends & Be ON</p>
+          <button ion-button block class="login-button" margin-vertical (click)="LoginUser()">Sign In</button>
+
+          <p class="forgot" >
+            <button (click)="forgotPassword()" ion-button clear color="color3">
+                Forgot Password?
+            </button>
+          </p>
+      </ion-list>
+
   </div>
-  
 </ion-content>
-<ion-footer text-center>
-  <div class="appForm" margin-bottom>
-    <ion-list>
-      <ion-item>
-        <ion-icon name="ios-mail-outline" item-left></ion-icon>
-        <ion-input type="email" [(ngModel)]="email" placeholder="Email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="ios-lock-outline" item-left></ion-icon>
-        <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
-      </ion-item>
-    </ion-list>
-  </div>
-  <p class="forgot" (click)="forgotPassword()">Forgot Password</p>
-  <button ion-button block color="color2" margin-vertical (click)="LoginUser()">Sign In</button>
-</ion-footer>
 
 
 

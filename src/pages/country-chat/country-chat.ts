@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, MenuController, Events, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, MenuController, Events, ToastController, Content } from 'ionic-angular';
 import * as io from 'socket.io-client';
 import { CaretEvent } from '@ionic-tools/emoji-picker/src';
 import { EmojiEvent } from '@ionic-tools/emoji-picker';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 
 
@@ -12,6 +13,7 @@ import { EmojiEvent } from '@ionic-tools/emoji-picker';
   templateUrl: 'country-chat.html',
 })
 export class CountryChatPage {
+  @ViewChild(Content) content : Content;
 
   tabBarElement: any;
 
@@ -29,7 +31,7 @@ export class CountryChatPage {
   public eventPosMock;
   public direction = Math.random() > 0.5 ? (Math.random() > 0.5 ? 'top' : 'bottom') : (Math.random() > 0.5 ? 'right' : 'left');
   public toggled = false;
-  public content = '';
+  public emojiContent = '';
   private _lastCaretEvent: CaretEvent;
 
   constructor(
@@ -38,7 +40,8 @@ export class CountryChatPage {
     private platform: Platform,
     public menuCtrl: MenuController,
     private events: Events,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private admobFree: AdMobFree
   ) {
     this.roomName = this.navParams.get("room");
     this.userData = this.navParams.get("user");
@@ -48,6 +51,8 @@ export class CountryChatPage {
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
+
+      this.goToBottom();
 
       this.params = {
         room: this.roomName.name,
@@ -65,8 +70,22 @@ export class CountryChatPage {
         }
       });
 
+      this.hideBanner();
+
     });
     
+  }
+
+  hideBanner() {
+    this.admobFree.banner.hide();
+  }
+  
+  showBanner(){
+    this.admobFree.banner.show();
+  }
+
+  onInputFocus(){
+    this.goToBottom();
   }
 
   ionViewDidLoad() {
@@ -79,10 +98,11 @@ export class CountryChatPage {
         this.welcome = data;
       }, 2000)
     });
+
+    this.goToBottom();
   }
 
   SendRoomMessage(){
-    
     if(this.message && this.message !== ''){
       this.socket.emit('roomMessage', {
         text: this.message,
@@ -90,11 +110,13 @@ export class CountryChatPage {
         sender: this.userData.username
       });
       this.message = '';
+
+      this.goToBottom();
     }
   }
 
   handleSelection(event: EmojiEvent) {
-    this.content = this.content.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.content.slice(this._lastCaretEvent.caretOffset);
+    this.emojiContent = this.emojiContent.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.emojiContent.slice(this._lastCaretEvent.caretOffset);
     this.eventMock = JSON.stringify(event);
     this.message = this.content;
     
@@ -103,8 +125,11 @@ export class CountryChatPage {
       room: this.roomName.name,
       sender: this.userData.username
     });
+    this.toggled = !this.toggled;
     this.message = "";
-    this.content = '';
+    this.emojiContent = '';
+
+    this.goToBottom();
   }
   
   handleCurrentCaret(event: CaretEvent) {
@@ -133,13 +158,25 @@ export class CountryChatPage {
   }
 
   ionViewWillEnter() {
-    this.tabBarElement.style.display = 'none';    
+    this.tabBarElement.style.display = 'none';  
+    
+    this.goToBottom();
   }
 
   ionViewWillLeave() {
     this.tabBarElement.style.display = 'flex';
+
+    this.showBanner();
   
     this.socket.disconnect();
+  }
+
+  goToBottom() {
+    setTimeout(() => {
+        if (this.content._scroll) {
+            this.content.scrollToBottom();
+        }
+    }, 1000);
   }
 
 }

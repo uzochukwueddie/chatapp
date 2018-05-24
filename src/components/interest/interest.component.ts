@@ -13,6 +13,7 @@ import { CountriesProvider } from '../../providers/countries/countries';
 export class InterestComponent {
 
   userValue: any;
+  select: string;
 
   clubs: any;
   players: any; 
@@ -38,6 +39,8 @@ export class InterestComponent {
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
+
+      this.select = "Select Your Favorite Teams"
 
       this.socket.on('refreshPage', (data) => {
         this.getUserData();

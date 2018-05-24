@@ -38,14 +38,14 @@
       <div *ngIf="senderName.username !== receiverName.name && senderName.username !== message.sendername" class="left">
         <div class="chat-bubble left slide-left" *ngIf="message.sendername">
           <div *ngIf="message.body" class="message" [innerHTML]="message.body" autolinker></div>
-          <img *ngIf="message.imageId && message.sendername" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+          <img *ngIf="message.imageId && message.sendername" (click)="viewImage(message.imageVersion, message.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
         </div>
       </div>
   
       <div *ngIf="senderName.username === message.sendername" class="right">
-        <div class="chat-bubble right slide-right" *ngIf="message.sendername" (click)="viewProfile(message.name)">
-          <div *ngIf="message.body" class="message" [innerHTML]="message.body" autolinker></div>
-          <img *ngIf="message.imageId && message.sendername" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
+        <div class="chat-bubble right slide-right" *ngIf="message.sendername">
+          <div *ngIf="message.body" class="message" [innerHTML]="message.body" autolinker (click)="viewProfile(message.name)"></div>
+          <img *ngIf="message.imageId && message.sendername" (click)="viewImage(message.imageVersion, message.imageId)" src="http://res.cloudinary.com/soccerkik/image/upload/v{{message.imageVersion}}/{{message.imageId}}">
         </div>
       </div>
   
@@ -54,14 +54,14 @@
       <div *ngIf="senderName.username !== receiverName.name && senderName.username !== message.sender" class="left">
         <div class="chat-bubble left slide-left" *ngIf="message.sender">
           <div *ngIf="message.text && message.sender && isAdded" class="message" [innerHTML]="message.text" autolinker></div>
-          <img *ngIf="message.image && message.sender" class="imgMsg" [src]="message.image" imageViewer >
+          <img *ngIf="message.image && message.sender" class="imgMsg" [src]="message.image" (click)="viewImage(message.imageVersion, message.imageId)" imageViewer  >
         </div>
       </div>
   
       <div *ngIf="senderName.username === message.sender" class="right">
         <div class="chat-bubble right slide-right" *ngIf="message.sender">
           <div *ngIf="message.text && message.sender && isAdded" class="message" [innerHTML]="message.text" autolinker></div>
-          <img *ngIf="message.image && message.sender" class="imgMsg" [src]="message.image" imageViewer >
+          <img *ngIf="message.image && message.sender" class="imgMsg" [src]="message.image" (click)="viewImage(message.imageVersion, message.imageId)" imageViewer >
         </div>
       </div>
   
@@ -78,8 +78,8 @@
 
 
 <ion-footer no-border>
-    <ion-item class="inputToolbar">
-      <ion-input id="msgInput" [(ngModel)]="message" placeholder="Send a message..." (keypress)="isTyping()"></ion-input>
+    <ion-item class="inputToolbar" style="margin-top: 0px !important">
+      <ion-input id="msgInput" (ionFocus)='onInputFocus()' [(ngModel)]="message" placeholder="Send a message..." (keypress)="isTyping()"></ion-input>
       <button class="imgBtn" ion-button clear item-end (click)="addImage()">
         <ion-icon name="image"></ion-icon>
       </button>

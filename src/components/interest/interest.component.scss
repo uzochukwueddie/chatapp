@@ -5,6 +5,7 @@ interest {
         padding-top: 5px;
         padding-bottom: 0px;
         bottom: -5px;
+        margin-bottom: 10px !important;
     }
 
     .deleteBtn{
@@ -16,10 +17,9 @@ interest {
     }
 
     .playerSpan{
-        margin-bottom: -20px;
+        margin-bottom: 40px !important;
         height: auto;
     }
-
 
     ion-input{
         font-size: 14px;

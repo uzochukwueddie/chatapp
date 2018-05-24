@@ -116,25 +116,21 @@ export class StreamPage {
           this.socket.emit('online', params);
         }
       });
-
-    
   }
 
   showBanner() {
- 
     let bannerConfig: AdMobFreeBannerConfig = {
         isTesting: true, // Remove in production
         autoShow: true,
-        id: 'ca-app-pub-5016812855157623/6844029312'
+        id: ''
     };
 
     this.admobFree.banner.config(bannerConfig);
 
     this.admobFree.banner.prepare().then(() => {
-        // success
+        
     }).catch(e => console.log(e));
-
-}
+  }
 
   showModal() {
     this.rm.getUser()

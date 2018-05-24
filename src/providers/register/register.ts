@@ -2,8 +2,7 @@ import { Platform } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Storage } from '@ionic/storage';
-// import * as io from 'socket.io-client';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 // declare var io;
 
@@ -23,37 +22,12 @@ export class RegisterProvider {
 
   constructor(
     private http: HttpClient,
-    private storage: Storage,
+    private nativeStorage: NativeStorage,
     private platform: Platform
   ) { 
     this.platform.ready().then(() => {
       this.loadData();
     })
-  }
-
-  checkAuthentication(){
- 
-    return new Promise((resolve, reject) => {
- 
-        //Load token if exists
-        this.storage.get('token').then((value) => {
- 
-            this.token = value;
- 
-            let headers = new HttpHeaders();
-            headers.set('Authorization', this.token);
- 
-            this.http.get(this.auth, {headers: headers})
-                .subscribe(res => {
-                    resolve(res);
-                }, (err) => {
-                    reject(err);
-                });
- 
-        });        
- 
-    });
- 
   }
 
   createUser(username, email, password?): Observable<any> {
@@ -71,12 +45,6 @@ export class RegisterProvider {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
-    // return this.http
-    //   .post(this.loginUrl, {
-    //     email: email,
-    //     password: password
-    //   }, {headers: headers});
-
     return this.http
       .post(this.loginUrl, {
         email: email,
@@ -85,13 +53,14 @@ export class RegisterProvider {
   }
 
   loadData() {
-    this.storage.get("token").then(value => {
-      this.token = value;
-    })
+    this.nativeStorage.getItem('token')
+      .then(value => {
+        this.token = value;
+      });
   }
 
-  async logout(){
-    return await this.storage.remove('token');
-  }
+  // async logout(){
+  //   return await this.nativeStorage.remove('token');
+  // }
 
 }

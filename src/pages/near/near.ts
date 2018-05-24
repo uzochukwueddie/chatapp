@@ -22,6 +22,8 @@ export class NearPage {
 
   isComplete = false;
 
+  tabBarElement: any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -29,6 +31,11 @@ export class NearPage {
     private rm: RoomsProvider,
     private sanitization: DomSanitizer,
   ) {
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+  }
+
+  ionViewWillEnter() {
+    this.tabBarElement.style.display = 'flex';    
   }
 
   ionViewDidLoad() {
@@ -42,11 +49,9 @@ export class NearPage {
 
   ionViewDidEnter(){
     setTimeout(() => {
-      // this.loc.getLocations(this.location)
-      this.loc.getLocations('Tallinn')
+      this.loc.getUsersLocations()
         .subscribe(res => {
-          //_.remove(res.nearby, {username: this.userData.username})
-          _.remove()
+          _.remove(res.nearby, {username: this.userData.username})
           this.nearByArray = res.nearby
         });
         this.isComplete = true;

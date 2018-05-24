@@ -2,7 +2,8 @@ import { Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage';
+// import { Storage } from '@ionic/storage';
 
 
 @Injectable()
@@ -14,8 +15,9 @@ export class RoomsProvider {
 
   constructor(
     private http: HttpClient,
-    private storage: Storage,
-    private platform: Platform
+    private nativeStorage: NativeStorage,
+    private platform: Platform,
+    // private storage: Storage,
   ) {
     this.platform.ready().then(() => {
       this.getDataFromToken();
@@ -122,20 +124,39 @@ export class RoomsProvider {
   }
 
   loadData() {
-    this.storage.get("token").then(value => {
-      this.token = value;
-    })
+    this.platform.ready().then(() => {
+      this.nativeStorage.getItem('token')
+      .then(value => {
+        this.token = value;
+      });
+    });
+
+    // this.storage.get("token").then(value => {
+    //   this.token = value;
+    // })
   }
 
   getDataFromToken() {
-    this.storage.get("token").then(token => {
-      let payload;
-      if (token) {
-        payload = token.split('.')[1];
-        payload = window.atob(payload);
-        this.username = JSON.parse(payload).data.username;
-      }
-    })
+    this.platform.ready().then(() => {
+      this.nativeStorage.getItem('token')
+      .then(token => {
+          let payload;
+          if (token) {
+            payload = token.split('.')[1];
+            payload = window.atob(payload);
+            this.username = JSON.parse(payload).data.username;
+          }
+      });
+    });
+
+    // this.storage.get("token").then(token => {
+    //   let payload;
+    //   if (token) {
+    //     payload = token.split('.')[1];
+    //     payload = window.atob(payload);
+    //     this.username = JSON.parse(payload).data.username;
+    //   }
+    // })
   }
 
 }

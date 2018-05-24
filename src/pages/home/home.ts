@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, Platform, NavController, Events } from 'ionic-angular';
 import * as io from 'socket.io-client';
-import { Storage } from '@ionic/storage';
 import { RoomsProvider } from '../../providers/rooms/rooms';
+import { NativeStorage } from '@ionic-native/native-storage';
+// import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -21,20 +22,16 @@ export class HomePage {
   clubLength = 0;
   isEmpty = false;
 
-
-  // private tabBarHeight;
-  // private topOrBottom:string;
-  // private contentBox;
-
   socketHost: any;
   socket: any;
 
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
-    private storage: Storage,
+    private nativeStorage: NativeStorage,
     private rm: RoomsProvider,
-    private events: Events
+    private events: Events,
+    // private storage: Storage,
   ) {
     this.chatrooms = "clubs";
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
@@ -55,9 +52,15 @@ export class HomePage {
 
 
   getName() {
-    this.storage.get("username").then(value => {
-      this.userData = value;
-    })
+    this.nativeStorage.getItem('username')
+    .then(data => {
+        this.userData = data;
+      }
+    );
+
+    // this.storage.get("username").then(value => {
+    //   this.userData = value;
+    // })
   }
 
   GroupChatPage(room) {

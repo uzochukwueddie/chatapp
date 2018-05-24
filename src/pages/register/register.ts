@@ -8,8 +8,9 @@ import {
   Platform
  } from 'ionic-angular';
 import { RegisterProvider } from '../../providers/register/register';
-import { Storage } from '@ionic/storage';
 import * as io from 'socket.io-client';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 
 
@@ -36,27 +37,35 @@ export class RegisterPage {
     public navParams: NavParams,
     private reg: RegisterProvider,
     private alertCtrl: AlertController,
-    private storage: Storage,
     private loadingCtrl: LoadingController,
     private platform: Platform,
+    private nativeStorage: NativeStorage,
+    private admobFree: AdMobFree
   ) {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
 
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
-    })
+
+      this.hideBanner();
+    });
+  }
+
+  hideBanner() {
+    this.admobFree.banner.hide();
   }
 
   RegisterUser() {
     this.showLoader();
 
     this.reg.createUser(this.username, this.email, this.password)
-      .subscribe(res => {
+      .subscribe(async res => {
         this.loading.dismiss();
         if(res.user){
-          this.storage.set('token', res.token);
-          this.storage.set('username', res.user.username);
+          await this.nativeStorage.setItem('token', res.token);
+          await this.nativeStorage.setItem('username', res.user.username);
+
           this.socket.emit('join stream', {"room": "stream"});
           this.navCtrl.setRoot("TabsPage");
         }

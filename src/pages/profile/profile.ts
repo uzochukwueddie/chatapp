@@ -2,13 +2,15 @@ import { ViewModalPage } from './../view-modal/view-modal';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 import { ProfileProvider } from '../../providers/profile/profile';
-import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage';
 import { RoomsProvider } from '../../providers/rooms/rooms';
 import { ModalPage } from '../modal/modal';
 // import { MessageModalPage } from '../message-modal/message-modal';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import * as io from 'socket.io-client';
+
+// import { Storage } from '@ionic/storage';
 
 
 
@@ -60,17 +62,20 @@ export class ProfilePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private profile: ProfileProvider,
-    private storage: Storage,
+    private nativeStorage: NativeStorage,
     private rm: RoomsProvider,
     private modalCtrl: ModalController,
     public http: HttpClient,
     private platform: Platform,
+    // private storage: Storage,
   ) {
 
     this.socketHost = 'https://soccerchatapi.herokuapp.com';
     this.platform.ready().then(() => {
       this.socket = io(this.socketHost);
-    })
+
+      this.getId();
+    });
     
     setTimeout(() => {
       this.userprofile = "overview";
@@ -117,15 +122,20 @@ export class ProfilePage {
           this.friends.push(val);
         });
       });
-
-    
   }
   
-
   getId() {
-    this.storage.get("username").then(value => {
-      this.userValue = value;
-    })
+    this.nativeStorage.getItem('username')
+    .then(data => {
+        this.userValue = data;
+      }
+    );
+
+    // this.storage.get('username')
+    // .then(data => {
+    //     this.userValue = data;
+    //   }
+    // );
   }
 
   openModal() {

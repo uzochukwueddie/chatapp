@@ -1,57 +1,58 @@
 <ion-spinner *ngIf="!isComplete"></ion-spinner>
 
 <ion-list class="all_list">
-<ion-item padding-horizontal *ngFor="let friend of friends">
+<ion-item padding-horizontal *ngFor="let friend of friends" style="margin-top: 0px !important;padding-top: 0px">
     <div *ngFor="let msg of msgArray">
         <div *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
 
-            <ion-item *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)" 
-            (click)="PrivateChatPage(friend)">
+            <ion-item *ngIf="checkIfBlocked(user.blockedUsers, user.blockedBy, friend.name)">
                 <ion-avatar item-left>
                     <img src="http://res.cloudinary.com/soccerkik/image/upload/v{{friend.friendId.imageVersion}}/{{friend.friendId.userImage}}">
                 </ion-avatar>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col>
-                            <h5 ion-text color="primary">{{friend.name}}</h5>
-                        </ion-col>
+                
+                <button (click)="PrivateChatPage(friend)" style="background: white">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col>
+                                <h5 ion-text color="primary">{{friend.name}}</h5>
+                            </ion-col>
 
-                        <ion-col col-auto *ngFor="let msg of msgArray">
-                            <span margin-left ion-text *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
-                                {{GetTime(msg.message.createdAt)}}
-                            </span>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+                            <ion-col col-auto *ngFor="let msg of msgArray">
+                                <span margin-left ion-text *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name">
+                                    {{GetTime(msg.message.createdAt)}}
+                                </span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
 
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col>
-                            <h5 ion-text color="dark" *ngFor="let msg of msgArray">
-                                <p *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name && msg.message.body !== ''">
-                                    <span *ngIf="senderName !== friend.name || !usertyping">
-                                        <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
-                                        </ion-icon> 
-                                        {{msg.message.body.substr(0, 10)}}...
-                                    </span>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col>
+                                <h5 ion-text color="dark" *ngFor="let msg of msgArray">
+                                    <p *ngIf="msg.message.sendername === friend.name || msg.message.receivername === friend.name && msg.message.body !== ''">
+                                        <span *ngIf="senderName !== friend.name || !usertyping ">
+                                            <ion-icon name="done-all" class="doneClass" *ngIf="messageRead(msg.msg, friend.name, userName)">
+                                            </ion-icon> 
+                                            {{msg.message.body.substr(0, 10)}}...
+                                        </span>
 
-                                    <span *ngIf="senderName === friend.name && usertyping" class="typing">typing...</span>
-                                </p>
-                                
-                            </h5>
-                        </ion-col>
+                                        <span *ngIf="senderName === friend.name && usertyping" class="typing">typing...</span>
+                                    </p>
+                                    
+                                </h5>
+                            </ion-col>
 
-                        <ion-col col-auto>
-                            <h4 *ngFor="let msg of msgArray" class="unread">
-                                <p margin-left ion-text *ngIf="Increment(msg.msg, friend.name, userName) > 0" class="msg">
-                                    {{Increment(msg.msg, friend.name, userName)}}
-                                </p>
-                            </h4>
-        
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-
+                            <ion-col col-auto>
+                                <h4 *ngFor="let msg of msgArray" class="unread">
+                                    <p margin-left ion-text *ngIf="Increment(msg.msg, friend.name, userName) > 0" class="msg">
+                                        {{Increment(msg.msg, friend.name, userName)}}
+                                    </p>
+                                </h4>
+            
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </button>
             </ion-item>
 
         </div>

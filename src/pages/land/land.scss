@@ -18,6 +18,13 @@ page-land {
     }
 }
 
+.login-button {
+    text-transform: none;
+    border-radius: 3px !important;
+    background: white;
+    color: #4aa1f3 !important;
+}
+
 .logo {
     margin-top: $toolbar-ios-height;
     img {
@@ -32,4 +39,5 @@ page-land {
 
 .footer {
     padding: 0px $content-padding $content-padding;
+    border: 0.1px #315a80 !important;
 }
